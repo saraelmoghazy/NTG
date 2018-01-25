@@ -1,0 +1,86 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ntg.user.mvpsample.task_details.TaskDetailFragment">
+
+    <TextView
+        android:id="@+id/titleTxtViewDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
+        android:hint="Title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/descrptionTxtViewDetail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descrptionTxtViewDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:hint="Descrption"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/descrptionContentTxtView"
+        app:layout_constraintEnd_toStartOf="@+id/descrptionContentTxtView" />
+
+    <TextView
+        android:id="@+id/completeTxtViewDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="49dp"
+        android:layout_marginLeft="49dp"
+        android:hint="Status"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/completeStatusTxtView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/titleContentTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="My Task"
+        android:textColor="@android:color/background_dark"
+        android:textColorHint="@android:color/background_dark"
+        app:layout_constraintStart_toStartOf="@+id/descrptionContentTxtView"
+        app:layout_constraintTop_toTopOf="@+id/titleTxtViewDetail" />
+
+    <TextView
+        android:id="@+id/descrptionContentTxtView"
+        android:layout_width="0dp"
+        android:layout_height="81dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginRight="51dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="48dp"
+        android:hint="I should finish this project in this weekend "
+        android:textColor="@android:color/background_dark"
+        android:textColorHint="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/completeStatusTxtView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/completeTxtViewDetail"
+        app:layout_constraintTop_toTopOf="@+id/titleContentTxtView" />
+
+    <TextView
+        android:id="@+id/completeStatusTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="198dp"
+        android:hint="Active"
+        android:textColor="@android:color/background_dark"
+        android:textColorHint="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/descrptionContentTxtView" />
+
+
+</android.support.constraint.ConstraintLayout>

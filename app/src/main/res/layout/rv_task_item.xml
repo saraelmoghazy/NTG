@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fdb5b5"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleRvTxtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/descrptionRvTxtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descrption"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@android:color/background_dark"
+        android:textColorHint="@android:color/background_dark" />
+</LinearLayout>
