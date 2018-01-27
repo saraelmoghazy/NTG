@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/task_details_fragment"
     tools:context="com.ntg.user.mvpsample.task_details.TaskDetailsActivity">
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.ntg.user.mvpsample.task_details.TaskDetailFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </FrameLayout>

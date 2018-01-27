@@ -15,10 +15,9 @@ public class CachingInterceptor implements Interceptor {
         Response originalResponse = chain.proceed(chain.request());
         CacheControl cacheControl = new CacheControl.Builder()
                 .maxAge(2, TimeUnit.MINUTES).build();
-        Response response = originalResponse.newBuilder()
+
+        return originalResponse.newBuilder()
                 .header("Cache-Control", cacheControl.toString())
                 .build();
-
-          return response;
     }
 }

@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.data;
 
+import java.util.UUID;
+
 /**
  * Created by ilias on 25/01/2018.
  */
@@ -10,12 +12,12 @@ private String title;
 private String description;
 private boolean isCompleted;
 
-    public Task(String id, String title) {
-        this(id, title, "");
+    public Task(String title) {
+        this(title, "");
     }
 
-    public Task(String id, String title, String description) {
-        this.id = id;
+    public Task(String title, String description) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.isCompleted = false;

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.ntg.user.mvpsample.add_task.AddTaskActivity">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/add_task_fragment"
         android:name="com.ntg.user.mvpsample.add_task.AddTaskFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/save_task_fab"

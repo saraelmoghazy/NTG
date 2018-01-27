@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ntg.user.mvpsample">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,7 @@
         <activity
             android:name=".tasks.TasksActivity"
             android:label="@string/title_activity_tasks"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +23,7 @@
         <activity android:name=".task_details.TaskDetailsActivity" />
         <activity
             android:name=".add_task.AddTaskActivity"
-            android:label="@string/title_activity_add_task"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_add_task"/>
     </application>
 
 </manifest>

@@ -8,22 +8,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.Util.ActivityUtils;
+import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.source.TasksRepository;
 
 public class TasksActivity extends AppCompatActivity {
+    TasksFragment tasksFragment;
+    TasksRepository tasksRepository;
+    TasksPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_task_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        tasksRepository = new TasksRepository(this);
+        tasksFragment = (TasksFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.tasks_fragment);
+        if (tasksFragment == null){
+            tasksFragment = TasksFragment.newInstance();
+        }
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                tasksFragment, R.id.tasks_fragment);
+        presenter = new TasksPresenter(tasksFragment, tasksRepository);
     }
 
 }

@@ -9,4 +9,9 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     public void start() {
 
     }
+
+    @Override
+    public void getTask(String taskId) {
+
+    }
 }

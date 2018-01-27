@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.ntg.user.mvpsample.tasks.TasksActivity">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/tasks_fragment"
-        android:name="com.ntg.user.mvpsample.tasks.TasksFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -10,10 +10,10 @@ import com.ntg.user.mvpsample.BaseView;
 public interface TaskDetailsContract {
 
     interface View extends BaseView<Presenter>{
-
+void showTaskDetails();
     }
 
     interface Presenter extends BasePresenter{
-
+        void getTask(String taskId);
     }
 }
