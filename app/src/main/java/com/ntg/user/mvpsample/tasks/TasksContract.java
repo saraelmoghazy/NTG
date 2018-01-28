@@ -4,6 +4,8 @@ import com.ntg.user.mvpsample.BasePresenter;
 import com.ntg.user.mvpsample.BaseView;
 import com.ntg.user.mvpsample.data.Task;
 
+import java.util.List;
+
 /**
  * Created by ilias on 25/01/2018.
  */
@@ -11,7 +13,7 @@ import com.ntg.user.mvpsample.data.Task;
 public interface TasksContract {
 
     interface View extends BaseView<Presenter> {
-        void showTasks();
+        void showTasks(List<Task> tasks);
 
         void showNoTasks();
 
@@ -28,5 +30,7 @@ public interface TasksContract {
         void getTasks();
 
         void addTask();
+
+        void updateTaskStatusAsCompleted(Task task);
     }
 }

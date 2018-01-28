@@ -20,6 +20,12 @@ public interface TasksServiceInterface {
     @GET("tasks/{taskId}")
     Call<List<Task>> getTasks(@Path("taskId") String taskId);
 
+    @GET("tasks")
+    Call<List<Task>> getTasks();
+
     @POST("tasks")
     Call<Task> addTask(@Body Task task);
+
+    @POST("tasks/{taskId}")
+    Call<Task> editTask(@Path("taskId")String taskId, @Body Task task);
 }

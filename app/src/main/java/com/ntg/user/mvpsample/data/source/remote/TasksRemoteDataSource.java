@@ -7,6 +7,8 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 import com.ntg.user.mvpsample.data.source.remote.network.TasksAPI;
 import com.ntg.user.mvpsample.data.source.remote.network.TasksServiceInterface;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +33,22 @@ public class TasksRemoteDataSource implements TasksDataSource {
 //    }
 
     @Override
-    public void loadRemoteData() {
+    public void loadRemoteData(final GetTasksCallBack tasksCallBack) {
+        TasksServiceInterface serviceInterface =
+                TasksAPI.getClient(context).create(TasksServiceInterface.class);
+        Call<List<Task>> call = serviceInterface.getTasks();
+        call.enqueue(new Callback<List<Task>>() {
+            @Override
+            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                tasksCallBack.onTasksLoaded(response.body());
+            }
 
+            @Override
+            public void onFailure(Call<List<Task>> call, Throwable t) {
+                tasksCallBack.onTasksFailed(t.getMessage());
+                call.clone().enqueue(this);
+            }
+        });
     }
 
     @Override

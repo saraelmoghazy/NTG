@@ -21,7 +21,6 @@ public class TasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
-        tasksRepository = new TasksRepository(this);
         tasksFragment = (TasksFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.tasks_fragment);
         if (tasksFragment == null){
@@ -29,6 +28,7 @@ public class TasksActivity extends AppCompatActivity {
         }
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                 tasksFragment, R.id.tasks_fragment);
+        tasksRepository = new TasksRepository(this);
         presenter = new TasksPresenter(tasksFragment, tasksRepository);
     }
 

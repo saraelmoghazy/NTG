@@ -2,9 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fdb5b5"
-    android:orientation="vertical">
+    android:background="@color/activeTask"
+    android:orientation="horizontal"
+    android:id="@+id/taskLayout">
 
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="6">
     <TextView
         android:id="@+id/titleRvTxtView"
         android:layout_width="match_parent"
@@ -24,4 +30,12 @@
         android:paddingStart="8dp"
         android:textColor="@android:color/background_dark"
         android:textColorHint="@android:color/background_dark" />
+</LinearLayout>
+
+    <CheckBox
+        android:id="@+id/taskStatusCheckBox"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

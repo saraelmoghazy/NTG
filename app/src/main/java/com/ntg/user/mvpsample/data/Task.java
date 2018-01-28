@@ -1,12 +1,15 @@
 package com.ntg.user.mvpsample.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.UUID;
 
 /**
  * Created by ilias on 25/01/2018.
  */
 
-public class Task {
+public class Task implements Parcelable {
 private String id;
 private String title;
 private String description;
@@ -54,4 +57,36 @@ private boolean isCompleted;
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeByte(this.isCompleted ? (byte) 1 : (byte) 0);
+    }
+
+    protected Task(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.isCompleted = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel source) {
+            return new Task(source);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 }

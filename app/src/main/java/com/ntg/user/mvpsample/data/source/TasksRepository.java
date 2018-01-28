@@ -27,8 +27,8 @@ public class TasksRepository implements TasksDataSource {
 //        return INSTANCE;
 //    }
     @Override
-    public void loadRemoteData() {
-
+    public void loadRemoteData(GetTasksCallBack getTasksCallBack) {
+        tasksRemoteDataSource.loadRemoteData(getTasksCallBack);
     }
 
     @Override

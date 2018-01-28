@@ -22,7 +22,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void loadRemoteData() {
+    public void loadRemoteData(GetTasksCallBack getTasksCallBack) {
 
     }
 
