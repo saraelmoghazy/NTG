@@ -9,5 +9,5 @@ import com.ntg.user.mvpsample.BasePresenter;
 public interface ITaskPresenter extends BasePresenter {
 
     void loadTasks();
-    void addNewTasks();
+
 }

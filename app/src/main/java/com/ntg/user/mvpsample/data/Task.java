@@ -1,20 +1,32 @@
 package com.ntg.user.mvpsample.data;
 
+import java.util.UUID;
+
 /**
  * Created by islam on 1/27/2018.
  */
 
 public class Task {
-    private int id;
+    private String id;
     private String title;
     private String description;
-    private boolean isCompleted;
+    private String completed;
 
-    public int getId() {
+    public Task() {
+    }
+
+    public Task(String id, String title, String description, String completed) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,11 +46,11 @@ public class Task {
         this.description = description;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public String getCompleted() {
+        return completed;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void setCompleted(String completed) {
+        this.completed = completed;
     }
 }

@@ -5,46 +5,33 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
 import com.ntg.user.mvpsample.data.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TasksFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TasksFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TasksFragment extends Fragment implements ITaskView {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private ITaskPresenter iTaskPresenter;
-
+    private TaskPresenter taskPresenter;
     private FloatingActionButton addNewTask;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private TaskAdapter taskAdapter;
+    private RecyclerView tasksRecyclerView;
     private OnFragmentInteractionListener mListener;
 
-    public TasksFragment() {
-        // Required empty public constructor
-    }
-
-
-    // TODO: Rename and change types and number of parameters
     public static TasksFragment newInstance() {
         TasksFragment fragment = new TasksFragment();
 
@@ -54,34 +41,28 @@ public class TasksFragment extends Fragment implements ITaskView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_tasks, container, false);
-
+        tasksRecyclerView = view.findViewById(R.id.rv_tasks);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        tasksRecyclerView.setLayoutManager(linearLayoutManager);
+        taskPresenter = new TaskPresenter(Injection.provideTasksRepository(),this);
         addNewTask = view.findViewById(R.id.btn_addNewTaskActivity);
-        addNewTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddNewTask();
-            }
-        });
+        addNewTask.setOnClickListener(v -> showAddNewTask());
+
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        taskPresenter.start();
+
     }
 
     @Override
@@ -93,6 +74,8 @@ public class TasksFragment extends Fragment implements ITaskView {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+
     }
 
     @Override
@@ -101,34 +84,24 @@ public class TasksFragment extends Fragment implements ITaskView {
         mListener = null;
     }
 
-    @Override
-    public void setPresenter(Object presenter) {
-        iTaskPresenter = (ITaskPresenter) presenter;
-    }
 
     @Override
     public void showTasks(List<Task> tasks) {
-
+        Log.e("frag", tasks.get(0).getTitle());
+        taskAdapter = new TaskAdapter(tasks);
+        tasksRecyclerView.setAdapter(taskAdapter);
     }
 
     @Override
     public void showAddNewTask() {
         AddTaskFragment addTaskFragment = AddTaskFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container , addTaskFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, addTaskFragment).commit();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void setPresenter(Object presenter) {
+    }
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
