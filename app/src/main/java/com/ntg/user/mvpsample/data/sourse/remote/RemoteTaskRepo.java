@@ -1,23 +1,16 @@
 package com.ntg.user.mvpsample.data.sourse.remote;
 
-import android.service.autofill.SaveCallback;
-import android.util.Log;
-
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by islam on 1/28/2018.
- */
 
 public class RemoteTaskRepo implements TasksDataSource {
+
     private static RemoteTaskRepo instance;
 
     private RemoteTaskRepo(){
@@ -41,7 +34,6 @@ public class RemoteTaskRepo implements TasksDataSource {
                 if (response.isSuccessful()){
                     List<Task> tasks = new ArrayList<>();
                     tasks.addAll(response.body());
-                    Log.e("task" , tasks.get(0).getTitle());
                     loadTasksCallback.onTasksLoaded(tasks);
                 }
             }
@@ -55,6 +47,21 @@ public class RemoteTaskRepo implements TasksDataSource {
     }
 
     @Override
-    public void saveTask(SaveCallback saveCallback) {
+    public Task saveTask(Task task) {
+        ApiInterface addNewTask = ApiClient.getClient().create(ApiInterface.class);
+        Call call = addNewTask.saveTask(task);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+
             }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+
+        return task;
+    }
 }

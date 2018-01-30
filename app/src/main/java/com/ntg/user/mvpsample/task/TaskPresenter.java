@@ -32,18 +32,12 @@ public class TaskPresenter implements ITaskPresenter {
                     iTaskView.showTasks(tasks);
                     Log.e(TAG,"Main thread");
                 }
-
             }
             @Override
             public void onTaskLoadedFail(String errMesg) {
                 Log.e("error",errMesg);
             }
         });
-    }
-
-    @Override
-    public void addNewTasks() {
-        iTaskView.showAddNewTask();
     }
 
     @Override

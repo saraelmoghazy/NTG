@@ -52,8 +52,8 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void saveTask(SaveTaskCallback saveTaskCallback) {
-        saveTaskToRemoteDataSource(saveTaskCallback);
+    public Task saveTask(Task task) {
+        return tasksRemoteDataSource.saveTask(task);
     }
 
 
@@ -71,17 +71,5 @@ public class TasksRepository implements TasksDataSource {
         });
     }
 
-    private void saveTaskToRemoteDataSource(SaveTaskCallback saveTaskCallback){
-        tasksRemoteDataSource.saveTask(new SaveTaskCallback() {
-            @Override
-            public void onSavTaskSuccess(Task task) {
-                saveTaskCallback.onSavTaskSuccess(task);
-            }
 
-            @Override
-            public void onSaveTaskFail(String errMessage) {
-                saveTaskCallback.onSaveTaskFail(errMessage);
-            }
-        });
-    }
 }

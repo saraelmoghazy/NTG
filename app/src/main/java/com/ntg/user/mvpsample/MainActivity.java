@@ -1,16 +1,19 @@
 package com.ntg.user.mvpsample;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
+import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task.TasksFragment;
+import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
 
-public class MainActivity extends AppCompatActivity implements TasksFragment.OnFragmentInteractionListener
-        , AddTaskFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements TaskItemListener{
+    TaskDetailFragment taskDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements TasksFragment.OnF
         setContentView(R.layout.activity_main);
 
         TasksFragment tasksFragment = TasksFragment.newInstance();
-
+        taskDetailFragment = TaskDetailFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.container , tasksFragment).commit();
     }
 
@@ -38,8 +41,9 @@ public class MainActivity extends AppCompatActivity implements TasksFragment.OnF
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-}
+            @Override
+            public void onTaskClicked(Task task) {
+                taskDetailFragment.getTask(task);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container , taskDetailFragment).commit();
+            }
+        }

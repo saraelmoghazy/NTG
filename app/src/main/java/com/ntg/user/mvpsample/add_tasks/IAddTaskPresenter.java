@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.add_tasks;
 
 import com.ntg.user.mvpsample.BasePresenter;
+import com.ntg.user.mvpsample.data.Task;
 
 /**
  * Created by islam on 1/29/2018.
@@ -8,5 +9,5 @@ import com.ntg.user.mvpsample.BasePresenter;
 
 public interface IAddTaskPresenter extends BasePresenter {
 
-    void saveTask(String title , String description);
+    void saveTask(Task task);
 }

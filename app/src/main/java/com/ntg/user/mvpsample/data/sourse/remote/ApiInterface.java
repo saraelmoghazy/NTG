@@ -5,6 +5,7 @@ import com.ntg.user.mvpsample.data.Task;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -20,8 +21,5 @@ public interface ApiInterface {
     Call<List<Task>> getTasks();
 
     @POST("tasks")
-    Call<Task> saveTask(@Field("id") String id,
-                        @Field("title") String title,
-                        @Field("description") String description,
-                        @Field("completed") String completed);
+    Call<Task> saveTask(@Body Task task);
 }

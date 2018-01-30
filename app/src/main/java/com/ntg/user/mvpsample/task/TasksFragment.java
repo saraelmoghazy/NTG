@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample.task;
 
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,30 +11,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
 import com.ntg.user.mvpsample.data.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class TasksFragment extends Fragment implements ITaskView {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class TasksFragment extends Fragment implements ITaskView , TaskItemListener {
+
+
     private TaskPresenter taskPresenter;
-    private FloatingActionButton addNewTask;
+    @BindView(R.id.btn_addNewTaskActivity)
+    FloatingActionButton addNewTask;
     private TaskAdapter taskAdapter;
-    private RecyclerView tasksRecyclerView;
-    private OnFragmentInteractionListener mListener;
+    @BindView(R.id.rv_tasks)
+    RecyclerView tasksRecyclerView;
+    TaskItemListener taskItemListener;
 
     public static TasksFragment newInstance() {
         TasksFragment fragment = new TasksFragment();
-
         return fragment;
     }
 
@@ -48,11 +48,11 @@ public class TasksFragment extends Fragment implements ITaskView {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_tasks, container, false);
-        tasksRecyclerView = view.findViewById(R.id.rv_tasks);
+        ButterKnife.bind(this , view);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         tasksRecyclerView.setLayoutManager(linearLayoutManager);
         taskPresenter = new TaskPresenter(Injection.provideTasksRepository(),this);
-        addNewTask = view.findViewById(R.id.btn_addNewTaskActivity);
         addNewTask.setOnClickListener(v -> showAddNewTask());
 
         return view;
@@ -66,29 +66,24 @@ public class TasksFragment extends Fragment implements ITaskView {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        if (activity instanceof TaskItemListener){
+            taskItemListener = (TaskItemListener)activity;
+        }else {
+            throw new ClassCastException(activity.toString() + "must implement");
         }
-
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
     @Override
     public void showTasks(List<Task> tasks) {
-        Log.e("frag", tasks.get(0).getTitle());
-        taskAdapter = new TaskAdapter(tasks);
+        taskAdapter = new TaskAdapter(tasks ,this);
         tasksRecyclerView.setAdapter(taskAdapter);
     }
 
@@ -101,7 +96,9 @@ public class TasksFragment extends Fragment implements ITaskView {
     @Override
     public void setPresenter(Object presenter) {
     }
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+
+    @Override
+    public void onTaskClicked(Task task) {
+        taskItemListener.onTaskClicked(task);
     }
 }

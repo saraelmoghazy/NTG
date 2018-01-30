@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.add_tasks;
 
 import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
 
 import java.util.UUID;
@@ -21,14 +22,11 @@ public class AddTaskPresenter implements IAddTaskPresenter {
 
     @Override
     public void start() {
-
     }
+
 
     @Override
-    public void saveTask(String title, String description) {
-        createNewTask(title , description);
-    }
-
-    private void createNewTask(String title , String description){
+    public void saveTask(Task task) {
+        repository.saveTask(task);
     }
 }

@@ -9,18 +9,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.data.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList = new ArrayList<>();
+    TaskItemListener taskItemListener;
 
-    public TaskAdapter(List<Task> taskList) {
+    public TaskAdapter(List<Task> taskList , TaskItemListener taskItemListener) {
         this.taskList = taskList;
+        this.taskItemListener = taskItemListener;
     }
 
     @Override
@@ -32,12 +38,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
-
-        Log.e("size", taskList.size() + " size ");
         Task task = taskList.get(position);
-        Log.e("title", task.getTitle());
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                taskItemListener.onTaskClicked(task);
+            }
+        });
     }
 
     @Override
@@ -48,13 +57,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView title, description;
+        @BindView(R.id.tvTitle)
+        TextView title;
+        @BindView(R.id.tvDescription)
+        TextView description;
 
         public TaskViewHolder(View itemView) {
             super(itemView);
-
-            title = itemView.findViewById(R.id.tvTitle);
-            description = itemView.findViewById(R.id.tvDescription);
+            ButterKnife.bind(this , itemView);
         }
     }
 }

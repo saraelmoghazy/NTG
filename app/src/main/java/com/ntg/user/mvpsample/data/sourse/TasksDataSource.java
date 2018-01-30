@@ -19,10 +19,7 @@ public interface TasksDataSource {
 
     void getTasks(LoadTasksCallback loadTasksCallback);
     
-    interface SaveTaskCallback{
-        void onSavTaskSuccess(Task task);
-        void onSaveTaskFail(String errMessage);
-    }
+
     
-    void saveTask(SaveTaskCallback saveTaskCallback);
+    public Task saveTask(Task task);
 }

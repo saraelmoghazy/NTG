@@ -10,21 +10,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.data.Task;
 
+import java.util.UUID;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class AddTaskFragment extends Fragment implements IAddTaskView {
 
-    private EditText title , description;
-    private Button addNewTask;
+    @BindView(R.id.tv_title)
+    EditText title;
+    @BindView(R.id.tv_description)
+    EditText description;
+    @BindView(R.id.btn_addNewTask)
+    Button addNewTask;
     AddTaskPresenter addTaskPresenter;
     public AddTaskFragment() {
 
     }
     public static AddTaskFragment newInstance() {
         AddTaskFragment fragment = new AddTaskFragment();
-
         return fragment;
     }
 
@@ -39,10 +48,8 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
-
-        title = view.findViewById(R.id.tv_title);
-        description = view.findViewById(R.id.tv_description);
-        addNewTask = view.findViewById(R.id.btn_addNewTask);
+        ButterKnife.bind(this , view);
+        addTaskPresenter = new AddTaskPresenter(this,Injection.provideTasksRepository());
 
         return view;
     }
@@ -51,8 +58,9 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
     public void onResume() {
         super.onResume();
 
-        addNewTask.setOnClickListener(view -> addTaskPresenter.saveTask(title.getText().toString()
-                , description.getText().toString()));
+        addNewTask.setOnClickListener(view -> addTaskPresenter.saveTask(new Task(UUID.randomUUID().toString()
+                , title.getText().toString()
+                ,description.getText().toString(),"false")));
     }
 
     @Override
@@ -81,4 +89,6 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
     public void setDescription(String description) {
 
     }
+
+
 }

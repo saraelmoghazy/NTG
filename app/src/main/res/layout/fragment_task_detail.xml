@@ -4,23 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ntg.user.mvpsample.add_tasks.AddTaskFragment">
+    tools:context="com.ntg.user.mvpsample.taskdetail.TaskDetailFragment">
 
+    <TextView
+        android:padding="4dp"
+        android:textSize="64sp"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_titleDetail"/>
 
-    <EditText
+    <TextView
+        android:textSize="24sp"
+        android:id="@+id/tv_descriptionDetail"
+        style="@style/Base.TextAppearance.AppCompat.Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_title"
-        android:hint="@string/title"/>
-    <EditText
+        android:padding="4dp" />
+    <TextView
+        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_description"
-        android:hint="@string/description"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_addNewTask"
-        android:text="@string/add"/>
+        android:id="@+id/tv_stateDetail"/>
 
 </LinearLayout>
