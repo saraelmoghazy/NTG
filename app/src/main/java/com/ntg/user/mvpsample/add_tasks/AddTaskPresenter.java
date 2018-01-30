@@ -7,7 +7,7 @@ import com.ntg.user.mvpsample.data.sourse.TasksRepository;
 import java.util.UUID;
 
 /**
- * Created by islam on 1/29/2018.
+ * @author islam
  */
 
 public class AddTaskPresenter implements IAddTaskPresenter {

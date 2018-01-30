@@ -12,28 +12,16 @@ import java.util.List;
 import static android.support.v4.util.Preconditions.checkNotNull;
 
 /**
- * Created by islam on 1/27/2018.
+ * @author islam
  */
 
 public class TasksRepository implements TasksDataSource {
 
     private static TasksRepository INSTANCE = null;
-
     private final TasksDataSource tasksRemoteDataSource;
-
-    private Context context;
-
-    boolean cachedTasks = false;
-
-    List<Task> taskList = new ArrayList<>();
-
-
-
-
 
     private TasksRepository(TasksDataSource mTasksRemoteDataSource) {
         this.tasksRemoteDataSource = mTasksRemoteDataSource;
-
     }
 
     public static TasksRepository getInstance(TasksDataSource tasksRemoteDataSource) {
@@ -56,7 +44,10 @@ public class TasksRepository implements TasksDataSource {
         return tasksRemoteDataSource.saveTask(task);
     }
 
-
+    /**
+     *
+     * @param loadTasksCallback
+     */
     private void getTasksFromRemoteDataSource(final LoadTasksCallback loadTasksCallback){
         tasksRemoteDataSource.getTasks(new LoadTasksCallback() {
             @Override
@@ -70,6 +61,4 @@ public class TasksRepository implements TasksDataSource {
             }
         });
     }
-
-
 }

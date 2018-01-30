@@ -1,13 +1,10 @@
 package com.ntg.user.mvpsample.data.sourse;
 
-import android.service.autofill.SaveCallback;
-
 import com.ntg.user.mvpsample.data.Task;
-
 import java.util.List;
 
 /**
- * Created by islam on 1/27/2018.
+ * @author islam
  */
 
 public interface TasksDataSource {
@@ -18,8 +15,5 @@ public interface TasksDataSource {
     }
 
     void getTasks(LoadTasksCallback loadTasksCallback);
-    
-
-    
-    public Task saveTask(Task task);
+    Task saveTask(Task task);
 }

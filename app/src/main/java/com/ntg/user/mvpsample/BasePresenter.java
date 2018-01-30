@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample;
 
 /**
- * Created by islam on 1/27/2018.
+ * @author islam
  */
 
 public interface BasePresenter {

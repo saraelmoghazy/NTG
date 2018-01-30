@@ -3,7 +3,7 @@ package com.ntg.user.mvpsample;
 import com.ntg.user.mvpsample.data.Task;
 
 /**
- * Created by islam on 1/30/2018.
+ * @author islam listner to help to send object when task clicked from recyclerview
  */
 
 public interface TaskItemListener {

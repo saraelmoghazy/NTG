@@ -4,7 +4,8 @@ import com.ntg.user.mvpsample.data.sourse.TasksRepository;
 import com.ntg.user.mvpsample.data.sourse.remote.RemoteTaskRepo;
 
 /**
- * Created by islam on 1/28/2018.
+ * @author islam
+ * Class that inject Tasks Repository
  */
 
 public class Injection {

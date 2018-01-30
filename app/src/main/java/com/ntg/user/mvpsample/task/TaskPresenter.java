@@ -7,7 +7,7 @@ import com.ntg.user.mvpsample.data.sourse.TasksRepository;
 import java.util.List;
 
 /**
- * Created by islam on 1/27/2018.
+ * @author islam class task presenter
  */
 
 public class TaskPresenter implements ITaskPresenter {

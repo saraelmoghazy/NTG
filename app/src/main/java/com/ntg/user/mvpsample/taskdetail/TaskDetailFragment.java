@@ -13,7 +13,11 @@ import com.ntg.user.mvpsample.data.Task;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TaskDetailFragment extends Fragment {
+/**
+ * @author Islam Eldsoke
+ * Fragment that represent Task Details
+ */
+public class TaskDetailFragment extends Fragment{
 
     @BindView(R.id.tv_titleDetail)
     TextView titleTv;
@@ -68,6 +72,10 @@ public class TaskDetailFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param task param that returned when click task
+     */
     public void getTask(Task task){
         this.task=task;
     }

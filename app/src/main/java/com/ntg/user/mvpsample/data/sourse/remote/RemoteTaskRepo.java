@@ -8,7 +8,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class RemoteTaskRepo implements TasksDataSource {
 
     private static RemoteTaskRepo instance;

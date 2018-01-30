@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.add_tasks;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,16 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.Task;
-
 import java.util.UUID;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 public class AddTaskFragment extends Fragment implements IAddTaskView {
 
@@ -89,6 +84,4 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
     public void setDescription(String description) {
 
     }
-
-
 }

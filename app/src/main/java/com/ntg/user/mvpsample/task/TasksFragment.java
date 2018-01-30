@@ -1,13 +1,11 @@
 package com.ntg.user.mvpsample.task;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +15,14 @@ import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
 import com.ntg.user.mvpsample.data.Task;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author islam fragment that present list of tasks
+ */
 
 public class TasksFragment extends Fragment implements ITaskView , TaskItemListener {
-
 
     private TaskPresenter taskPresenter;
     @BindView(R.id.btn_addNewTaskActivity)

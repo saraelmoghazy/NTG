@@ -1,9 +1,9 @@
 package com.ntg.user.mvpsample.data;
 
-import java.util.UUID;
 
 /**
- * Created by islam on 1/27/2018.
+ * @author Islam Eldsoke
+ *POJO Class that contains info about mt task
  */
 
 public class Task {

@@ -4,7 +4,7 @@ import com.ntg.user.mvpsample.BasePresenter;
 import com.ntg.user.mvpsample.data.Task;
 
 /**
- * Created by islam on 1/29/2018.
+ * @author islam
  */
 
 public interface IAddTaskPresenter extends BasePresenter {
