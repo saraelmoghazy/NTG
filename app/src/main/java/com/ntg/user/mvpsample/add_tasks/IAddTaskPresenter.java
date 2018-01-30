@@ -8,6 +8,5 @@ import com.ntg.user.mvpsample.data.Task;
  */
 
 public interface IAddTaskPresenter extends BasePresenter {
-
     void saveTask(Task task);
 }

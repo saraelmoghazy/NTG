@@ -15,5 +15,8 @@ public interface TasksDataSource {
     }
 
     void getTasks(LoadTasksCallback loadTasksCallback);
-    Task saveTask(Task task);
+
+    interface SaveTask{
+        Task saveTask(Task task);
+    }
 }

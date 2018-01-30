@@ -1,12 +1,7 @@
 package com.ntg.user.mvpsample.data.sourse;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.service.autofill.SaveCallback;
-
 import com.ntg.user.mvpsample.data.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
@@ -36,12 +31,6 @@ public class TasksRepository implements TasksDataSource {
     public void getTasks(LoadTasksCallback loadTasksCallback) {
             checkNotNull(loadTasksCallback);
             getTasksFromRemoteDataSource(loadTasksCallback);
-
-    }
-
-    @Override
-    public Task saveTask(Task task) {
-        return tasksRemoteDataSource.saveTask(task);
     }
 
     /**

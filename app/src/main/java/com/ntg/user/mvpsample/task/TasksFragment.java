@@ -89,7 +89,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     @Override
     public void showAddNewTask() {
         AddTaskFragment addTaskFragment = AddTaskFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container, addTaskFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, addTaskFragment).addToBackStack(null).commit();
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.Task;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,7 +16,7 @@ import butterknife.ButterKnife;
  * @author Islam Eldsoke
  * Fragment that represent Task Details
  */
-public class TaskDetailFragment extends Fragment{
+public class TaskDetailFragment extends Fragment implements ITaskDetailsView{
 
     @BindView(R.id.tv_titleDetail)
     TextView titleTv;
@@ -25,15 +24,13 @@ public class TaskDetailFragment extends Fragment{
     TextView descriptionTv;
     @BindView(R.id.tv_stateDetail)
     TextView stateTv;
-    Task task;
+    ITaskDetailsPresenter iTaskDetailsPresenter;
 
-
-    public TaskDetailFragment() {
-    }
-
-
-    public static TaskDetailFragment newInstance() {
+    public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment fragment = new TaskDetailFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("task" , task);
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -41,6 +38,7 @@ public class TaskDetailFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -48,14 +46,11 @@ public class TaskDetailFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
         ButterKnife.bind(this , view);
-
-        String title = task.getTitle();
-        titleTv.setText(title);
-        String description = task.getDescription();
-        descriptionTv.setText(description);
-        String state = task.getCompleted();
-        stateTv.setText(state);
-
+        if (getArguments() != null) {
+            Task task = (Task) getArguments().get("task");
+            iTaskDetailsPresenter = new TaskDetailsPresenter(this , task);
+            iTaskDetailsPresenter.start();
+        }
         return view;
     }
 
@@ -69,14 +64,26 @@ public class TaskDetailFragment extends Fragment{
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void setPresenter(Object presenter) {
 
     }
 
-    /**
-     *
-     * @param task param that returned when click task
-     */
-    public void getTask(Task task){
-        this.task=task;
+    @Override
+    public void showTitle(String title) {
+        titleTv.setText(title);
+    }
+
+    @Override
+    public void showDescription(String description) {
+        descriptionTv.setText(description);
+
+    }
+
+    @Override
+    public void showState(String state) {
+        stateTv.setText(state);
     }
 }

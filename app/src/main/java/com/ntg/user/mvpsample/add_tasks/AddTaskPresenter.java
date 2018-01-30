@@ -1,29 +1,23 @@
 package com.ntg.user.mvpsample.add_tasks;
 
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import com.ntg.user.mvpsample.data.sourse.TasksRepository;
-
-import java.util.UUID;
+import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
 
 /**
  * @author islam
  */
 
-public class AddTaskPresenter implements IAddTaskPresenter {
+public class AddTaskPresenter implements IAddTaskPresenter{
 
-    private final IAddTaskView addTaskView;
-    private final TasksRepository repository;
+    private final AddTaskRepo repository;
 
-    public AddTaskPresenter(IAddTaskView addTaskView, TasksRepository repository) {
-        this.addTaskView = addTaskView;
+    public AddTaskPresenter(AddTaskRepo repository) {
         this.repository = repository;
     }
 
     @Override
     public void start() {
     }
-
 
     @Override
     public void saveTask(Task task) {

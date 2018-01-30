@@ -4,21 +4,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task.TasksFragment;
 import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
 
 public class MainActivity extends AppCompatActivity implements TaskItemListener{
-    TaskDetailFragment taskDetailFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         TasksFragment tasksFragment = TasksFragment.newInstance();
-        taskDetailFragment = TaskDetailFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().add(R.id.container , tasksFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, tasksFragment).commit();
     }
 
     @Override
@@ -37,9 +35,8 @@ public class MainActivity extends AppCompatActivity implements TaskItemListener{
         }
     }
 
-            @Override
-            public void onTaskClicked(Task task) {
-                taskDetailFragment.getTask(task);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container , taskDetailFragment).commit();
-            }
-        }
+    @Override
+    public void onTaskClicked(Task task) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, TaskDetailFragment.newInstance(task)).commit();
+    }
+}

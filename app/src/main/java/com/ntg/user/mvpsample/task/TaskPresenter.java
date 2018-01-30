@@ -22,7 +22,9 @@ public class TaskPresenter implements ITaskPresenter {
         this.iTaskView = iTaskView;
     }
 
-
+    /**
+     *
+     */
     @Override
     public void loadTasks() {
         tasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {

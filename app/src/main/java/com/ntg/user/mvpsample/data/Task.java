@@ -1,12 +1,14 @@
 package com.ntg.user.mvpsample.data;
 
 
+import java.io.Serializable;
+
 /**
  * @author Islam Eldsoke
  *POJO Class that contains info about mt task
  */
 
-public class Task {
+public class Task implements Serializable {
     private String id;
     private String title;
     private String description;

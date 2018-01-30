@@ -1,28 +1,22 @@
 package com.ntg.user.mvpsample.task;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.data.Task;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList = new ArrayList<>();
-    TaskItemListener taskItemListener;
+    private TaskItemListener taskItemListener;
 
     public TaskAdapter(List<Task> taskList , TaskItemListener taskItemListener) {
         this.taskList = taskList;
@@ -41,20 +35,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                taskItemListener.onTaskClicked(task);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClicked(task));
     }
 
     @Override
     public int getItemCount() {
         return taskList.size();
     }
-
-
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvTitle)

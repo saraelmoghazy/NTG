@@ -7,6 +7,5 @@ import com.ntg.user.mvpsample.BaseView;
  */
 
 public interface IAddTaskView extends BaseView {
-    void setTitle(String title);
-    void setDescription(String description);
+
 }
