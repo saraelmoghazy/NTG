@@ -23,10 +23,8 @@ public class TaskRemoteRepo implements TasksDataSource {
         return new TaskRemoteRepo();
     }
 
-
     @Override
     public void getPosts(final TasksDataSource.GetPostsCallBack getPostsCallBack) {
-
 
         APIService mAPIService = ApiClient.getClient().create(APIService.class);
         mAPIService.getPosts().enqueue(new Callback<List<Task>>() {
