@@ -83,7 +83,17 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
     public void showTasks(List<Task> tasks) {
         adapter.replaceData(tasks);
     }
-    
+
+    @Override
+    public void showEmptyTasks() {
+
+    }
+
+    @Override
+    public void showErrorMessage(String errMsg) {
+
+    }
+
     @Override
     public void showSaveTaskSuccessMsg() {
         Toast.makeText(getApplicationContext(),"Task is Saved",Toast.LENGTH_SHORT).show();

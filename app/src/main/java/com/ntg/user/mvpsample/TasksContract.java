@@ -13,6 +13,8 @@ import java.util.List;
 public interface TasksContract {
     interface View{
         void showTasks(List<Task> tasks);
+        void showEmptyTasks();
+        void showErrorMessage(String errMsg);
         void showSaveTaskSuccessMsg();
         void showSaveTaskFailedMsg();
         void setPresenter(Presenter presenter);
