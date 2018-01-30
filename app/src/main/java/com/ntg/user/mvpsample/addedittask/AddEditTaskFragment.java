@@ -1,48 +1,35 @@
 package com.ntg.user.mvpsample.addedittask;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.source.remote.ApiClient;
-import com.ntg.user.mvpsample.data.source.remote.ApiService;
-import com.ntg.user.mvpsample.poc.PocActivity;
+import com.ntg.user.mvpsample.Task;
+import com.ntg.user.mvpsample.addedittask.data.source.remote.ApiClient;
+import com.ntg.user.mvpsample.addedittask.data.source.remote.ApiService;
 
-import java.util.UUID;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by mohamed yassin on 1/28/2018.
  */
 
-public class AddEditTaskFragment   extends Fragment implements AddEditTaskContract.View{
+public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
     public static final String ARGUMENT_EDIT_TASK_ID = "EDIT_TASK_ID";
 
     private AddEditTaskContract.Presenter mPresenter;
-    Task task ;
+    Task task;
 
     private TextView mTitle;
-
     private TextView mDescription;
     private ApiService mAPIService;
 
@@ -50,9 +37,6 @@ public class AddEditTaskFragment   extends Fragment implements AddEditTaskContra
         return new AddEditTaskFragment();
     }
 
-    public AddEditTaskFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onResume() {
@@ -69,7 +53,7 @@ public class AddEditTaskFragment   extends Fragment implements AddEditTaskContra
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAPIService= ApiClient.getClient().create(ApiService.class);
+        mAPIService = ApiClient.getClient().create(ApiService.class);
         FloatingActionButton fab =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_task_done);
         fab.setImageResource(R.drawable.ic_done);
@@ -78,40 +62,9 @@ public class AddEditTaskFragment   extends Fragment implements AddEditTaskContra
             public void onClick(View v) {
                 String title = mTitle.getText().toString().trim();
                 String body = mDescription.getText().toString().trim();
-
-                    sendTask(title,body) ;
-                Intent PocIntent=new Intent(getContext(), PocActivity.class);
-                startActivity(PocIntent);
-
+                mPresenter.saveTask(title, body);
             }
         });
-
-
-    }
-
-    private void sendTask(String title,String Description) {
-        Task task=new Task(title,Description);
-        Call<Task>taskCall=mAPIService.saveTask(task);
-        taskCall.enqueue(new Callback<Task>() {
-            @Override
-            public void onResponse(Call<Task> call, Response<Task> response) {
-                Task task = response.body();
-
-                int statusCode = response.code();;
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Task> call, Throwable t) {
-                Toast.makeText(getContext(), "onFailure called ", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
     }
 
     @Nullable
@@ -134,20 +87,5 @@ public class AddEditTaskFragment   extends Fragment implements AddEditTaskContra
     public void showTasksList() {
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
-    }
-
-    @Override
-    public void setTitle(String title) {
-        mTitle.setText(title);
-    }
-
-    @Override
-    public void setDescription(String description) {
-        mDescription.setText(description);
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
     }
 }
