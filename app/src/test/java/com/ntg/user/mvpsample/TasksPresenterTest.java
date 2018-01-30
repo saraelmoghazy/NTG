@@ -41,9 +41,12 @@ public class TasksPresenterTest {
         List<Task> tasks = new ArrayList();
         tasks.add(new Task("Title1", "Description1"));
         tasks.add(new Task("Title2", "Description2"));
+        List<Task> tasksReult = new ArrayList();
+        tasks.add(new Task("Title1_result", "Description1"));
+        tasks.add(new Task("Title2_result", "Description2"));
         verify(tasksDataSource).getPosts(getPostsCallBackArgumentCaptor.capture());
         getPostsCallBackArgumentCaptor.getValue().onPostsLoaded(tasks);
-        verify(view).showTasks(tasks);
+        verify(view).showTasks(tasksReult);
     }
 
     @Test
