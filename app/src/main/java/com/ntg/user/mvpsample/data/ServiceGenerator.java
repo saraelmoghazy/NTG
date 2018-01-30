@@ -12,9 +12,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
    public static Retrofit getClient(){
-       String bsaeURL = "http://ntg-webservices.getsandbox.com/";
+       String baseURL = "http://ntg-webservices.getsandbox.com/";
        return new Retrofit.Builder()
-               .baseUrl(bsaeURL)
+               .baseUrl(baseURL)
                .addConverterFactory(GsonConverterFactory.create())
                .build();
    }

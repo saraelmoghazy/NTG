@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorOffWhite"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:id="@+id/addtask"
-    android:text="Add Task"
-    android:textSize="25dp"
-    android:backgroundTint="@color/colorGray"
-    android:textColor="@color/colorOffWhite"
-    android:onClick="addTask"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/arrangetasks"
-        android:text="Arrang Tasks"
-        android:textSize="25dp"
-        android:layout_below="@+id/addtask"
-        android:background="@color/colorGray"
-        android:textColor="@color/colorOffWhite"
-        android:onClick="arrangTasks"/>
+    android:layout_height="match_parent"
+    android:background="@color/colorOffWhite">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/noTasksTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Tasks"
+        android:visibility="invisible"
+        android:textColor="@color/colorBrown"
+        android:textSize="24sp" />
 
 </RelativeLayout>
