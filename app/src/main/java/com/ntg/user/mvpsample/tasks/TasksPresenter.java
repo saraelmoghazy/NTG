@@ -6,7 +6,7 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 import java.util.List;
 
 /**
- * Created by ilias on 25/01/2018.
+ * TasksPresenter control getting data from TasksRepository and pass it to view to show
  */
 
 public class TasksPresenter implements TasksContract.Presenter {
@@ -14,7 +14,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     private TasksContract.View tasksView;
     private TasksDataSource tasksRepository;
 
-    public TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
+    TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
         this.tasksView = tasksView;
         this.tasksRepository = tasksRepository;
         tasksView.setPresenter(this);
@@ -25,28 +25,42 @@ public class TasksPresenter implements TasksContract.Presenter {
         getTasks();
     }
 
+    /**
+     * getTasks ask TasksRepository to load data from server and pass the returned tasks list
+     * to the view to show
+     */
     @Override
     public void getTasks() {
-        tasksRepository.loadRemoteData(new TasksDataSource.GetTasksCallBack() {
+        tasksRepository.loadData(new TasksDataSource.GetTasksCallBack() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                tasksView.showTasks(tasks);
+                if (tasks != null && tasks.size() != 0) {
+                    tasksView.showTasks(tasks);
+                } else {
+                    tasksView.showNoTasks();
+                }
             }
 
             @Override
             public void onTasksFailed(String errorMsg) {
-
+                tasksView.showNetworkError();
             }
         });
     }
 
+    /**
+     * navigateToAddTaskUI ask view to navigate to addTask activity
+     */
     @Override
-    public void addTask() {
+    public void navigateToAddTaskUI() {
         tasksView.showAddNewTaskUI();
     }
 
+    /**
+     * updateTaskStatus ask TasksRepository to update task status
+     */
     @Override
-    public void updateTaskStatusAsCompleted(Task task) {
-
+    public void updateTaskStatus(Task task) {
+        tasksRepository.upDateTask(task);
     }
 }

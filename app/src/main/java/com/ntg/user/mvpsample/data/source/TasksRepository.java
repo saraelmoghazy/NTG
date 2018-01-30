@@ -1,7 +1,5 @@
 package com.ntg.user.mvpsample.data.source;
 
-import android.content.Context;
-
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.remote.TasksRemoteDataSource;
 
@@ -10,29 +8,34 @@ import com.ntg.user.mvpsample.data.source.remote.TasksRemoteDataSource;
  */
 
 public class TasksRepository implements TasksDataSource {
-    //    public static TasksRepository INSTANCE = null;
+
+    private static TasksRepository INSTANCE = null;
     private TasksDataSource tasksRemoteDataSource;
-    private TasksDataSource tasksLocalDataSource;
-    private Context context;
 
-    public TasksRepository(Context context) {
-        this.tasksRemoteDataSource = new TasksRemoteDataSource(context);
-//        this.tasksLocalDataSource = new TasksLocalDataSource();
+    private TasksRepository(TasksRemoteDataSource tasksRemoteDataSource) {
+        this.tasksRemoteDataSource = tasksRemoteDataSource;
     }
 
-    //    public static TasksRepository newInstance(Context context) {
-//        if (INSTANCE == null){
-//            INSTANCE = new TasksRepository(context, TasksRemoteDataSource.getINSTANCE(), TasksLocalDataSource.getINSTANCE());
-//        }
-//        return INSTANCE;
-//    }
-    @Override
-    public void loadRemoteData(GetTasksCallBack getTasksCallBack) {
-        tasksRemoteDataSource.loadRemoteData(getTasksCallBack);
+    public static TasksRepository getInstance(TasksRemoteDataSource tasksRemoteDataSource) {
+        if (INSTANCE == null) {
+            INSTANCE = new TasksRepository(tasksRemoteDataSource);
+        }
+
+        return INSTANCE;
     }
 
     @Override
-    public Task saveTask(Task task) {
-        return tasksRemoteDataSource.saveTask(task);
+    public void loadData(GetTasksCallBack getTasksCallBack) {
+        tasksRemoteDataSource.loadData(getTasksCallBack);
+    }
+
+    @Override
+    public void saveTask(Task task, SaveTaskCallBack saveTaskCallBack) {
+        tasksRemoteDataSource.saveTask(task, saveTaskCallBack);
+    }
+
+    @Override
+    public void upDateTask(Task task) {
+        tasksRemoteDataSource.upDateTask(task);
     }
 }

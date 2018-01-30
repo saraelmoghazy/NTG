@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.data.source.remote;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
@@ -14,60 +15,92 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by ilias on 25/01/2018.
+ * TasksRemoteDataSource contains the logic of sending requests to server and getting data
+ * from responses
  */
 
 public class TasksRemoteDataSource implements TasksDataSource {
-    //    static TasksRemoteDataSource INSTANCE;
-    private Context context;
 
-    public TasksRemoteDataSource(Context context) {
-        this.context = context;
+    private static TasksRemoteDataSource INSTANCE;
+
+    private TasksRemoteDataSource() {
     }
 
-//    public static TasksDataSource getINSTANCE() {
-//        if (INSTANCE == null){
-//            INSTANCE = new TasksRemoteDataSource();
-//        }
-//        return INSTANCE;
-//    }
+    public static TasksRemoteDataSource getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new TasksRemoteDataSource();
+        }
 
+        return INSTANCE;
+    }
+
+    /**
+     * loadData create GET request to get all saved tasks
+     *
+     * @param tasksCallBack to carry result of loading data to the user of this method
+     */
     @Override
-    public void loadRemoteData(final GetTasksCallBack tasksCallBack) {
+    public void loadData(final GetTasksCallBack tasksCallBack) {
         TasksServiceInterface serviceInterface =
-                TasksAPI.getClient(context).create(TasksServiceInterface.class);
+                TasksAPI.getClient().create(TasksServiceInterface.class);
         Call<List<Task>> call = serviceInterface.getTasks();
         call.enqueue(new Callback<List<Task>>() {
             @Override
-            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+            public void onResponse(@NonNull Call<List<Task>> call, @NonNull Response<List<Task>> response) {
                 tasksCallBack.onTasksLoaded(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Task>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Task>> call, @NonNull Throwable t) {
                 tasksCallBack.onTasksFailed(t.getMessage());
                 call.clone().enqueue(this);
             }
         });
     }
 
+    /**
+     * saveTask create POST request to add new task to server
+     *
+     * @param task             the task that will be added
+     * @param saveTaskCallBack to carry saving task result
+     */
     @Override
-    public Task saveTask(Task task) {
+    public void saveTask(Task task, SaveTaskCallBack saveTaskCallBack) {
         TasksServiceInterface serviceInterface =
-                TasksAPI.getClient(context).create(TasksServiceInterface.class);
-        final Task[] result = new Task[1];
+                TasksAPI.getClient().create(TasksServiceInterface.class);
         Call<Task> call = serviceInterface.addTask(task);
         call.enqueue(new Callback<Task>() {
             @Override
-            public void onResponse(Call<Task> call, Response<Task> response) {
-                result[0] = response.body();
+            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+                saveTaskCallBack.onTaskSaved();
             }
 
             @Override
-            public void onFailure(Call<Task> call, Throwable t) {
+            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+                saveTaskCallBack.onTaskFailed(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     * updateTask create PUT request to update specific task
+     *
+     * @param task task that will be updated
+     */
+    @Override
+    public void upDateTask(Task task) {
+        TasksServiceInterface serviceInterface =
+                TasksAPI.getClient().create(TasksServiceInterface.class);
+        Call<Task> call = serviceInterface.editTask(task.getId(), task);
+        call.enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
                 call.clone().enqueue(this);
             }
         });
-        return result[0];
     }
 }

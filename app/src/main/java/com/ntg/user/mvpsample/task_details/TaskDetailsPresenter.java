@@ -1,17 +1,24 @@
 package com.ntg.user.mvpsample.task_details;
 
+import com.ntg.user.mvpsample.data.source.TasksDataSource;
+
 /**
- * Created by ilias on 25/01/2018.
+ * TaskDetailsPresenter control of showing task details
  */
 
 public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
-    @Override
-    public void start() {
 
+    private TasksDataSource taskRepository;
+    private TaskDetailsContract.View taskDetailsView;
+
+    TaskDetailsPresenter(TaskDetailsContract.View taskDetailsView, TasksDataSource taskRepository) {
+        this.taskDetailsView = taskDetailsView;
+        this.taskRepository = taskRepository;
+        taskDetailsView.setPresenter(this);
     }
 
     @Override
-    public void getTask(String taskId) {
-
+    public void start() {
+        taskDetailsView.showTaskDetails();
     }
 }

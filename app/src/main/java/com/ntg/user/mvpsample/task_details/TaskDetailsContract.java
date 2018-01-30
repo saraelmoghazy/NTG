@@ -1,19 +1,17 @@
 package com.ntg.user.mvpsample.task_details;
 
-import com.ntg.user.mvpsample.BasePresenter;
-import com.ntg.user.mvpsample.BaseView;
+import com.ntg.user.mvpsample.base.BasePresenter;
+import com.ntg.user.mvpsample.base.BaseView;
 
 /**
- * Created by ilias on 25/01/2018.
+ * TaskDetailsContract
  */
 
 public interface TaskDetailsContract {
 
-    interface View extends BaseView<Presenter>{
-void showTaskDetails();
+    interface View extends BaseView<Presenter> {
+        void showTaskDetails();
     }
 
-    interface Presenter extends BasePresenter{
-        void getTask(String taskId);
-    }
+    interface Presenter extends BasePresenter {}
 }

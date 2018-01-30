@@ -9,13 +9,24 @@ import java.util.List;
  */
 
 public interface TasksDataSource {
-    void loadRemoteData(GetTasksCallBack tasksCallBack);
 
-    Task saveTask(Task task);
+    void loadData(GetTasksCallBack tasksCallBack);
+
+    void saveTask(Task task, SaveTaskCallBack saveTaskCallBack);
+
+    void upDateTask(Task task);
 
     interface GetTasksCallBack {
+
         void onTasksLoaded(List<Task> tasks);
 
         void onTasksFailed(String errorMsg);
+    }
+
+    interface SaveTaskCallBack {
+
+        void onTaskSaved();
+
+        void onTaskFailed(String errorMsg);
     }
 }

@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample.tasks;
 
-import com.ntg.user.mvpsample.BasePresenter;
-import com.ntg.user.mvpsample.BaseView;
+import com.ntg.user.mvpsample.base.BasePresenter;
+import com.ntg.user.mvpsample.base.BaseView;
 import com.ntg.user.mvpsample.data.Task;
 
 import java.util.List;
@@ -17,20 +17,18 @@ public interface TasksContract {
 
         void showNoTasks();
 
+        void showNetworkError();
+
         void showAddNewTaskUI();
 
-        void showTaskDetailsUI();
-
-        void showTaskAsComplete();
-
-        void showTaskAsActive();
+        void showTaskDetailsUI(Task task);
     }
 
     interface Presenter extends BasePresenter {
         void getTasks();
 
-        void addTask();
+        void navigateToAddTaskUI();
 
-        void updateTaskStatusAsCompleted(Task task);
+        void updateTaskStatus(Task task);
     }
 }

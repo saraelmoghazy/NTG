@@ -3,6 +3,8 @@ package com.ntg.user.mvpsample.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.UUID;
 
 /**
@@ -10,10 +12,12 @@ import java.util.UUID;
  */
 
 public class Task implements Parcelable {
-private String id;
-private String title;
-private String description;
-private boolean isCompleted;
+
+    @SerializedName("taskId")
+    private String id;
+    private String title;
+    private String description;
+    private boolean isCompleted;
 
     public Task(String title) {
         this(title, "");
