@@ -1,7 +1,5 @@
 package com.ntg.user.mvpsample.tasks.data.remote;
 
-import com.ntg.user.mvpsample.tasks.data.Poc;
-
 import java.util.List;
 
 import retrofit2.Call;

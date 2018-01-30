@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.addedittask.AddTaskActivity;
-import com.ntg.user.mvpsample.tasks.data.Poc;
 
 import java.util.ArrayList;
 import java.util.List;

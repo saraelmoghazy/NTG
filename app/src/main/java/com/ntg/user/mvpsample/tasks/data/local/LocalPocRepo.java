@@ -2,7 +2,6 @@ package com.ntg.user.mvpsample.tasks.data.local;
 
 
 
-import com.ntg.user.mvpsample.tasks.data.Poc;
 import com.ntg.user.mvpsample.tasks.data.PocDataSource;
 
 import java.util.ArrayList;

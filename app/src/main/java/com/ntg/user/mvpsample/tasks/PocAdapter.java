@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.tasks.data.Poc;
 
 import java.util.List;
 

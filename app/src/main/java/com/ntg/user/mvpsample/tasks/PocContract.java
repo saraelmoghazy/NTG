@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.tasks;
 
 import com.ntg.user.mvpsample.BasePresenter;
-import com.ntg.user.mvpsample.tasks.data.Poc;
 
 import java.util.List;
 
