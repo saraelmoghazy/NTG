@@ -1,8 +1,11 @@
 package com.ntg.user.mvpsample;
 
+import com.ntg.user.mvpsample.add_tasks.AddTaskPresenter;
+import com.ntg.user.mvpsample.add_tasks.IAddTaskView;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
+import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
 import com.ntg.user.mvpsample.task.ITaskView;
 import com.ntg.user.mvpsample.task.TaskPresenter;
 
@@ -25,13 +28,19 @@ import static org.mockito.Mockito.verify;
 public class TasksPresenterTest {
     @Mock
     TasksRepository tasksRepository;
+    AddTaskRepo addTaskRepo;
 
     @Mock
     ITaskView iTaskView;
     TaskPresenter taskPresenter;
 
+    @Mock
+    IAddTaskView iAddTaskView;
+    AddTaskPresenter addTaskPresenter;
+
     @Captor
     private ArgumentCaptor<TasksDataSource.LoadTasksCallback> loadTasksCallbackArgumentCaptor;
+    private ArgumentCaptor<Task> taskArgumentCaptor;
 
     @Before
     public void setupPresenter() {
@@ -56,5 +65,10 @@ public class TasksPresenterTest {
         verify(tasksRepository).getTasks(loadTasksCallbackArgumentCaptor.capture());
         loadTasksCallbackArgumentCaptor.getValue().onTaskLoadedFail("something went wrong");
         verify(iTaskView).showErrorMesaage("something went wrong");
+    }
+
+    @Test
+    public void addTask(){
+        
     }
 }
