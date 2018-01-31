@@ -14,7 +14,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     private TasksContract.View tasksView;
     private TasksDataSource tasksRepository;
 
-    TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
+    public TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
         this.tasksView = tasksView;
         this.tasksRepository = tasksRepository;
         tasksView.setPresenter(this);
