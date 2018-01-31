@@ -11,4 +11,5 @@ import java.util.List;
 public interface ITaskView extends BaseView {
     void showTasks(List<Task> tasks);
     void showAddNewTask();
+    void showErrorMesaage(String errMesg);
 }

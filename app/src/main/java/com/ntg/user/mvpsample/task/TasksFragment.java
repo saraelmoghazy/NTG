@@ -93,6 +93,11 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     }
 
     @Override
+    public void showErrorMesaage(String errMesg) {
+
+    }
+
+    @Override
     public void setPresenter(Object presenter) {
     }
 

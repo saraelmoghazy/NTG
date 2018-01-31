@@ -30,14 +30,12 @@ public class TaskPresenter implements ITaskPresenter {
         tasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                if(Looper.myLooper() == Looper.getMainLooper()) {
                     iTaskView.showTasks(tasks);
-                    Log.e(TAG,"Main thread");
-                }
+
             }
             @Override
             public void onTaskLoadedFail(String errMesg) {
-                Log.e("error",errMesg);
+                iTaskView.showErrorMesaage(errMesg);
             }
         });
     }

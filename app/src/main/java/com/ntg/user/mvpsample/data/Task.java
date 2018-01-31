@@ -14,6 +14,10 @@ public class Task implements Serializable {
     private String description;
     private String completed;
 
+    public Task(String title , String description){
+        this.title=title;
+        this.description=description;
+    }
     public Task() {
     }
 
