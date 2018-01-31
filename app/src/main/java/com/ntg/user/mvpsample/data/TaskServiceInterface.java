@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
- * Created by devsaad on 1/28/2018.
+ * This interface contains function getTask that will get tasks from the sever .
  */
 
 public interface TaskServiceInterface {

@@ -7,7 +7,9 @@ import com.ntg.user.mvpsample.data.TaskRepository;
 import java.util.List;
 
 /**
- * Created by devsaad on 1/30/2018.
+ * Tasks presenter is the head of the app.
+ * It contains instances of view and model to achive the purpos of MVP.
+ * It is the only Decition maker in the project.
  */
 
 public class TasksPresenter implements TasksContract.Presenter {
@@ -20,10 +22,14 @@ public class TasksPresenter implements TasksContract.Presenter {
         this.taskRepository = taskRepository;
     }
 
+    /**
+     * load tasks
+     **/
     public void start() {
         taskRepository.loadData(new TaskDataSource.GetTaskCallBack() {
             @Override
             public void onTaskLoaded(List<Task> taskList) {
+
                 view.showTask(taskList);
             }
 

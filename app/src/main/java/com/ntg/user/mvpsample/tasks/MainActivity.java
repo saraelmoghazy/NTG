@@ -1,12 +1,15 @@
 package com.ntg.user.mvpsample.tasks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
         }
     }
 
+    /**
+     * show tasks
+     * @param tasks
+     **/
     @Override
     public void showTask(List<Task> tasks) {
         myAdapter.replaceData(tasks);
@@ -68,5 +75,13 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
     @Override
     public void showNoTasks() {
 
+        Toast.makeText(this,"No Tasks Added",Toast.LENGTH_LONG);
+
+    }
+
+    public void add(View view) {
+        FloatingActionButton floatingActionButton=findViewById(R.id.floButton);
+        Intent intent=new Intent(this,Main2Activity.class);
+        startActivity(intent);
     }
 }

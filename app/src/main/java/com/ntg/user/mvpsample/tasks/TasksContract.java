@@ -5,10 +5,16 @@ import com.ntg.user.mvpsample.data.Task;
 import java.util.List;
 
 /**
- * Created by devsaad on 1/30/2018.
+ * This interface includes tow interfaces view and presenter.
+ * the view interface contain three function that will be called from
+ * task adapter.
+ * the second interface contains function start that will be called from
+ * class task presenter.
  */
 
 public interface TasksContract {
+
+
     interface View{
         void showTask(List<Task> tasks);
         void setPresenter(Presenter presenter);
