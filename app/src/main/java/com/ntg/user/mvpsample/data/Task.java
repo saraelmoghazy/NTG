@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,6 +20,7 @@ public class Task implements Parcelable {
     private String title;
     private String description;
     private boolean isCompleted;
+    private List<Subtask> subtasks;
 
     public Task(String title) {
         this(title, "");
@@ -28,6 +31,15 @@ public class Task implements Parcelable {
         this.title = title;
         this.description = description;
         this.isCompleted = false;
+        this.subtasks = fillSubTaskList();
+    }
+
+    private List<Subtask> fillSubTaskList() {
+        List<Subtask> subtasks = new ArrayList<>(3);
+        subtasks.add(new Subtask("sub 1", 90));
+        subtasks.add(new Subtask("sub 2", 92));
+        subtasks.add(new Subtask("sub 3", 93));
+        return subtasks;
     }
 
     public String getId() {

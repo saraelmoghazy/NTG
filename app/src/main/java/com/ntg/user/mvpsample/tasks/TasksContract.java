@@ -3,6 +3,7 @@ package com.ntg.user.mvpsample.tasks;
 import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.base.BaseView;
 import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface TasksContract {
         void showAddNewTaskUI();
 
         void showTaskDetailsUI(Task task);
+
+        void changeTaskColorUponProgress(boolean isOver90);
     }
 
     interface Presenter extends BasePresenter {
@@ -30,5 +33,7 @@ public interface TasksContract {
         void navigateToAddTaskUI();
 
         void updateTaskStatus(Task task);
+
+        void getTaskProgress(String taskId);
     }
 }

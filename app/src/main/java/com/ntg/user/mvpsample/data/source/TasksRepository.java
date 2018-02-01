@@ -38,4 +38,9 @@ public class TasksRepository implements TasksDataSource {
     public void upDateTask(Task task) {
         tasksRemoteDataSource.upDateTask(task);
     }
+
+    @Override
+    public boolean getTaskProgress(String taskId) {
+        return tasksRemoteDataSource.getTaskProgress(taskId);
+    }
 }

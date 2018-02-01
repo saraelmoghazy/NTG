@@ -107,6 +107,11 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         startActivity(intent);
     }
 
+    @Override
+    public void changeTaskColorUponProgress(boolean isOver90) {
+
+    }
+
     TasksAdapter.TaskItemListener itemListener = new TasksAdapter.TaskItemListener() {
         @Override
         public void onTaskClick(Task clickedTask) {

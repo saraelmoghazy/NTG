@@ -16,6 +16,8 @@ public interface TasksDataSource {
 
     void upDateTask(Task task);
 
+    boolean getTaskProgress(String taskId);
+
     interface GetTasksCallBack {
 
         void onTasksLoaded(List<Task> tasks);
@@ -28,5 +30,12 @@ public interface TasksDataSource {
         void onTaskSaved();
 
         void onTaskFailed(String errorMsg);
+    }
+
+    interface GetTaskProgressCallBack {
+
+        void onTaskProgressed(boolean isOver90);
+
+        void onGetTaskProgressFailed(String errorMsg);
     }
 }

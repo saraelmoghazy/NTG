@@ -63,4 +63,9 @@ public class TasksPresenter implements TasksContract.Presenter {
     public void updateTaskStatus(Task task) {
         tasksRepository.upDateTask(task);
     }
+
+    @Override
+    public void getTaskProgress(String taskId) {
+        tasksRepository.getTaskProgress(taskId);
+    }
 }
