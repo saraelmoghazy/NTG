@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample;
 
+import android.app.Dialog;
+import android.content.Context;
 import  android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
     private FloatingActionButton btn;
     EditText taskName, taskDesc;
     Context context = this;
-    
+    List<Task> taskList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,30 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
                 alertDialog.show();
             }
         });
+
+        //recycleview
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(context, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Task task = taskList.get(position);
+
+                       /* AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                        alertDialog.setTitle(task.getTitle());
+                        alertDialog.setMessage(task.getBody());
+                        alertDialog.show();*/
+                      AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                      View mview=getLayoutInflater().inflate()
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                        Toast.makeText(getApplicationContext(),"long click",Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+        );
+
     }
     
     Task getTaskFromUser() {
@@ -82,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
     @Override
     public void showTasks(List<Task> tasks) {
         adapter.replaceData(tasks);
+        taskList=tasks;
     }
 
     @Override
