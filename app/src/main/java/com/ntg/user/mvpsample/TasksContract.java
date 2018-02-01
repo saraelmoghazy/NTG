@@ -23,5 +23,6 @@ public interface TasksContract {
     interface Presenter{
         void getTask();
         void saveTask(Task task);
+        void updateTask(Task task);
     }
 }

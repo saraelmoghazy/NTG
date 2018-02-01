@@ -27,4 +27,10 @@ public class TasksRepo implements TasksDataSource {
     public void saveTasks(Task task, SavePostsCallBack savePostsCallBack) {
         remoteRepo.saveTasks(task,savePostsCallBack);
     }
+    
+    @Override
+    public void updateTasks(Task task, SavePostsCallBack savePostsCallBack) {
+        remoteRepo.saveTasks(task,savePostsCallBack);
+    
+    }
 }

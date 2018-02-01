@@ -60,5 +60,19 @@ public class TaskPresenter implements TasksContract.Presenter {
             }
         });
     }
-
+    
+    @Override
+    public void updateTask(Task task) {
+        tasksDataSource.updateTasks(task, new TasksDataSource.SavePostsCallBack() {
+            @Override
+            public void onPostsSaved(Task task) {
+                view.showSaveTaskSuccessMsg();
+            }
+    
+            @Override
+            public void onPostsFailed(String errorMessage) {
+            }
+        });
+    }
+    
 }

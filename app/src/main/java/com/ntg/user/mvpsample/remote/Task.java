@@ -7,6 +7,9 @@ package com.ntg.user.mvpsample.remote;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+import java.util.UUID;
+
 public class Task {
 
     @SerializedName("title")
@@ -15,15 +18,28 @@ public class Task {
     @SerializedName("body")
     @Expose
     private String body;
-
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("subTasks")
+    @Expose
+    private List<SubTask> subTasks;
     
-    public Task(String title, String desc) {
+    public List<SubTask> getSubTasks() {
+        return subTasks;
+    }
+    
+    public void setSubTasks(List<SubTask> subTasks) {
+        this.subTasks = subTasks;
+    }
+    
+    public Task(String title, String desc,List<SubTask> subTasks) {
         this.title = title;
         this.body = desc;
+        this.id= UUID.randomUUID().toString();
+        this.subTasks=subTasks;
     }
+    
     
     public String getTitle() {
         return title;

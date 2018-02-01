@@ -21,7 +21,11 @@ public interface TasksDataSource {
         void onPostsSaved(Task task);
         void onPostsFailed(String errorMessage);
     }
-
+    interface UpdatePostsCallBack{
+        void onPostsUpdated(Task task);
+        void onPostsFailed(String errorMessage);
+    }
     void getPosts(GetPostsCallBack getPostsCallBack);
     void saveTasks(Task task, SavePostsCallBack savePostsCallBack);
+    void updateTasks(Task task, SavePostsCallBack savePostsCallBack);
 }

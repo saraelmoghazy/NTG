@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
     <EditText
         android:id="@+id/taskname"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -16,6 +16,7 @@
 
     <EditText
         android:id="@+id/disc"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -24,5 +25,19 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="Discription"/>
-
+    <EditText
+        android:id="@+id/subTaskNo"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif"
+        android:hint="subTaskNo"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewSubTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

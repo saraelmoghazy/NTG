@@ -7,16 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.ntg.user.mvpsample.remote.Task;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
+public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.TaskHolder> {
 
     List<Task> taskList;
 
-    public TaskAdapter(List<Task> tasksList) {
+    public SubTaskAdapter(List<Task> tasksList) {
         this.taskList = tasksList;
     }
 
