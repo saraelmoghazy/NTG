@@ -21,18 +21,40 @@ import io.reactivex.ObservableOnSubscribe;
 public class Main2Activity extends AppCompatActivity {
 
 
-    EditText addTitle,addDescribtion;
+    EditText addTitle, addDescribtion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        addTitle=findViewById(R.id.title);
-        addDescribtion=findViewById(R.id.describtion);
+        addTitle = findViewById(R.id.title);
+        addDescribtion = findViewById(R.id.describtion);
+        create();
+
+        just();
     }
+
+
 
     public void addTask(View view) {
 
 
     }
+
+
+
+
+
+
+
+    private void create() {
+        Observable.create(emitter -> emitter.onNext("ahmed"))
+                .subscribe(o -> Log.i("onNext" , o.toString()));
+    }
+
+    private void just(){
+        Observable.just(1,2,3,4,5).subscribe(integer -> Log.i("justOnNext" , integer.toString()));
+    }
+
 }
+
