@@ -4,14 +4,21 @@ package com.ntg.user.mvpsample.task_details;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.add_task.SubTasksAdapter;
 import com.ntg.user.mvpsample.data.Task;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,18 +28,16 @@ import butterknife.ButterKnife;
  */
 public class TaskDetailFragment extends Fragment implements TaskDetailsContract.View {
 
-    @BindView(R.id.titleTxtViewDetail)
-    TextView titleTxtViewDetail;
-    @BindView(R.id.descrptionTxtViewDetail)
-    TextView descrptionTxtViewDetail;
-    @BindView(R.id.completeTxtViewDetail)
-    TextView completeTxtViewDetail;
     @BindView(R.id.titleContentTxtView)
     TextView titleContentTxtView;
     @BindView(R.id.descrptionContentTxtView)
     TextView descrptionContentTxtView;
-    @BindView(R.id.completeStatusTxtView)
-    TextView completeStatusTxtView;
+    @BindView(R.id.rv_subtasks_detail)
+    RecyclerView subtasksRecyclerView;
+    @BindView(R.id.task_details_layout)
+    ConstraintLayout taskDetailsLayout;
+    LinearLayoutManager llm;
+    SubTasksAdapter subTasksAdapter;
     TaskDetailsContract.Presenter presenter;
     Task task;
 
@@ -46,7 +51,10 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
         ButterKnife.bind(this, view);
-
+        llm = new LinearLayoutManager(getContext());
+        subtasksRecyclerView.setLayoutManager(llm);
+        subTasksAdapter = new SubTasksAdapter(new ArrayList<>(0));
+        subtasksRecyclerView.setAdapter(subTasksAdapter);
         return view;
     }
 
@@ -79,10 +87,13 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
         if (taskToView != null) {
             titleContentTxtView.setText(taskToView.getTitle());
             descrptionContentTxtView.setText(taskToView.getDescription());
+            subTasksAdapter.setSubtasks(taskToView.getSubtasks());
             if (taskToView.isCompleted()) {
-                completeStatusTxtView.setText("complete");
-            } else {
-                completeStatusTxtView.setText("Active");
+                taskDetailsLayout.setBackgroundColor(
+                        getContext().getResources().getColor(R.color.completeTask));
+            }else {
+                taskDetailsLayout.setBackgroundColor(
+                        getContext().getResources().getColor(R.color.activeTask));
             }
         }
     }

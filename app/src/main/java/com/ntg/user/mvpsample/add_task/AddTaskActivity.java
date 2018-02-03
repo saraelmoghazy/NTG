@@ -2,6 +2,8 @@ package com.ntg.user.mvpsample.add_task;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Util.ActivityUtils;
@@ -31,4 +33,14 @@ public class AddTaskActivity extends AppCompatActivity {
         presenter = new AddTaskPresenter(addTaskFragment, tasksRepository);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_task, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }

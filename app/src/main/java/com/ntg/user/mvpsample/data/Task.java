@@ -23,23 +23,19 @@ public class Task implements Parcelable {
     private List<Subtask> subtasks;
 
     public Task(String title) {
-        this(title, "");
+        this(title, "", new ArrayList<>(0));
     }
 
     public Task(String title, String description) {
+        this(title, description, new ArrayList<>(0));
+    }
+
+    public Task(String title, String description, List<Subtask> subtasks) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.isCompleted = false;
-        this.subtasks = fillSubTaskList();
-    }
-
-    private List<Subtask> fillSubTaskList() {
-        List<Subtask> subtasks = new ArrayList<>(3);
-        subtasks.add(new Subtask("sub 1", 90));
-        subtasks.add(new Subtask("sub 2", 92));
-        subtasks.add(new Subtask("sub 3", 93));
-        return subtasks;
+        this.subtasks = subtasks;
     }
 
     public String getId() {
@@ -74,6 +70,14 @@ public class Task implements Parcelable {
         isCompleted = completed;
     }
 
+    public List<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,6 +89,7 @@ public class Task implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.description);
         dest.writeByte(this.isCompleted ? (byte) 1 : (byte) 0);
+        dest.writeList(this.subtasks);
     }
 
     protected Task(Parcel in) {
@@ -92,6 +97,8 @@ public class Task implements Parcelable {
         this.title = in.readString();
         this.description = in.readString();
         this.isCompleted = in.readByte() != 0;
+        this.subtasks = new ArrayList<Subtask>();
+        in.readList(this.subtasks, Subtask.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
