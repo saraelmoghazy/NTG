@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
@@ -82,6 +84,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     public void showTasks(List<Task> tasks) {
         taskAdapter = new TaskAdapter(tasks ,this);
         tasksRecyclerView.setAdapter(taskAdapter);
+
     }
 
     @Override
@@ -103,5 +106,6 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     @Override
     public void onTaskClicked(Task task) {
         taskItemListener.onTaskClicked(task);
+        Toast.makeText(getActivity() , task.getProgress()+"" ,Toast.LENGTH_LONG).show();
     }
 }

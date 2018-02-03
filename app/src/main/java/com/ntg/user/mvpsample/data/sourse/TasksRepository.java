@@ -26,6 +26,11 @@ public class TasksRepository implements TasksDataSource {
         return INSTANCE;
     }
 
+    @Override
+    public int getSubTasksProgress(String id) {
+        return 0;
+    }
+
     @SuppressLint("RestrictedApi")
     @Override
     public void getTasks(LoadTasksCallback loadTasksCallback) {

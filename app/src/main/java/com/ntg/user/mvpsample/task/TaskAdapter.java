@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.data.Task;
@@ -35,6 +38,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
+        holder.progressBar.setProgress(task.getProgress());
+        holder.progress.setText(String.valueOf(task.getProgress()));
         holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClicked(task));
     }
 
@@ -48,6 +53,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView title;
         @BindView(R.id.tvDescription)
         TextView description;
+        @BindView(R.id.progressBar)
+        CircularProgressBar progressBar;
+        @BindView(R.id.tv_progress)
+        TextView progress;
 
         public TaskViewHolder(View itemView) {
             super(itemView);

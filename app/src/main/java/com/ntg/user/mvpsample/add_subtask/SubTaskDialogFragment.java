@@ -29,6 +29,8 @@ public class SubTaskDialogFragment extends DialogFragment implements ISubTaskVie
     EditText subTaskDescription;
     @BindView(R.id.subTaskAddBtn)
     Button addSubTask;
+    @BindView(R.id.subTaskProgress)
+    EditText subTaskProgress;
     SubTaskPresenter subTaskPresenter;
 
     public static SubTaskDialogFragment newInstance(String id) {
@@ -52,7 +54,7 @@ public class SubTaskDialogFragment extends DialogFragment implements ISubTaskVie
             SubTask subTask = new SubTask(UUID.randomUUID().toString()
                     ,subTaskTitle.getText().toString()
                     ,subTaskDescription.getText().toString()
-                    ,50);
+                    ,Integer.parseInt(subTaskProgress.getText().toString()));
             subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);});
         return view;
     }

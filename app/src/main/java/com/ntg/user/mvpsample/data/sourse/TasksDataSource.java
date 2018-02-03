@@ -15,6 +15,8 @@ public interface TasksDataSource {
         void onTaskLoadedFail(String errMesg);
     }
 
+    int getSubTasksProgress(String id);
+
     void getTasks(LoadTasksCallback loadTasksCallback);
 
     interface SaveTask{

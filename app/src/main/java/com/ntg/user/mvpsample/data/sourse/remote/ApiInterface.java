@@ -32,4 +32,7 @@ public interface ApiInterface {
 
     @PUT("tasks/{id}")
     Observable<List<SubTask>> saveSubTask(@Path("id")String id , @Body SubTask subTasks);
+
+    @GET("tasks/{id}/subTasks")
+    Observable<List<SubTask>> getSubTasks(@Path("id") String id);
 }
