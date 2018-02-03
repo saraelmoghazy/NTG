@@ -11,16 +11,21 @@ public class AddTaskPresenter implements IAddTaskPresenter{
 
     private final AddTaskRepo repository;
 
-    public AddTaskPresenter(AddTaskRepo repository) {
+    public AddTaskPresenter(AddTaskRepo repository){
         this.repository = repository;
     }
 
     @Override
-    public void start() {
+    public void start(){
     }
 
     @Override
     public void saveTask(Task task) {
         repository.saveTask(task);
+    }
+
+    @Override
+    public void getTaskId() {
+
     }
 }

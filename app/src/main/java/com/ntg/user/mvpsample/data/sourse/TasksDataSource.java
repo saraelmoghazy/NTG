@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample.data.sourse;
 
+import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import java.util.List;
 
@@ -17,6 +18,10 @@ public interface TasksDataSource {
     void getTasks(LoadTasksCallback loadTasksCallback);
 
     interface SaveTask{
-        Task saveTask(Task task);
+        void saveTask(Task task);
+    }
+
+    interface SaveSubTask{
+        void saveSubTask(String id , SubTask subTasks);
     }
 }

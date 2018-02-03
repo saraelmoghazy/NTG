@@ -1,13 +1,18 @@
 package com.ntg.user.mvpsample.taskdetail;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.add_subtask.SubTaskDialogFragment;
 import com.ntg.user.mvpsample.data.Task;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,7 +21,7 @@ import butterknife.ButterKnife;
  * @author Islam Eldsoke
  * Fragment that represent Task Details
  */
-public class TaskDetailFragment extends Fragment implements ITaskDetailsView{
+public class TaskDetailFragment extends android.app.Fragment implements ITaskDetailsView{
 
     @BindView(R.id.tv_titleDetail)
     TextView titleTv;
@@ -24,7 +29,10 @@ public class TaskDetailFragment extends Fragment implements ITaskDetailsView{
     TextView descriptionTv;
     @BindView(R.id.tv_stateDetail)
     TextView stateTv;
+    @BindView(R.id.btn_addSubTask)
+    FloatingActionButton navigateToSubTaskDialog;
     ITaskDetailsPresenter iTaskDetailsPresenter;
+    String id;
 
     public static TaskDetailFragment newInstance(Task task) {
         TaskDetailFragment fragment = new TaskDetailFragment();
@@ -48,12 +56,13 @@ public class TaskDetailFragment extends Fragment implements ITaskDetailsView{
         ButterKnife.bind(this , view);
         if (getArguments() != null) {
             Task task = (Task) getArguments().get("task");
+            id = task.getId();
             iTaskDetailsPresenter = new TaskDetailsPresenter(this , task);
             iTaskDetailsPresenter.start();
         }
+        navigateToSubTaskDialog.setOnClickListener(v -> navigateToSubTasksFragment());
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -83,7 +92,16 @@ public class TaskDetailFragment extends Fragment implements ITaskDetailsView{
     }
 
     @Override
-    public void showState(String state) {
-        stateTv.setText(state);
+    public void navigateToSubTasksFragment() {
+        SubTaskDialogFragment dialogFragment = SubTaskDialogFragment.newInstance(id);
+        dialogFragment.show(getFragmentManager(),"islam");
+        this.getActivity().getFragmentManager().executePendingTransactions();
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        Dialog yourDialog = dialogFragment.getDialog();
+        yourDialog.getWindow().setAttributes(layoutParams);
+
     }
+
 }

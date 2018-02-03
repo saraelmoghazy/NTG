@@ -1,7 +1,10 @@
 package com.ntg.user.mvpsample.data;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Islam Eldsoke
@@ -9,10 +12,34 @@ import java.io.Serializable;
  */
 
 public class Task implements Serializable {
+    @SerializedName("id")
     private String id;
+    @SerializedName("title")
     private String title;
+    @SerializedName("description")
     private String description;
-    private String completed;
+    @SerializedName("progress")
+    private int progress;
+    @SerializedName("subTasks")
+    private List<SubTask> subTasks;
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+
+
+    public List<SubTask> getSubTasks() {
+        return subTasks;
+    }
+
+    public void setSubTasks(List<SubTask> subTasks) {
+        this.subTasks = subTasks;
+    }
 
     public Task(String title , String description){
         this.title=title;
@@ -21,11 +48,11 @@ public class Task implements Serializable {
     public Task() {
     }
 
-    public Task(String id, String title, String description, String completed) {
+    public Task(String id, String title, String description , List<SubTask> subTasks) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.completed = completed;
+        this.subTasks = subTasks;
     }
 
     public String getId() {
@@ -50,13 +77,5 @@ public class Task implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(String completed) {
-        this.completed = completed;
     }
 }

@@ -2,52 +2,52 @@ package com.ntg.user.mvpsample.data.sourse.remote;
 
 import android.util.Log;
 
-import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
- * Created by islam on 1/30/2018.
+ * Created by islam on 2/1/2018.
  */
 
-public class AddTaskRepo implements TasksDataSource.SaveTask {
+public class AddSubTaskRepo implements TasksDataSource.SaveSubTask {
 
-    private static AddTaskRepo INSTANCE = null;
+    private static AddSubTaskRepo INSTANCE = null;
 
 
-    public static AddTaskRepo getInstance() {
+    public static AddSubTaskRepo getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new AddTaskRepo();
+            INSTANCE = new AddSubTaskRepo();
         }
         return INSTANCE;
     }
+
+
     @Override
-    public void saveTask(Task task) {
-        ApiInterface addNewTask = ApiClient.getClient().create(ApiInterface.class);
-        addNewTask.saveTask(task)
-                .subscribeOn(Schedulers.io())
+    public void saveSubTask(String id, SubTask subTasks) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        apiInterface.saveSubTask(id, subTasks).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Task>() {
+                .subscribe(new Observer<List<SubTask>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Task task) {
-
+                    public void onNext(List<SubTask> subTasks) {
+                        Log.i("lsit", subTasks.get(0).getTitle());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("err", e.getMessage());
                     }
 
                     @Override

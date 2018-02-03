@@ -10,5 +10,5 @@ import com.ntg.user.mvpsample.data.Task;
 public interface ITaskDetailsView extends BaseView {
     void showTitle(String title);
     void showDescription(String description);
-    void showState(String state);
+    void navigateToSubTasksFragment();
 }

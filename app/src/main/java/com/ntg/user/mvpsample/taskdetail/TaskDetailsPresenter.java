@@ -24,6 +24,5 @@ public class TaskDetailsPresenter implements ITaskDetailsPresenter{
         Log.e("task" , task.getTitle());
         iTaskDetailsView.showTitle(task.getTitle());
         iTaskDetailsView.showDescription(task.getDescription());
-        iTaskDetailsView.showState(task.getCompleted());
     }
 }

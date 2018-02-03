@@ -2,7 +2,7 @@ package com.ntg.user.mvpsample.add_tasks;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task.TasksFragment;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddTaskFragment extends Fragment implements IAddTaskView {
+public class AddTaskFragment extends android.app.Fragment implements IAddTaskView {
 
     @BindView(R.id.tv_title)
     EditText title;
@@ -45,12 +47,13 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
 
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         ButterKnife.bind(this , view);
+        List<SubTask> subTasks = new ArrayList<>();
         addTaskPresenter = new AddTaskPresenter(Injection.provideAddTasksRepository());
         tasksFragment = TasksFragment.newInstance();
         addNewTask.setOnClickListener(v ->{
             addTaskPresenter.saveTask(new Task(UUID.randomUUID().toString()
                     , title.getText().toString()
-                    ,description.getText().toString(),"false"));getFragmentManager()
+                    ,description.getText().toString(),subTasks));getFragmentManager()
                     .beginTransaction().replace(R.id.container ,tasksFragment).commit();});
         return view;
     }
@@ -59,7 +62,6 @@ public class AddTaskFragment extends Fragment implements IAddTaskView {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     @Override
