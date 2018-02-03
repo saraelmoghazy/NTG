@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.Subtask;
+import com.ntg.user.mvpsample.data.Task;
 
 import java.util.List;
 
@@ -69,5 +70,10 @@ public class SubTasksAdapter extends RecyclerView.Adapter<SubTasksAdapter.SubTas
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface SubTaskItemListener {
+
+        void onSubTaskClick(Task clickedTask);
     }
 }

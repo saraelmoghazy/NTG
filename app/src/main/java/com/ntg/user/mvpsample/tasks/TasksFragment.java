@@ -7,7 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -36,6 +39,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     private TasksContract.Presenter presenter;
     TasksAdapter tasksAdapter;
     LinearLayoutManager llm;
+    ActionMode actionMode;
+    Task taskFromAdapter;
 
     public static TasksFragment newInstance() {
         return new TasksFragment();
@@ -101,21 +106,62 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     @Override
+    public void showUpdateTaskUI(Task task) {
+
+    }
+
+    @Override
     public void showTaskDetailsUI(Task task) {
         Intent intent = new Intent(getContext(), TaskDetailsActivity.class);
         intent.putExtra("task", task);
         startActivity(intent);
     }
 
-    @Override
-    public void changeTaskColorUponProgress(boolean isOver90) {
+    ActionMode.Callback callback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.getMenuInflater().inflate(R.menu.menu_action, menu);
+            return true;
+        }
 
-    }
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.mi_delete:
+                    presenter.deleteTask(taskFromAdapter);
+                    actionMode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            TasksFragment.this.actionMode = null;
+        }
+    };
 
     TasksAdapter.TaskItemListener itemListener = new TasksAdapter.TaskItemListener() {
         @Override
         public void onTaskClick(Task clickedTask) {
             showTaskDetailsUI(clickedTask);
+        }
+
+        @Override
+        public boolean onTaskLongClick(Task longClickedTask, View view) {
+            taskFromAdapter = longClickedTask;
+            if (actionMode != null) {
+                return false;
+            }
+            actionMode = getActivity().startActionMode(callback);
+            view.setSelected(true);
+            return true;
         }
 
         @Override

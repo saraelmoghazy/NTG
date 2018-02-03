@@ -70,7 +70,11 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     private Observable<List<Task>> convert(List<Task> tasks) {
         for (Task task : tasks)
-            task.setCompleted(getTaskProgress(task.getId()));
+            if (task.getSubtasks() != null && !task.getSubtasks().isEmpty()) {
+                task.setCompleted(getTaskProgress(task.getId()));
+            } else {
+                task.setCompleted(false);
+            }
 
         return Observable.just(tasks);
     }
@@ -112,6 +116,23 @@ public class TasksRemoteDataSource implements TasksDataSource {
         call.enqueue(new Callback<Task>() {
             @Override
             public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+                call.clone().enqueue(this);
+            }
+        });
+    }
+
+    @Override
+    public void deleteTask(Task task) {
+        TasksServiceInterface serviceInterface =
+                TasksAPI.getClient().create(TasksServiceInterface.class);
+        serviceInterface.deleteTask(task.getId()).enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+
             }
 
             @Override

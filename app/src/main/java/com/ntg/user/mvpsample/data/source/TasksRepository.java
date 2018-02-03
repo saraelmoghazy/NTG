@@ -40,6 +40,11 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
+    public void deleteTask(Task task) {
+        tasksRemoteDataSource.deleteTask(task);
+    }
+
+    @Override
     public boolean getTaskProgress(String taskId) {
         return tasksRemoteDataSource.getTaskProgress(taskId);
     }

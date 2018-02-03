@@ -16,6 +16,8 @@ public interface TasksDataSource {
 
     void upDateTask(Task task);
 
+    void deleteTask(Task task);
+
     boolean getTaskProgress(String taskId);
 
     interface GetTasksCallBack {

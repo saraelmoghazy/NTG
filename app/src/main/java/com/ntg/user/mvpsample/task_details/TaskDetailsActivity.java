@@ -2,6 +2,8 @@ package com.ntg.user.mvpsample.task_details;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Util.ActivityUtils;
@@ -29,5 +31,16 @@ public class TaskDetailsActivity extends AppCompatActivity {
         }
 
         taskDetailsPresenter = new TaskDetailsPresenter(taskDetailFragment, tasksRepository);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_tasks, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

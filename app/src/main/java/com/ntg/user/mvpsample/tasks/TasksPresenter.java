@@ -65,7 +65,13 @@ public class TasksPresenter implements TasksContract.Presenter {
     }
 
     @Override
-    public void getTaskProgress(String taskId) {
-        tasksRepository.getTaskProgress(taskId);
+    public void updateTask(Task task) {
+
+    }
+
+    @Override
+    public void deleteTask(Task task) {
+        tasksRepository.deleteTask(task);
+        getTasks();
     }
 }

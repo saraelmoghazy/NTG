@@ -8,6 +8,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -47,4 +48,7 @@ public interface TasksServiceInterface {
      */
     @PUT("tasks/{taskId}")
     Call<Task> editTask(@Path("taskId") String taskId, @Body Task task);
+
+    @DELETE("tasks/deleteTask/{taskId}")
+    Call<Task> deleteTask(@Path("taskId") String taskId);
 }

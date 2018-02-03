@@ -22,9 +22,9 @@ public interface TasksContract {
 
         void showAddNewTaskUI();
 
-        void showTaskDetailsUI(Task task);
+        void showUpdateTaskUI(Task task);
 
-        void changeTaskColorUponProgress(boolean isOver90);
+        void showTaskDetailsUI(Task task);
     }
 
     interface Presenter extends BasePresenter {
@@ -34,6 +34,8 @@ public interface TasksContract {
 
         void updateTaskStatus(Task task);
 
-        void getTaskProgress(String taskId);
+        void updateTask(Task task);
+
+        void deleteTask(Task task);
     }
 }

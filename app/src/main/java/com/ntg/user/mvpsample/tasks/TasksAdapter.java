@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample.tasks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -68,6 +69,8 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
                     }
                 });
         holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClick(task));
+        holder.itemView.setOnLongClickListener(view ->
+                taskItemListener.onTaskLongClick(task, holder.itemView));
     }
 
     @Override
@@ -106,6 +109,8 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
     public interface TaskItemListener {
 
         void onTaskClick(Task clickedTask);
+
+        boolean onTaskLongClick(Task longClickedTask, View view);
 
         void onCompleteTaskClick(Task completedTask);
 
