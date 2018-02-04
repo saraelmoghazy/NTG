@@ -31,6 +31,7 @@ public class TasksPresenter implements TasksContract.Presenter {
      */
     @Override
     public void getTasks() {
+        tasksView.showLoadingIndicator();
         tasksRepository.loadData(new TasksDataSource.GetTasksCallBack() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
@@ -54,11 +55,6 @@ public class TasksPresenter implements TasksContract.Presenter {
     @Override
     public void navigateToAddTaskUI() {
         tasksView.showAddNewTaskUI();
-    }
-
-    @Override
-    public void updateTask(Task task) {
-
     }
 
     @Override

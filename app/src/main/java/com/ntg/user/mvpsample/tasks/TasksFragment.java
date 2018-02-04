@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
@@ -31,10 +32,11 @@ import butterknife.ButterKnife;
  */
 public class TasksFragment extends Fragment implements TasksContract.View {
 
-    public static final int ADD_TASK_REQUEST_CODE = 20;
     FloatingActionButton addTaskFab;
     @BindView(R.id.rvTasks)
     RecyclerView rvTasks;
+    @BindView(R.id.pb_load_tasks)
+    ProgressBar loadTasksProgressBar;
     @BindView(R.id.noTasksTxtView)
     TextView noTasksTxtView;
     private TasksContract.Presenter presenter;
@@ -85,6 +87,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void showTasks(List<Task> tasks) {
         noTasksTxtView.setVisibility(View.GONE);
+        loadTasksProgressBar.setVisibility(View.GONE);
         tasksAdapter.replaceData(tasks);
     }
 
@@ -92,6 +95,11 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public void showNoTasks() {
         noTasksTxtView.setVisibility(View.VISIBLE);
         noTasksTxtView.setText("No Tasks");
+    }
+
+    @Override
+    public void showLoadingIndicator() {
+        loadTasksProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -104,11 +112,6 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public void showAddNewTaskUI() {
         Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void showUpdateTaskUI(Task task) {
-
     }
 
     @Override

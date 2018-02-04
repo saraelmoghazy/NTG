@@ -18,11 +18,11 @@ public interface TasksContract {
 
         void showNoTasks();
 
+        void showLoadingIndicator();
+
         void showNetworkError();
 
         void showAddNewTaskUI();
-
-        void showUpdateTaskUI(Task task);
 
         void showTaskDetailsUI(Task task);
     }
@@ -31,8 +31,6 @@ public interface TasksContract {
         void getTasks();
 
         void navigateToAddTaskUI();
-
-        void updateTask(Task task);
 
         void deleteTask(Task task);
     }
