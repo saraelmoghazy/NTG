@@ -17,7 +17,10 @@ public class TasksRepo implements TasksDataSource {
         localRepo = TaskLocalRepo.newInstance();
         remoteRepo = TaskRemoteRepo.newInstance();
     }
-
+    
+  
+   
+    
     @Override
     public void getPosts(GetPostsCallBack getPostsCallBack) {
         remoteRepo.getPosts(getPostsCallBack);
@@ -29,8 +32,9 @@ public class TasksRepo implements TasksDataSource {
     }
     
     @Override
-    public void updateTasks(Task task, SavePostsCallBack savePostsCallBack) {
-        remoteRepo.saveTasks(task,savePostsCallBack);
-    
+    public void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack) {
+        remoteRepo.updateTasks(task,updatePostsCallBack);
     }
+    
+   
 }

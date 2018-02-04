@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public interface TasksDataSource {
+    
     interface GetPostsCallBack
     {
         void onPostsLoaded(List<Task> taskList);
@@ -27,5 +28,5 @@ public interface TasksDataSource {
     }
     void getPosts(GetPostsCallBack getPostsCallBack);
     void saveTasks(Task task, SavePostsCallBack savePostsCallBack);
-    void updateTasks(Task task, SavePostsCallBack savePostsCallBack);
+    void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack);
 }

@@ -23,5 +23,9 @@ public class TaskLocalRepo implements TasksDataSource {
   @Override
   public void saveTasks(Task task, SavePostsCallBack savePostsCallBack) {
   }
+  
+  @Override
+  public void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack) {
+  }
 }
 

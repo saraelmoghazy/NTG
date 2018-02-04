@@ -1,5 +1,4 @@
 package com.ntg.user.mvpsample.remote;
-
 /**
  * Created by GM7 on 1/29/2018.
  */
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Task {
-
+    
     @SerializedName("title")
     @Expose
     private String title;
@@ -33,37 +32,37 @@ public class Task {
         this.subTasks = subTasks;
     }
     
-    public Task(String title, String desc,List<SubTask> subTasks) {
+    public Task(String title, String desc, List<SubTask> subTasks) {
         this.title = title;
         this.body = desc;
-        this.id= UUID.randomUUID().toString();
-        this.subTasks=subTasks;
+        this.id = UUID.randomUUID().toString();
+        this.subTasks = subTasks;
     }
     
     
     public String getTitle() {
         return title;
     }
-
+    
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public String getBody() {
         return body;
     }
-
+    
     public void setBody(String body) {
         this.body = body;
     }
-
+    
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
-
-
+    
+    
 }
