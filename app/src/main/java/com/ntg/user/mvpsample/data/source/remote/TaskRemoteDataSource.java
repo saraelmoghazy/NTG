@@ -4,11 +4,18 @@ package com.ntg.user.mvpsample.data.source.remote;
 
 import android.support.annotation.NonNull;
 
+import com.ntg.user.mvpsample.MathUtil;
+import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,44 +44,64 @@ public class TaskRemoteDataSource implements TasksDataSource {
         ApiService apiService =
                 ApiClient.getClient().create(ApiService.class);
 
-        Call<List<Task>> call = apiService.getTasks();
-        call.enqueue(new Callback<List<Task>>() {
-            @Override
-            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+        apiService.getTasks()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Task>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                    tasksCallBack.onTasksLoaded(response.body());
+                    }
 
+                    @Override
+                    public void onNext(List<Task> tasks) {
+                        tasksCallBack.onTasksLoaded(tasks);
+                    }
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                       tasksCallBack.onDataNotAvailable(e.getMessage());
+                    }
 
-            @Override
-            public void onFailure(Call<List<Task>> call, Throwable t) {
-                tasksCallBack.onDataNotAvailable(t.getMessage());
-                call.clone().enqueue(this);
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
-
+                    }
+                });
     }
 
     @Override
     public void saveTask(Task task, final SaveTaskCallBack saveTaskCallBack) {
         ApiService apiService =
                 ApiClient.getClient().create(ApiService.class);
-        Call<Task> call = apiService.saveTask(task);
-        call.enqueue(new Callback<Task>() {
-            @Override
-            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
-                saveTaskCallBack.onTaskSaved();
-            }
+        apiService.saveTask(task)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Task>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
-                saveTaskCallBack.onTaskFailed(t.getMessage());
-            }
-        });
+                    }
 
+                    @Override
+                    public void onNext(Task task) {
+                        saveTaskCallBack.onTaskSaved();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        saveTaskCallBack.onTaskFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
+
 
 
 }
