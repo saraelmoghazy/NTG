@@ -1,18 +1,18 @@
-package com.ntg.user.mvpsample.add_task;
+package com.ntg.user.mvpsample.add_edit_task;
 
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 /**
- * AddTaskPresenter control adding task operation and refreshing tasks list with new task
+ * AddEditTaskPresenter control adding task operation and refreshing tasks list with new task
  */
 
-public class AddTaskPresenter implements AddTaskContract.Presenter {
+public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
 
-    private AddTaskContract.View addTaskView;
+    private AddEditTaskContract.View addTaskView;
     private TasksDataSource tasksRepository;
 
-    AddTaskPresenter(AddTaskContract.View addTaskView, TasksDataSource tasksRepository) {
+    public AddEditTaskPresenter(AddEditTaskContract.View addTaskView, TasksDataSource tasksRepository) {
         this.addTaskView = addTaskView;
         this.tasksRepository = tasksRepository;
         addTaskView.setPresenter(this);
@@ -41,5 +41,21 @@ public class AddTaskPresenter implements AddTaskContract.Presenter {
             }
         });
         addTaskView.showTasks();
+    }
+
+    @Override
+    public void editTask(Task task) {
+        tasksRepository.upDateTask(task, new TasksDataSource.SaveTaskCallBack() {
+            @Override
+            public void onTaskSaved() {
+                addTaskView.showSaveTaskSuccessMsg();
+            }
+
+            @Override
+            public void onTaskFailed(String errorMsg) {
+                addTaskView.showSaveTaskFailedMsg();
+            }
+        });
+        addTaskView.showTaskDetail(task);
     }
 }

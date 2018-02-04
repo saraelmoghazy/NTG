@@ -56,14 +56,6 @@ public class TasksPresenter implements TasksContract.Presenter {
         tasksView.showAddNewTaskUI();
     }
 
-    /**
-     * updateTaskStatus ask TasksRepository to update task status
-     */
-    @Override
-    public void updateTaskStatus(Task task) {
-        tasksRepository.upDateTask(task);
-    }
-
     @Override
     public void updateTask(Task task) {
 

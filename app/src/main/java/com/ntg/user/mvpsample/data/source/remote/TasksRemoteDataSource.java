@@ -53,19 +53,6 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasksCallBack::onTasksLoaded,
                         t -> tasksCallBack.onTasksFailed(t.getMessage()));
-//        Call<List<Task>> call = serviceInterface.getTasks();
-//        call.enqueue(new Callback<List<Task>>() {
-//            @Override
-//            public void onResponse(@NonNull Call<List<Task>> call, @NonNull Response<List<Task>> response) {
-//                tasksCallBack.onTasksLoaded(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<List<Task>> call, @NonNull Throwable t) {
-//                tasksCallBack.onTasksFailed(t.getMessage());
-//                call.clone().enqueue(this);
-//            }
-//        });
     }
 
     private Observable<List<Task>> convert(List<Task> tasks) {
@@ -89,15 +76,15 @@ public class TasksRemoteDataSource implements TasksDataSource {
     public void saveTask(Task task, SaveTaskCallBack saveTaskCallBack) {
         TasksServiceInterface serviceInterface =
                 TasksAPI.getClient().create(TasksServiceInterface.class);
-        Call<Task> call = serviceInterface.addTask(task);
-        call.enqueue(new Callback<Task>() {
+        Call<Void> call = serviceInterface.addTask(task);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 saveTaskCallBack.onTaskSaved();
             }
 
             @Override
-            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 saveTaskCallBack.onTaskFailed(t.getMessage());
             }
         });
@@ -109,18 +96,19 @@ public class TasksRemoteDataSource implements TasksDataSource {
      * @param task task that will be updated
      */
     @Override
-    public void upDateTask(Task task) {
+    public void upDateTask(Task task, SaveTaskCallBack saveTaskCallBack) {
         TasksServiceInterface serviceInterface =
                 TasksAPI.getClient().create(TasksServiceInterface.class);
-        Call<Task> call = serviceInterface.editTask(task.getId(), task);
-        call.enqueue(new Callback<Task>() {
+        Call<Void> call = serviceInterface.editTask(task.getId(), task);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                saveTaskCallBack.onTaskSaved();
             }
 
             @Override
-            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
-                call.clone().enqueue(this);
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                saveTaskCallBack.onTaskFailed(t.getMessage());
             }
         });
     }
@@ -129,14 +117,14 @@ public class TasksRemoteDataSource implements TasksDataSource {
     public void deleteTask(Task task) {
         TasksServiceInterface serviceInterface =
                 TasksAPI.getClient().create(TasksServiceInterface.class);
-        serviceInterface.deleteTask(task.getId()).enqueue(new Callback<Task>() {
+        serviceInterface.deleteTask(task.getId()).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
 
             }
 
             @Override
-            public void onFailure(@NonNull Call<Task> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 call.clone().enqueue(this);
             }
         });

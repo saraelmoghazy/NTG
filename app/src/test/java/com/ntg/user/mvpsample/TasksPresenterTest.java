@@ -50,13 +50,6 @@ public class TasksPresenterTest {
     }
 
     @Test
-    public void updateTask(){
-        Task task = new Task("title", "descrption");
-        tasksPresenter.updateTaskStatus(task);
-        verify(tasksDataSource).upDateTask(task);
-    }
-
-    @Test
     public void showAddTaskUI(){
         tasksPresenter.navigateToAddTaskUI();
         verify(tasksView).showAddNewTaskUI();

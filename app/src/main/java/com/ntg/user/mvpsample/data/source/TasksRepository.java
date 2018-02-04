@@ -35,8 +35,8 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void upDateTask(Task task) {
-        tasksRemoteDataSource.upDateTask(task);
+    public void upDateTask(Task task, SaveTaskCallBack saveTaskCallBack) {
+        tasksRemoteDataSource.upDateTask(task, saveTaskCallBack);
     }
 
     @Override

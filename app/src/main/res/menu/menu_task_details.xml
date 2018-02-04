@@ -4,11 +4,6 @@
     tools:context="com.ntg.user.mvpsample.task_details.TaskDetailsActivity">
 
     <item
-        android:id="@+id/mi_add_subtask"
-        android:title="Add SubTask"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/mi_edit"
         android:title="Edit"
         app:showAsAction="ifRoom" />

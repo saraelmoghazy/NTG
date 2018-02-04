@@ -14,7 +14,7 @@ public interface TasksDataSource {
 
     void saveTask(Task task, SaveTaskCallBack saveTaskCallBack);
 
-    void upDateTask(Task task);
+    void upDateTask(Task task, SaveTaskCallBack saveTaskCallBack);
 
     void deleteTask(Task task);
 

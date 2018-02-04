@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.add_task;
+package com.ntg.user.mvpsample.add_edit_task;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +46,7 @@ public class SubTasksAdapter extends RecyclerView.Adapter<SubTasksAdapter.SubTas
         return subtasks.size();
     }
 
-    void addSubTaskToList(Subtask subtask){
+    public void addSubTaskToList(Subtask subtask){
         subtasks.add(subtask);
         notifyDataSetChanged();
     }

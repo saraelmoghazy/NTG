@@ -32,8 +32,6 @@ public interface TasksContract {
 
         void navigateToAddTaskUI();
 
-        void updateTaskStatus(Task task);
-
         void updateTask(Task task);
 
         void deleteTask(Task task);

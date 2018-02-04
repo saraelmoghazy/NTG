@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".task_details.TaskDetailsActivity" />
         <activity
-            android:name=".add_task.AddTaskActivity"
+            android:name=".add_edit_task.AddEditTaskActivity"
             android:label="@string/title_activity_add_task" />
         <activity android:name=".RxActivity">
             <intent-filter>

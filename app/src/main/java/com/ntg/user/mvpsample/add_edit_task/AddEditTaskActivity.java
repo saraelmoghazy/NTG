@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.add_task;
+package com.ntg.user.mvpsample.add_edit_task;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +9,13 @@ import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Util.ActivityUtils;
 import com.ntg.user.mvpsample.Util.Injection;
 import com.ntg.user.mvpsample.data.source.TasksRepository;
-/** AddTaskActivity is used to add AddTaskFragment
+/** AddEditTaskActivity is used to add AddEditTaskFragment
  */
-public class AddTaskActivity extends AppCompatActivity {
+public class AddEditTaskActivity extends AppCompatActivity {
 
-    AddTaskFragment addTaskFragment;
+    AddEditTaskFragment addEditTaskFragment;
     TasksRepository tasksRepository;
-    AddTaskPresenter presenter;
+    AddEditTaskPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +23,14 @@ public class AddTaskActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_task);
         tasksRepository = Injection.provideTasksRepository();
-        addTaskFragment = (AddTaskFragment) getSupportFragmentManager()
+        addEditTaskFragment = (AddEditTaskFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.add_task_fragment);
-        if (addTaskFragment == null) {
-            addTaskFragment = AddTaskFragment.newInstance();
+        if (addEditTaskFragment == null) {
+            addEditTaskFragment = AddEditTaskFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    addTaskFragment, R.id.add_task_fragment);
+                    addEditTaskFragment, R.id.add_task_fragment);
         }
-        presenter = new AddTaskPresenter(addTaskFragment, tasksRepository);
+        presenter = new AddEditTaskPresenter(addEditTaskFragment, tasksRepository);
     }
 
     @Override

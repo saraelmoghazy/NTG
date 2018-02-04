@@ -38,7 +38,7 @@ public interface TasksServiceInterface {
      * @param task the task to be added
      */
     @POST("tasks")
-    Call<Task> addTask(@Body Task task);
+    Call<Void> addTask(@Body Task task);
 
     /**
      * editTask used to update task attribute
@@ -46,9 +46,9 @@ public interface TasksServiceInterface {
      * @param taskId to specify the required task to be updated
      * @param task   the task instance with updates
      */
-    @PUT("tasks/{taskId}")
-    Call<Task> editTask(@Path("taskId") String taskId, @Body Task task);
+    @PUT("tasks/updateTask/{taskId}")
+    Call<Void> editTask(@Path("taskId") String taskId, @Body Task task);
 
     @DELETE("tasks/deleteTask/{taskId}")
-    Call<Task> deleteTask(@Path("taskId") String taskId);
+    Call<Void> deleteTask(@Path("taskId") String taskId);
 }

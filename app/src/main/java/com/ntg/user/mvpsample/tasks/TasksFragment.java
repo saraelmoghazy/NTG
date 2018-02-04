@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.add_task.AddTaskActivity;
+import com.ntg.user.mvpsample.add_edit_task.AddEditTaskActivity;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task_details.TaskDetailsActivity;
 
@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
  */
 public class TasksFragment extends Fragment implements TasksContract.View {
 
+    public static final int ADD_TASK_REQUEST_CODE = 20;
     FloatingActionButton addTaskFab;
     @BindView(R.id.rvTasks)
     RecyclerView rvTasks;
@@ -101,7 +102,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showAddNewTaskUI() {
-        Intent intent = new Intent(getContext(), AddTaskActivity.class);
+        Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
         startActivity(intent);
     }
 
@@ -162,16 +163,6 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             actionMode = getActivity().startActionMode(callback);
             view.setSelected(true);
             return true;
-        }
-
-        @Override
-        public void onCompleteTaskClick(Task completedTask) {
-            presenter.updateTaskStatus(completedTask);
-        }
-
-        @Override
-        public void onActivateTaskClick(Task activatedTask) {
-            presenter.updateTaskStatus(activatedTask);
         }
     };
 }

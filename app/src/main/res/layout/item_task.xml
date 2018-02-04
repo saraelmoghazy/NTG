@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/taskLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="2dp"
     android:background="@color/activeTask"
-    android:orientation="horizontal"
-    android:id="@+id/taskLayout">
+    android:orientation="horizontal">
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="6">
-    <TextView
-        android:id="@+id/titleRvTxtView"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Title"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/colorPrimaryDark" />
+        android:layout_weight="6"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/descrptionRvTxtView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Descrption"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
-        android:textColor="@android:color/background_dark"
-        android:textColorHint="@android:color/background_dark" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/titleRvTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/descrptionRvTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrption"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:textColor="@android:color/background_dark"
+            android:textColorHint="@android:color/background_dark" />
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/taskStatusCheckBox"
-        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.task_details;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.add_task.SubTasksAdapter;
+import com.ntg.user.mvpsample.add_edit_task.AddEditTaskActivity;
+import com.ntg.user.mvpsample.add_edit_task.SubTasksAdapter;
 import com.ntg.user.mvpsample.data.Task;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
  */
 public class TaskDetailFragment extends Fragment implements TaskDetailsContract.View {
 
+    public static final int EDIT_TASK_REQUEST_CODE = 10;
     @BindView(R.id.titleContentTxtView)
     TextView titleContentTxtView;
     @BindView(R.id.descrptionContentTxtView)
@@ -83,13 +85,28 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == EDIT_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            task = data.getParcelableExtra("task");
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.mi_edit:
+                navigateToEditTextUI();
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -102,6 +119,14 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
         setTaskDetailsToViews(task);
     }
 
+    @Override
+    public void navigateToEditTextUI() {
+        Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
+        intent.putExtra("task", task);
+        intent.putExtra("requestCode", EDIT_TASK_REQUEST_CODE);
+        startActivityForResult(intent, EDIT_TASK_REQUEST_CODE);
+    }
+
     void setTaskDetailsToViews(Task taskToView) {
         if (taskToView != null) {
             titleContentTxtView.setText(taskToView.getTitle());
@@ -110,7 +135,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
             if (taskToView.isCompleted()) {
                 taskDetailsLayout.setBackgroundColor(
                         getContext().getResources().getColor(R.color.completeTask));
-            }else {
+            } else {
                 taskDetailsLayout.setBackgroundColor(
                         getContext().getResources().getColor(R.color.activeTask));
             }

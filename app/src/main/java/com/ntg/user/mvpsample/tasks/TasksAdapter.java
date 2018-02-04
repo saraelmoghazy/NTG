@@ -60,12 +60,10 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
                         holder.taskLayout.setBackgroundColor(
                                 context.getResources().getColor(R.color.completeTask));
                         task.setCompleted(true);
-                        taskItemListener.onCompleteTaskClick(task);
                     } else {
                         holder.taskLayout.setBackgroundColor(
                                 context.getResources().getColor(R.color.activeTask));
                         task.setCompleted(false);
-                        taskItemListener.onActivateTaskClick(task);
                     }
                 });
         holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClick(task));
@@ -111,10 +109,6 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
         void onTaskClick(Task clickedTask);
 
         boolean onTaskLongClick(Task longClickedTask, View view);
-
-        void onCompleteTaskClick(Task completedTask);
-
-        void onActivateTaskClick(Task activatedTask);
     }
 }
 

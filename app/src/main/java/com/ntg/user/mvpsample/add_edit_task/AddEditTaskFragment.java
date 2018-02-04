@@ -1,5 +1,7 @@
-package com.ntg.user.mvpsample.add_task;
+package com.ntg.user.mvpsample.add_edit_task;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,12 +28,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.ntg.user.mvpsample.task_details.TaskDetailFragment.EDIT_TASK_REQUEST_CODE;
+
 /**
  * AddFragmentClass show UI with title textView, title editText,
  * descrption textView, descrption editText for entering task attribute
  * and floatingButton for saving
  */
-public class AddTaskFragment extends Fragment implements AddTaskContract.View {
+public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
 
     @BindView(R.id.titleEditText)
     EditText titleEditText;
@@ -40,12 +44,13 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     @BindView(R.id.rv_subtasks)
     RecyclerView subtasksRecyclerView;
     FloatingActionButton saveTaskFab;
-    private AddTaskContract.Presenter presenter;
+    private AddEditTaskContract.Presenter presenter;
     SubTasksAdapter subTasksAdapter;
     LinearLayoutManager llm;
+    Task taskToEdit;
 
-    public static AddTaskFragment newInstance() {
-        return new AddTaskFragment();
+    public static AddEditTaskFragment newInstance() {
+        return new AddEditTaskFragment();
     }
 
     @Override
@@ -59,7 +64,18 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
         super.onActivityCreated(savedInstanceState);
 
         saveTaskFab = getActivity().findViewById(R.id.save_task_fab);
-        saveTaskFab.setOnClickListener(view -> presenter.saveTask(getTaskFromUser()));
+        int requestCode = getActivity().getIntent().getIntExtra("requestCode", 0);
+        if (requestCode == EDIT_TASK_REQUEST_CODE) {
+            taskToEdit = getActivity().getIntent().getParcelableExtra("task");
+            setTaskToEdit(taskToEdit);
+        }
+        saveTaskFab.setOnClickListener(view -> {
+            if (requestCode == EDIT_TASK_REQUEST_CODE) {
+                presenter.editTask(getUpdatedTaskFromUser(taskToEdit));
+            } else {
+                presenter.saveTask(getNewTaskFromUser());
+            }
+        });
     }
 
     @Override
@@ -111,7 +127,7 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
     }
 
     @Override
-    public void setPresenter(AddTaskContract.Presenter presenter) {
+    public void setPresenter(AddEditTaskContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -123,21 +139,42 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
         getActivity().finish();
     }
 
+    @Override
+    public void showTaskDetail(Task task) {
+        Intent intent = new Intent();
+        intent.putExtra("task", task);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
+    }
+
     /**
      * This method show Toast with a message indicating that saving task operation success
      */
     @Override
     public void showSaveTaskSuccessMsg() {
-        Toast.makeText(getContext(), "Task saved successfully", Toast.LENGTH_LONG).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), "Task saved successfully", Toast.LENGTH_LONG).show();
+        }
     }
+
 
     /**
      * This method show Toast with a message indicating that saving task operation failed
      */
     @Override
     public void showSaveTaskFailedMsg() {
-        Toast.makeText(getContext(), "Server Error: Failed to save Task",
-                Toast.LENGTH_LONG).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), "Server Error: Failed to save Task",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setTaskToEdit(Task taskToEdit) {
+        if (taskToEdit != null) {
+            titleEditText.setText(taskToEdit.getTitle());
+            descrptionEditText.setText(taskToEdit.getDescription());
+            subTasksAdapter.setSubtasks(taskToEdit.getSubtasks());
+        }
     }
 
     /**
@@ -145,10 +182,17 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View {
      *
      * @return Task instance with title and descrption from inputs.
      */
-    Task getTaskFromUser() {
+    Task getNewTaskFromUser() {
         String title = titleEditText.getText().toString();
         String descrption = descrptionEditText.getText().toString();
         List<Subtask> subtasks = subTasksAdapter.getSubtasks();
         return new Task(title, descrption, subtasks);
+    }
+
+    Task getUpdatedTaskFromUser(Task task) {
+        task.setTitle(titleEditText.getText().toString());
+        task.setDescription(descrptionEditText.getText().toString());
+        task.setSubtasks(subTasksAdapter.getSubtasks());
+        return task;
     }
 }

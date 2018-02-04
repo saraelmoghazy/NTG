@@ -1,17 +1,19 @@
-package com.ntg.user.mvpsample.add_task;
+package com.ntg.user.mvpsample.add_edit_task;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.base.BaseView;
 import com.ntg.user.mvpsample.data.Task;
 
 /**
- * AddTaskContract contains View and presenter interfaces of AddTask module
+ * AddEditTaskContract contains View and presenter interfaces of AddTask module
  */
 
-public interface AddTaskContract {
+public interface AddEditTaskContract {
 
     interface View extends BaseView<Presenter> {
         void showTasks();
+
+        void showTaskDetail(Task task);
 
         void showSaveTaskSuccessMsg();
 
@@ -20,5 +22,7 @@ public interface AddTaskContract {
 
     interface Presenter extends BasePresenter {
         void saveTask(Task task);
+
+        void editTask(Task task);
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ntg.user.mvpsample.add_task.AddTaskActivity">
+    tools:context="com.ntg.user.mvpsample.add_edit_task.AddEditTaskActivity">
 
     <FrameLayout
         android:id="@+id/add_task_fragment"
