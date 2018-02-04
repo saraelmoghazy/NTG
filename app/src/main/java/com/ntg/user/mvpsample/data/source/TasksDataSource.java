@@ -22,8 +22,15 @@ public interface TasksDataSource {
        void onTaskSaved();
        void onTaskFailed(String msgError);
    }
+    interface GetTasksProgressCallBack {
+
+        void onTasksProgressed(boolean ratio);
+
+        void onGetTasksProgressFailed(String MsgError);
+    }
     void loadTask(GetTaskCallback getTaskCallback);
     void saveTask(Task task, SaveTaskCallBack saveTask);
+    boolean getTasksProgress(String taskId);
 
 
 }

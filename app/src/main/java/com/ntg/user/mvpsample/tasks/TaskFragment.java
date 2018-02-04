@@ -107,7 +107,8 @@ public class TaskFragment extends Fragment  implements TaskContract.View, TaskIt
     @Override
     public void showMessageError() {
         noTasksTxtView.setVisibility(View.VISIBLE);
-        noTasksTxtView.setText("Server Error: Check Your Connection");
+        progressBar.setVisibility(View.GONE);
+        noTasksTxtView.setText("Something Erorr");
 
     }
 

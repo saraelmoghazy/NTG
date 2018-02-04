@@ -47,6 +47,10 @@ public class TasksRepository  implements TasksDataSource{
 
     }
 
+    @Override
+    public boolean getTasksProgress(String taskId) {
+        return tasksRemoteDataSource.getTasksProgress(taskId);
+    }
 
 
 }

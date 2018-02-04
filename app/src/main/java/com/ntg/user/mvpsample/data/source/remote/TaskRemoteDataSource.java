@@ -12,6 +12,7 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -45,6 +46,7 @@ public class TaskRemoteDataSource implements TasksDataSource {
                 ApiClient.getClient().create(ApiService.class);
 
         apiService.getTasks()
+                .flatMap(this::cast)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Task>>() {
@@ -60,7 +62,8 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
                     @Override
                     public void onError(Throwable e) {
-                       tasksCallBack.onDataNotAvailable(e.getMessage());
+                        tasksCallBack.onDataNotAvailable(e.getMessage());
+
                     }
 
                     @Override
@@ -70,11 +73,25 @@ public class TaskRemoteDataSource implements TasksDataSource {
                 });
     }
 
+    private Observable<List<Task>> cast(List<Task> tasks) {
+        for (Task task : tasks)
+            if (task.getSubtasks() != null && !task.getSubtasks().isEmpty()) {
+                task.setCompleted(getTasksProgress(task.getTaskId()));
+
+            } else {
+                task.setCompleted(false);
+            }
+
+        return Observable.just(tasks);
+
+    }
+
     @Override
     public void saveTask(Task task, final SaveTaskCallBack saveTaskCallBack) {
         ApiService apiService =
                 ApiClient.getClient().create(ApiService.class);
         apiService.saveTask(task)
+
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Task>() {
@@ -100,6 +117,21 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
                     }
                 });
+    }
+    @Override
+    public boolean getTasksProgress(String taskId) {
+        final boolean[] ratio = {false};
+
+        ApiService apiService =
+                ApiClient.getClient().create(ApiService.class);
+
+        apiService.getSubTasks(taskId)
+                .flatMapIterable(subtasks -> subtasks)
+                .map(Subtask::getProgress)
+                .toList()
+                .subscribe(list -> ratio[0] = MathUtil.average(list) > 80);
+
+        return ratio[0];
     }
 
 
