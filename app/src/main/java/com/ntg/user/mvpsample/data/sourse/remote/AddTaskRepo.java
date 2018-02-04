@@ -29,7 +29,7 @@ public class AddTaskRepo implements TasksDataSource.SaveTask {
         return INSTANCE;
     }
     @Override
-    public void saveTask(Task task) {
+    public void saveTask(Task task, AddTaskCallback addTaskCallback) {
         ApiInterface addNewTask = ApiClient.getClient().create(ApiInterface.class);
         addNewTask.saveTask(task)
                 .subscribeOn(Schedulers.io())
@@ -42,12 +42,12 @@ public class AddTaskRepo implements TasksDataSource.SaveTask {
 
                     @Override
                     public void onNext(Task task) {
-
+                        addTaskCallback.onTaskAdded(task);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        addTaskCallback.onTaskAddedFail(e.getMessage());
                     }
 
                     @Override

@@ -2,12 +2,13 @@ package com.ntg.user.mvpsample.add_tasks;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.SubTask;
@@ -48,13 +49,19 @@ public class AddTaskFragment extends android.app.Fragment implements IAddTaskVie
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         ButterKnife.bind(this , view);
         List<SubTask> subTasks = new ArrayList<>();
-        addTaskPresenter = new AddTaskPresenter(Injection.provideAddTasksRepository());
+        addTaskPresenter = new AddTaskPresenter(Injection.provideAddTasksRepository(), this);
         tasksFragment = TasksFragment.newInstance();
         addNewTask.setOnClickListener(v ->{
-            addTaskPresenter.saveTask(new Task(UUID.randomUUID().toString()
-                    , title.getText().toString()
-                    ,description.getText().toString(),subTasks));getFragmentManager()
-                    .beginTransaction().replace(R.id.container ,tasksFragment).commit();});
+            if (title.getText().toString().equals("") ||
+                    description.getText().toString().equals("")){
+                title.setError(getResources().getString(R.string.fill_data));
+            }else {
+                addTaskPresenter.saveTask(new Task(UUID.randomUUID().toString()
+                        , title.getText().toString()
+                        ,description.getText().toString(),subTasks));getFragmentManager()
+                        .beginTransaction().replace(R.id.container ,tasksFragment).commit();
+            }
+           });
         return view;
     }
 
@@ -79,5 +86,15 @@ public class AddTaskFragment extends android.app.Fragment implements IAddTaskVie
     @Override
     public void setPresenter(Object presenter) {
 
+    }
+
+    @Override
+    public void showAddSuccess(String s) {
+        Toast.makeText(getActivity() , s , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showAddFail(String s) {
+        Toast.makeText(getActivity() , s , Toast.LENGTH_SHORT).show();
     }
 }

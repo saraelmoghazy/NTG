@@ -1,6 +1,8 @@
 package com.ntg.user.mvpsample.data;
 
-public class SubTask{
+import java.io.Serializable;
+
+public class SubTask implements Serializable{
 
     private String id;
     private String title;

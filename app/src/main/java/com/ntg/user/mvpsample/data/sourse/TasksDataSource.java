@@ -15,12 +15,17 @@ public interface TasksDataSource {
         void onTaskLoadedFail(String errMesg);
     }
 
+
     int getSubTasksProgress(String id);
 
     void getTasks(LoadTasksCallback loadTasksCallback);
 
     interface SaveTask{
-        void saveTask(Task task);
+        interface AddTaskCallback{
+            void onTaskAdded(Task task);
+            void onTaskAddedFail(String errMessage);
+        }
+        void saveTask(Task task , AddTaskCallback addTaskCallback);
     }
 
     interface SaveSubTask{

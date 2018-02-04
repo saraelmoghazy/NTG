@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_subtask.SubTaskDialogFragment;
+import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +37,10 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
     TextView stateTv;
     @BindView(R.id.btn_addSubTask)
     FloatingActionButton navigateToSubTaskDialog;
+    @BindView(R.id.rv_subTasks)
+    RecyclerView subTaskRecycler;
+    private SubTasksAdapter subTasksAdapter;
+
     ITaskDetailsPresenter iTaskDetailsPresenter;
     String id;
 
@@ -54,6 +64,9 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
         ButterKnife.bind(this , view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        subTaskRecycler.setLayoutManager(linearLayoutManager);
         if (getArguments() != null) {
             Task task = (Task) getArguments().get("task");
             id = task.getId();
@@ -92,6 +105,12 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
     }
 
     @Override
+    public void showSubTasks(List<SubTask> subTasks){
+        subTasksAdapter = new SubTasksAdapter(subTasks);
+        subTaskRecycler.setAdapter(subTasksAdapter);
+    }
+
+    @Override
     public void navigateToSubTasksFragment() {
         SubTaskDialogFragment dialogFragment = SubTaskDialogFragment.newInstance(id);
         dialogFragment.show(getFragmentManager(),"islam");
@@ -101,7 +120,6 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         Dialog yourDialog = dialogFragment.getDialog();
         yourDialog.getWindow().setAttributes(layoutParams);
-
     }
 
 }

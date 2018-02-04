@@ -31,6 +31,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_stateDetail"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subtasks"
+            android:textSize="24sp"
+            android:padding="2dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_subTasks">
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton

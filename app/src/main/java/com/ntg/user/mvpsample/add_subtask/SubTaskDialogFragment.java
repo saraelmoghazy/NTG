@@ -8,18 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.SubTask;
-
 import java.util.UUID;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by islam on 2/1/2018.
+ * @author islam
  */
 
 public class SubTaskDialogFragment extends DialogFragment implements ISubTaskView {
@@ -51,11 +48,22 @@ public class SubTaskDialogFragment extends DialogFragment implements ISubTaskVie
 
         subTaskPresenter = new SubTaskPresenter(Injection.provideAddSubTaskRepository(), this);
         addSubTask.setOnClickListener(v -> {
-            SubTask subTask = new SubTask(UUID.randomUUID().toString()
-                    ,subTaskTitle.getText().toString()
-                    ,subTaskDescription.getText().toString()
-                    ,Integer.parseInt(subTaskProgress.getText().toString()));
-            subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);});
+            if (subTaskTitle.getText().toString().equals("")){
+                subTaskTitle.setError(getResources().getString(R.string.fill_data));
+            }else if (subTaskDescription.getText().toString().equals("")){
+                subTaskDescription.setError(getResources().getString(R.string.fill_data));
+            }else if (subTaskProgress.getText().toString().equals("")){
+                subTaskProgress.setError(getResources().getString(R.string.fill_data));
+            }else if (Integer.parseInt(subTaskProgress.getText().toString())> 100){
+                subTaskProgress.setError(getResources().getString(R.string.less_than_100));
+            }
+            else {
+                SubTask subTask = new SubTask(UUID.randomUUID().toString()
+                        ,subTaskTitle.getText().toString()
+                        ,subTaskDescription.getText().toString()
+                        ,Integer.parseInt(subTaskProgress.getText().toString()));
+                subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);dismiss();}
+           });
         return view;
     }
 
