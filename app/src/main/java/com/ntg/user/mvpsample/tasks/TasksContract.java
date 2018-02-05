@@ -1,27 +1,40 @@
 package com.ntg.user.mvpsample.tasks;
 
-import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.PresenterLayer.InterfacePresenter;
+import com.ntg.user.mvpsample.PresenterLayer.ViewInterface;
+import com.ntg.user.mvpsample.model.Task;
 
 import java.util.List;
 
 /**
- * This interface includes tow interfaces view and presenter.
- * the view interface contain three function that will be called from
- * task adapter.
- * the second interface contains function start that will be called from
- * class task presenter.
+ * Created by ilias on 25/01/2018.
  */
 
 public interface TasksContract {
 
+    interface View extends ViewInterface<Presenter> {
+        void showTasks(List<Task> tasks);
 
-    interface View{
-        void showTask(List<Task> tasks);
-        void setPresenter(Presenter presenter);
         void showNoTasks();
+
+        void showNetworkError();
+
+        void showAddNewTaskUI();
+
+        void showUpdateTaskUI(Task task);
+
+        void showTaskDetailsUI(Task task);
     }
 
-    interface Presenter{
-        void start();
+    interface Presenter extends InterfacePresenter {
+        void getTasks();
+
+        void navigateToAddTaskUI();
+
+        void updateTaskStatus(Task task);
+
+        void updateTask(Task task);
+
+        void deleteTask(Task task);
     }
 }

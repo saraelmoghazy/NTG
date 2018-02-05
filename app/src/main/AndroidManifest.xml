@@ -11,14 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tasks.MainActivity">
+        <activity
+            android:name=".tasks.TasksActivity"
+            android:label="@string/title_activity_tasks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasks.Main2Activity"></activity>
+        <activity android:name=".show_task.ShowTaskActivity" />
+        <activity
+            android:name=".model.AddTaskActivity"
+            android:label="@string/title_activity_add_task" />
+        <activity android:name=".RxActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
