@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.SubTask;
@@ -62,18 +64,19 @@ public class SubTaskDialogFragment extends DialogFragment implements ISubTaskVie
                         ,subTaskTitle.getText().toString()
                         ,subTaskDescription.getText().toString()
                         ,Integer.parseInt(subTaskProgress.getText().toString()));
-                subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);dismiss();}
+                subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);}
            });
         return view;
     }
 
     @Override
-    public void showSuccess() {
-
+    public void showSuccess(String success){
+        Toast.makeText(getActivity() , success , Toast.LENGTH_SHORT).show();
+        dismiss();
     }
 
     @Override
-    public void showFail() {
-
+    public void showFail(String fail) {
+        Toast.makeText(getActivity() , fail , Toast.LENGTH_SHORT).show();
     }
 }

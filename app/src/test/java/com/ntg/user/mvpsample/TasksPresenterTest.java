@@ -2,6 +2,7 @@ package com.ntg.user.mvpsample;
 
 import com.ntg.user.mvpsample.add_tasks.AddTaskPresenter;
 import com.ntg.user.mvpsample.add_tasks.IAddTaskView;
+import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
@@ -18,7 +19,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -28,24 +31,29 @@ import static org.mockito.Mockito.verify;
 public class TasksPresenterTest {
     @Mock
     TasksRepository tasksRepository;
+    @Mock
     AddTaskRepo addTaskRepo;
 
     @Mock
     ITaskView iTaskView;
+
     TaskPresenter taskPresenter;
 
     @Mock
     IAddTaskView iAddTaskView;
+
     AddTaskPresenter addTaskPresenter;
 
     @Captor
     private ArgumentCaptor<TasksDataSource.LoadTasksCallback> loadTasksCallbackArgumentCaptor;
-    private ArgumentCaptor<Task> taskArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<TasksDataSource.SaveTask.AddTaskCallback> addTaskCallbackArgumentCaptor;
 
     @Before
     public void setupPresenter() {
         MockitoAnnotations.initMocks(this);
         taskPresenter = new TaskPresenter(tasksRepository, iTaskView);
+        addTaskPresenter = new AddTaskPresenter(addTaskRepo , iAddTaskView);
     }
 
     @Test
@@ -69,6 +77,9 @@ public class TasksPresenterTest {
 
     @Test
     public void addTask(){
-        
+        Task task = new Task( "title" , "descrption" );
+        addTaskPresenter.saveTask(task);
+        verify(addTaskRepo).saveTask(eq(task) , addTaskCallbackArgumentCaptor.capture());
+        addTaskCallbackArgumentCaptor.getValue().onTaskAdded(eq(task));
     }
 }

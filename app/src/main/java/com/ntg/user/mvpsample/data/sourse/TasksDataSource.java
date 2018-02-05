@@ -28,7 +28,12 @@ public interface TasksDataSource {
         void saveTask(Task task , AddTaskCallback addTaskCallback);
     }
 
+
     interface SaveSubTask{
-        void saveSubTask(String id , SubTask subTasks);
+        interface AddSubTaskCallback{
+            void onSubTaskAdded(SubTask subTask);
+            void inSubTaskAddedFail(String errMessage);
+        }
+        void saveSubTask(String id , SubTask subTasks , AddSubTaskCallback addSubTaskCallback);
     }
 }

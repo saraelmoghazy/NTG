@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ntg.user.mvpsample.Injection;
@@ -32,6 +33,8 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     private TaskAdapter taskAdapter;
     @BindView(R.id.rv_tasks)
     RecyclerView tasksRecyclerView;
+    @BindView(R.id.loadinIndicator)
+    ProgressBar loadingIndicator;
     TaskItemListener taskItemListener;
 
     public static TasksFragment newInstance() {
@@ -79,12 +82,10 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
         super.onDetach();
     }
 
-
     @Override
     public void showTasks(List<Task> tasks) {
         taskAdapter = new TaskAdapter(tasks ,this);
         tasksRecyclerView.setAdapter(taskAdapter);
-
     }
 
     @Override
@@ -95,8 +96,16 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     }
 
     @Override
-    public void showErrorMesaage(String errMesg) {
+    public void showErrorMesaage(String errMessasg) {
+    }
 
+    @Override
+    public void showLoadingIndicator(boolean show) {
+        if (show){
+            loadingIndicator.setVisibility(View.VISIBLE);
+        }else {
+            loadingIndicator.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -106,6 +115,5 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     @Override
     public void onTaskClicked(Task task) {
         taskItemListener.onTaskClicked(task);
-        Toast.makeText(getActivity() , task.getProgress()+"" ,Toast.LENGTH_LONG).show();
     }
 }

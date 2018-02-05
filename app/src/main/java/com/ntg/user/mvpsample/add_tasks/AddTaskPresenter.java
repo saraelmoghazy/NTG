@@ -34,7 +34,7 @@ public class AddTaskPresenter implements IAddTaskPresenter{
 
             @Override
             public void onTaskAddedFail(String errMessage) {
-                iAddTaskView.showAddSuccess("Task Added Fail");
+                iAddTaskView.showAddFail("Task Added Fail");
             }
         });
     }

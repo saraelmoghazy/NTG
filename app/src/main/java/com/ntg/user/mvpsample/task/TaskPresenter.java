@@ -27,11 +27,12 @@ public class TaskPresenter implements ITaskPresenter {
      */
     @Override
     public void loadTasks() {
+        iTaskView.showLoadingIndicator(true);
         tasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
                     iTaskView.showTasks(tasks);
-
+                iTaskView.showLoadingIndicator(false);
             }
             @Override
             public void onTaskLoadedFail(String errMesg) {

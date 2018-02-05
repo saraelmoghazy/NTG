@@ -1,10 +1,11 @@
 package com.ntg.user.mvpsample.add_subtask;
 
 import com.ntg.user.mvpsample.data.SubTask;
+import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.remote.AddSubTaskRepo;
 
 /**
- * Created by islam on 2/1/2018.
+ * @author islam
  */
 
 public class SubTaskPresenter implements ISubTaskPresenter {
@@ -23,6 +24,16 @@ public class SubTaskPresenter implements ISubTaskPresenter {
 
     @Override
     public void saveSubTask(String id, SubTask subTasks) {
-        addSubTaskRepo.saveSubTask(id , subTasks);
+        addSubTaskRepo.saveSubTask(id, subTasks, new TasksDataSource.SaveSubTask.AddSubTaskCallback() {
+            @Override
+            public void onSubTaskAdded(SubTask subTask) {
+                iSubTaskView.showSuccess("Success");
+            }
+
+            @Override
+            public void inSubTaskAddedFail(String errMessage) {
+                iSubTaskView.showFail("Fail To Add SubTask");
+            }
+        });
     }
 }
