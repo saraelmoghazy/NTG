@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.task.TasksFragment;
+import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements TaskItemListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(this, "hello from github", Toast.LENGTH_SHORT).show();
+
+        TasksFragment tasksFragment = TasksFragment.newInstance();
+        getFragmentManager().beginTransaction().add(R.id.container, tasksFragment).commit();
     }
 
     @Override
@@ -29,5 +32,10 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onTaskClicked(Task task) {
+        getFragmentManager().beginTransaction().replace(R.id.container, TaskDetailFragment.newInstance(task)).commit();
     }
 }
