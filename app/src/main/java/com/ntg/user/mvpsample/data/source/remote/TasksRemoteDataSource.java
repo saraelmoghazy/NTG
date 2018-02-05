@@ -1,8 +1,10 @@
 package com.ntg.user.mvpsample.data.source.remote;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
-import com.ntg.user.mvpsample.Util.MathUtil;
+import com.ntg.user.mvpsample.data.source.remote.network.RetrofitExceptionConverter;
+import com.ntg.user.mvpsample.utils.MathUtil;
 import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
@@ -25,6 +27,7 @@ import retrofit2.Response;
 
 public class TasksRemoteDataSource implements TasksDataSource {
 
+    @SuppressLint("StaticFieldLeak")
     private static TasksRemoteDataSource INSTANCE;
 
     private TasksRemoteDataSource() {
@@ -52,7 +55,11 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasksCallBack::onTasksLoaded,
-                        t -> tasksCallBack.onTasksFailed(t.getMessage()));
+                        t -> {
+                            String message = RetrofitExceptionConverter
+                                    .convertToRetrofitException(t).getMessage();
+                            tasksCallBack.onTasksFailed(message);
+                        });
     }
 
     private Observable<List<Task>> convert(List<Task> tasks) {

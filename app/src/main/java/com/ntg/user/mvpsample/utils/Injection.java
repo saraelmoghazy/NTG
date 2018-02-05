@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.Util;
+package com.ntg.user.mvpsample.utils;
 
 import android.content.Context;
 

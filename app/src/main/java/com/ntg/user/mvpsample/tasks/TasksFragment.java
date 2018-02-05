@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample.tasks;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import butterknife.ButterKnife;
  */
 public class TasksFragment extends Fragment implements TasksContract.View {
 
+    public static int ADD_TASK_REQUEST_CODE = 20;
     FloatingActionButton addTaskFab;
     @BindView(R.id.rvTasks)
     RecyclerView rvTasks;
@@ -65,7 +67,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         llm = new LinearLayoutManager(getContext());
         rvTasks.setLayoutManager(llm);
         tasksAdapter = new TasksAdapter(getContext(),
-                new ArrayList<Task>(0),
+                new ArrayList<>(0),
                 itemListener);
         rvTasks.setAdapter(tasksAdapter);
 
@@ -77,6 +79,15 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         super.onResume();
 
         presenter.start();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            presenter.getTasks();
+        }
     }
 
     @Override
@@ -103,15 +114,16 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     @Override
-    public void showNetworkError() {
+    public void showNetworkError(String msg) {
         noTasksTxtView.setVisibility(View.VISIBLE);
-        noTasksTxtView.setText("Server Error: Check Your Connection");
+        loadTasksProgressBar.setVisibility(View.INVISIBLE);
+        noTasksTxtView.setText(msg);
     }
 
     @Override
     public void showAddNewTaskUI() {
         Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, ADD_TASK_REQUEST_CODE);
     }
 
     @Override

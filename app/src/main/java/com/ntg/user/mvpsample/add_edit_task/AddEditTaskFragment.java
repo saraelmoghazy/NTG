@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.source.remote.network.ErrorType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +137,7 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
      */
     @Override
     public void showTasks() {
+        getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }
 

@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.Util.ActivityUtils;
-import com.ntg.user.mvpsample.Util.Injection;
+import com.ntg.user.mvpsample.utils.ActivityUtils;
+import com.ntg.user.mvpsample.utils.Injection;
 import com.ntg.user.mvpsample.data.source.TasksRepository;
 
 public class TaskDetailsActivity extends AppCompatActivity {

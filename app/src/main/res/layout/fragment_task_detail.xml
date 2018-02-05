@@ -36,10 +36,11 @@
 
     <TextView
         android:id="@+id/titleContentTxtView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:gravity="center"
         android:hint="My Task"
         android:textColor="@android:color/background_dark"
         android:textColorHint="@android:color/background_dark"
@@ -50,10 +51,11 @@
 
     <TextView
         android:id="@+id/descrptionContentTxtView"
-        android:layout_width="192dp"
+        android:layout_width="0dp"
         android:layout_height="81dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
         android:hint="I should finish this project in this weekend "
         android:textColor="@android:color/background_dark"
         android:textColorHint="@android:color/background_dark"
@@ -64,8 +66,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_subtasks_detail"
-        android:layout_width="368dp"
-        android:layout_height="365dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
