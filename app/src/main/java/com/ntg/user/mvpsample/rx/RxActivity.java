@@ -1,8 +1,10 @@
-package com.ntg.user.mvpsample;
+package com.ntg.user.mvpsample.rx;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.ntg.user.mvpsample.R;
 
 import java.util.ArrayList;
 import java.util.List;

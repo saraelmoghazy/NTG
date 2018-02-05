@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.model.taskdatasources;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.ntg.user.mvpsample.tasks.CalculatAverage;
 import com.ntg.user.mvpsample.model.Subtask;

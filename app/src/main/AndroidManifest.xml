@@ -24,7 +24,7 @@
         <activity
             android:name=".model.AddTaskActivity"
             android:label="@string/title_activity_add_task" />
-        <activity android:name=".RxActivity">
+        <activity android:name=".rx.RxActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

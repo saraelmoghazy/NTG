@@ -20,7 +20,7 @@ public class TasksAPI {
      * @return Retrofit instance to use it for web service requests
      */
     public static Retrofit getClient() {
-        String baseURL = "http://mesawer.getsandbox.com/";
+        String baseURL = "http://ntg-webservices.getsandbox.com/";
 
         return new Retrofit.Builder()
                 .baseUrl(baseURL)

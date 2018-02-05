@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.PresenterLayer;
 
+import android.util.Log;
+
 import com.ntg.user.mvpsample.model.Task;
 import com.ntg.user.mvpsample.model.taskdatasources.TasksDataSource;
 import com.ntg.user.mvpsample.tasks.TasksContract;
@@ -44,6 +46,7 @@ public class TasksPresenter implements TasksContract.Presenter {
 
             @Override
             public void onTasksFailed(String errorMsg) {
+                Log.e("err" , errorMsg);
                 tasksView.showNetworkError();
             }
         });

@@ -24,7 +24,7 @@ public interface TasksServiceInterface {
     @GET("tasks")
     Observable<List<Task>> getTasks();
 
-    @GET("tasks/{taskId}/subtasks")
+    @GET("tasks/{taskId}/subtaks")
     Observable<List<Subtask>> getSubTasks(@Path("taskId") String taskId);
 
 
