@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".tasks.MainActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -21,4 +21,5 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_playlist_add_black_24dp"
         />
+
 </RelativeLayout>

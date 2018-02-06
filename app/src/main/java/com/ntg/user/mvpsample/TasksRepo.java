@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample;
 
 
-import com.ntg.user.mvpsample.local.TaskLocalRepo;
+import com.ntg.user.mvpsample.remote.SubTask;
 import com.ntg.user.mvpsample.remote.Task;
 import com.ntg.user.mvpsample.remote.TaskRemoteRepo;
 /**
@@ -10,16 +10,12 @@ import com.ntg.user.mvpsample.remote.TaskRemoteRepo;
 
 public class TasksRepo implements TasksDataSource {
     TaskRemoteRepo remoteRepo;
-    TaskLocalRepo localRepo;
-
-
+    
+    
     public TasksRepo() {
-        localRepo = TaskLocalRepo.newInstance();
         remoteRepo = TaskRemoteRepo.newInstance();
     }
     
-  
-   
     
     @Override
     public void getPosts(GetPostsCallBack getPostsCallBack) {
@@ -28,13 +24,18 @@ public class TasksRepo implements TasksDataSource {
     
     @Override
     public void saveTasks(Task task, SavePostsCallBack savePostsCallBack) {
-        remoteRepo.saveTasks(task,savePostsCallBack);
+        remoteRepo.saveTasks(task, savePostsCallBack);
     }
     
     @Override
     public void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack) {
-        remoteRepo.updateTasks(task,updatePostsCallBack);
+        remoteRepo.updateTasks(task, updatePostsCallBack);
     }
     
-   
+    @Override
+    public void saveSubTask(String taskId, SubTask subTask, SaveSubTaskCallBack saveSubTaskCallBack) {
+        remoteRepo.saveSubTask(taskId, subTask, saveSubTaskCallBack);
+    }
+    
+    
 }

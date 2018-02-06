@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample;
+package com.ntg.user.mvpsample.tasks;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.remote.Task;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
@@ -48,12 +52,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     }
 
     class TaskHolder extends RecyclerView.ViewHolder {
-        TextView taskName;
+        @BindView(R.id.task) TextView taskName;
 
         public TaskHolder(View itemView) {
             super(itemView);
-            taskName = (TextView) itemView.findViewById(R.id.task);
-
+            ButterKnife.bind(this,itemView);
         }
     }
 

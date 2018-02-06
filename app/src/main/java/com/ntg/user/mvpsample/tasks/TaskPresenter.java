@@ -1,6 +1,7 @@
-package com.ntg.user.mvpsample;
+package com.ntg.user.mvpsample.tasks;
 
 
+import com.ntg.user.mvpsample.TasksDataSource;
 import com.ntg.user.mvpsample.remote.Task;
 
 import java.util.List;
@@ -40,7 +41,9 @@ public class TaskPresenter implements TasksContract.Presenter {
         tasksDataSource.saveTasks(task, new TasksDataSource.SavePostsCallBack() {
             @Override
             public void onPostsSaved(Task task) {
+                
                 view.showSaveTaskSuccessMsg();
+          
             }
 
             @Override

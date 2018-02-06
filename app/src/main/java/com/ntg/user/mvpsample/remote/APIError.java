@@ -1,26 +1,31 @@
 package com.ntg.user.mvpsample.remote;
 
-public class APIError extends RuntimeException {
+/**
+ * Created by GM7 on 2/5/2018.
+ */
 
-    private int statusCode;
-    private String messageErr;
-
-    public APIError() {
+public class ApiError{
+    
+    private int errorCode;
+    private String errorMessage;
+    
+    public ApiError() {
     }
-
-    public int getStatusCode() {
-        return statusCode;
+    
+    public int getErrorCode() {
+        return errorCode;
     }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    
+    public void setErrorCode(int errorCode) {
+        
+        this.errorCode = errorCode;
     }
-
-    public String getMessageErr() {
-        return messageErr;
+    
+    public String getErrorMessage() {
+        return errorMessage;
     }
-
-    public void setMessageErr(String messageErr) {
-        this.messageErr = messageErr;
+    
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

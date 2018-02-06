@@ -1,72 +1,80 @@
 package com.ntg.user.mvpsample.remote;
 
+
+import com.ntg.user.mvpsample.R;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-
-
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
-
-    private final RxJava2CallAdapterFactory original;
-
-    private RxErrorHandlingCallAdapterFactory() {
-        original = RxJava2CallAdapterFactory.create();
+    private RxJava2CallAdapterFactory rxJava2CallAdapterFactory;
+    
+    public RxErrorHandlingCallAdapterFactory() {
+        rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create();
     }
-
+    
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
-        return null;
+        return new RxErrorHandlingCallAdapter(rxJava2CallAdapterFactory.get(returnType, annotations, retrofit));
     }
-
-
-    private class RxCallAdapterWrapper<R> implements CallAdapter<R, Observable<R>> {
-        private final Retrofit retrofit;
-        private final CallAdapter<R, ?> mWrappedCallAdapter;
-
-        public RxCallAdapterWrapper(final Retrofit retrofit, final CallAdapter<R, ?> wrapped) {
-            this.retrofit = retrofit;
-            mWrappedCallAdapter = wrapped;
+    
+    private class RxErrorHandlingCallAdapter implements CallAdapter<R, Observable<R>> {
+        private CallAdapter mWrapCallAdapter;
+        
+        public RxErrorHandlingCallAdapter(CallAdapter wrapped) {
+            mWrapCallAdapter = wrapped;
         }
-
+        
         @Override
         public Type responseType() {
-            return mWrappedCallAdapter.responseType();
+            return mWrapCallAdapter.responseType();
         }
-
+        
         @Override
-        public Observable<R> adapt(Call<R> call) {
-            return ((Observable<R>) mWrappedCallAdapter.adapt(call)).onErrorResumeNext(
-                    throwable -> {
-                        return Observable.error(generateCustomError(throwable));
-                    });
+        public Observable<R> adapt(Call call) {
+            return ((Observable<R>) mWrapCallAdapter.adapt(call)).onErrorResumeNext(new Function<Throwable, ObservableSource<? extends R>>() {
+                @Override
+                public ObservableSource<? extends R> apply(@NonNull Throwable throwable) throws Exception {
+                    return Observable.error(asRetrofitException(throwable));
+                }
+            });
         }
-
-        private APIError generateCustomError(final Throwable throwable) {
-            final HttpException httpException = (HttpException) throwable;
-            final Response response = httpException.response();
-            if (response.code() == 400) {
-                {
-                    try {
-                        Converter<ResponseBody, APIError> converter =
-                                retrofit.responseBodyConverter(APIError.class, new Annotation[0]);
-                        return converter.convert(response.errorBody());
-                    } catch (IOException ex) {
-                        return new APIError();
-                    }
+        
+        private RetrofitException asRetrofitException(final Throwable throwable) {
+            RetrofitException retrofitException = null;
+            if (throwable instanceof HttpException) {
+                HttpException httpException = (HttpException) throwable;
+                try {
+                    Converter<ResponseBody, ApiError> converter = ApiClient.getClient()
+                            .responseBodyConverter(ApiError.class, new Annotation[0]);
+                    ApiError apiError = converter.convert(httpException.response().errorBody());
+                    retrofitException = new RetrofitException(apiError.getErrorCode(),
+                            apiError.getErrorMessage(), ErrorType.HTTP);
+                } catch (Exception e) {
                 }
             }
-            return new APIError();
+            // A network error happened
+            else if (throwable instanceof IOException) {
+                retrofitException = new RetrofitException(-1, throwable.getMessage(), ErrorType.NETWORK);
+            } else {
+                // We don't know what happened. We need to simply convert to an unknown error
+                retrofitException = new RetrofitException(-1, throwable.getMessage(), ErrorType.UNEXPECTED);
+            }
+            return retrofitException;
         }
+        
     }
 }

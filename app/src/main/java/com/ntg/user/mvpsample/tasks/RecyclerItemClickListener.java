@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample;
+package com.ntg.user.mvpsample.tasks;
 
 /**
  * Created by GM7 on 1/30/2018.
