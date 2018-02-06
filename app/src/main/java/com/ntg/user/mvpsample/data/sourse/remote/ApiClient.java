@@ -29,7 +29,6 @@ public class ApiClient {
                     .baseUrl(BASE_URL)
                     .addCallAdapterFactory(new RxErrorHandlingCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .
                     .build();
         return retrofit;
     }
