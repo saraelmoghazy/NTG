@@ -2,6 +2,9 @@ package com.ntg.user.mvpsample.data.sourse.remote;
 
 import android.util.Log;
 
+import com.ntg.user.mvpsample.ApiError;
+import com.ntg.user.mvpsample.ErrorType;
+import com.ntg.user.mvpsample.RetrofitError;
 import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
@@ -67,13 +70,21 @@ public class RemoteTaskRepo implements TasksDataSource{
 
             @Override
             public void onNext(List<Task> tasks) {
-                loadTasksCallback.onTasksLoaded(tasks);
+                if (tasks.size() != 0){
+                    loadTasksCallback.onTasksLoaded(tasks);
+                }else {
 
+                }
             }
 
             @Override
             public void onError(Throwable e) {
                 loadTasksCallback.onTaskLoadedFail(e.getMessage());
+                ApiError error =  RetrofitError.covertError(e);
+                switch (error.getType()){
+                    case ErrorType.HTTP:
+                        Log.e("sss" , error.getMessage());
+                }
             }
 
             @Override

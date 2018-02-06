@@ -24,7 +24,7 @@ public interface ApiInterface {
 
 
     @GET("tasks")
-    @Headers("Content-type: application/json")
+ //   @Headers("Content-type: application/json")
     Observable<List<Task>> getTasks();
 
     @POST("tasks")
