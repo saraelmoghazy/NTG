@@ -9,6 +9,7 @@ import com.ntg.user.mvpsample.data.sourse.remote.ApiClient;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
 import java.lang.reflect.Type;
 import java.util.Observable;
 
@@ -36,11 +37,11 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         return new RxErrorHandlingCallAdapter(rxJava2CallAdapterFactory.get(returnType
-                , annotations , retrofit));
+                , annotations, retrofit));
     }
 
-    private class RxErrorHandlingCallAdapter implements CallAdapter<R , io.reactivex.Observable<R>>{
-        private CallAdapter  wrapCallAdapter;
+    private class RxErrorHandlingCallAdapter implements CallAdapter<R, io.reactivex.Observable<R>> {
+        private CallAdapter wrapCallAdapter;
 
         public RxErrorHandlingCallAdapter(CallAdapter wrapped) {
             wrapCallAdapter = wrapped;
@@ -57,28 +58,29 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                     .onErrorResumeNext(new Function<Throwable, ObservableSource>() {
                         @Override
                         public ObservableSource apply(Throwable throwable) throws Exception {
-                            return io.reactivex.Observable.error(throwable);
+                            return io.reactivex.Observable.error(covertError(throwable));
                         }
                     });
         }
-        public  ApiError covertError(Throwable  t){
+
+        public ApiError covertError(Throwable t) {
             ApiError error = null;
-            if (t instanceof HttpException){
+            if (t instanceof HttpException) {
                 HttpException httpException = (HttpException) t;
-                Converter<ResponseBody , ApiError> converter = ApiClient.getClient()
-                        .responseBodyConverter(ApiError.class , new Annotation[0]);
+                Converter<ResponseBody, ApiError> converter = ApiClient.getClient()
+                        .responseBodyConverter(ApiError.class, new Annotation[0]);
                 ResponseBody responseBody = httpException.response().errorBody();
-                if (responseBody != null){
+                if (responseBody != null) {
                     try {
                         error = converter.convert(responseBody);
-                    }catch (IOException e){
+                    } catch (IOException e) {
                     }
                     return error;
-                }else {
+                } else {
                     return null;
                 }
-            }else if(t instanceof NetworkErrorException){
-                return new ApiError(-1,"otherException" ,2);
+            } else if (t instanceof NetworkErrorException) {
+                return new ApiError(-1, "otherException", 2);
             }
             return error;
         }
