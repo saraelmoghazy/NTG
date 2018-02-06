@@ -62,7 +62,9 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
                     @Override
                     public void onError(Throwable e) {
-                        tasksCallBack.onDataNotAvailable(e.getMessage());
+                        String message = ApiErrorUtil
+                                .parseError(e).getMessage();
+                        tasksCallBack.onDataNotAvailable(message);
 
                     }
 
@@ -108,6 +110,7 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
                     @Override
                     public void onError(Throwable e) {
+
 
                         saveTaskCallBack.onTaskFailed(e.getMessage());
                     }

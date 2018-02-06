@@ -15,7 +15,7 @@ public class TaskContract {
 
         void showTasks(List<Task> taskList);
         void showNoTasks();
-        void showMessageError();
+        void showMessageError(String msg);
 
 
     }

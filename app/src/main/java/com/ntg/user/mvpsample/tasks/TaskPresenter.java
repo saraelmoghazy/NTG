@@ -39,7 +39,7 @@ public class TaskPresenter implements TaskContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String msgError) {
-                tasksView.showMessageError();
+                tasksView.showMessageError(msgError);
 
             }
         });

@@ -50,6 +50,7 @@ public class ApiClient {
                             .baseUrl(BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                            .addCallAdapterFactory(new RxErrorHandlingCallAdapterFactory())
                             .client(client)
                             .build();
                 }

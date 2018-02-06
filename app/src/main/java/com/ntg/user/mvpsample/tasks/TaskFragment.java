@@ -105,10 +105,10 @@ public class TaskFragment extends Fragment  implements TaskContract.View, TaskIt
     }
 
     @Override
-    public void showMessageError() {
+    public void showMessageError(String msg) {
         noTasksTxtView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        noTasksTxtView.setText("Something Erorr");
+        noTasksTxtView.setText(msg);
 
     }
 
