@@ -26,7 +26,7 @@ public class RetrofitExceptionConverter {
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
             Converter<ResponseBody, TasksAPIError> converter = TasksAPI.getClient()
-                    .responseBodyConverter(RetrofitException.class, new Annotation[0]);
+                    .responseBodyConverter(TasksAPIError.class, new Annotation[0]);
             ResponseBody responseErrorBody = httpException.response().errorBody();
             if (responseErrorBody != null) {
                 try {

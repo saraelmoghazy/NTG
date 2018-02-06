@@ -41,8 +41,7 @@ public class TasksAPI {
         return new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(new ErrorHandlingRxCallAdapterFactory())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .client(client)
                 .build();
     }
