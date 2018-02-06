@@ -20,8 +20,6 @@ public interface TasksContract {
 
         void showLoadingIndicator();
 
-        void showNetworkError(String msg);
-
         void showAddNewTaskUI();
 
         void showTaskDetailsUI(Task task);

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.source.remote.network.ErrorObserver;
 import com.ntg.user.mvpsample.data.source.remote.network.ErrorType;
 import com.ntg.user.mvpsample.data.source.remote.network.RetrofitException;
@@ -53,13 +54,8 @@ public class TasksRemoteDataSource implements TasksDataSource {
      * @param tasksCallBack to carry result of loading data to the user of this method
      */
     @Override
-    public void loadData(final GetTasksCallBack tasksCallBack) {
-        ErrorObserver<List<Task>> errorObserver = new ErrorObserver<List<Task>>() {
-            @Override
-            public void getErrorMsg(String errorMsg) {
-                tasksCallBack.onTasksFailed(errorMsg);
-            }
-
+    public void loadData(final GetTasksCallBack tasksCallBack, ErrorCallback errorCallback) {
+        ErrorObserver<List<Task>> errorObserver = new ErrorObserver<List<Task>>(errorCallback) {
             @Override
             public void onNext(List<Task> tasks) {
                 tasksCallBack.onTasksLoaded(tasks);
@@ -72,25 +68,6 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(errorObserver);
-//                .subscribe(tasksCallBack::onTasksLoaded,
-//                        t -> {
-//                            String errorMsg;
-//                            if (t instanceof RetrofitException) {
-//                                RetrofitException retrofitException = (RetrofitException) t;
-//                                switch (retrofitException.getType()) {
-//                                    case ErrorType.HTTP:
-//                                        errorMsg = retrofitException.getMessage();
-//                                        break;
-//                                    case ErrorType.NETWORK:
-//                                        errorMsg = retrofitException.getMessage();
-//                                        break;
-//                                    default:
-//                                        errorMsg = retrofitException.getMessage();
-//                                }
-//                                tasksCallBack.onTasksFailed(errorMsg);
-//                            }
-//                        });
-
     }
 
     private Observable<List<Task>> convert(List<Task> tasks) {

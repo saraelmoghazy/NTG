@@ -115,6 +115,11 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
     }
 
     @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
     public void showTaskDetails() {
         setTaskDetailsToViews(task);
     }

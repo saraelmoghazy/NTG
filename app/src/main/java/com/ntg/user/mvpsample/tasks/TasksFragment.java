@@ -96,6 +96,13 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     @Override
+    public void showErrorMsg(String errorMsg) {
+        noTasksTxtView.setVisibility(View.VISIBLE);
+        loadTasksProgressBar.setVisibility(View.INVISIBLE);
+        noTasksTxtView.setText(errorMsg);
+    }
+
+    @Override
     public void showTasks(List<Task> tasks) {
         noTasksTxtView.setVisibility(View.GONE);
         loadTasksProgressBar.setVisibility(View.GONE);
@@ -111,13 +118,6 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void showLoadingIndicator() {
         loadTasksProgressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showNetworkError(String msg) {
-        noTasksTxtView.setVisibility(View.VISIBLE);
-        loadTasksProgressBar.setVisibility(View.INVISIBLE);
-        noTasksTxtView.setText(msg);
     }
 
     @Override

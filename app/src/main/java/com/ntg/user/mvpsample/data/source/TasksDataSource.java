@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.data.source;
 
-import android.content.Context;
-
+import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.Task;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public interface TasksDataSource {
 
-    void loadData(GetTasksCallBack tasksCallBack);
+    void loadData(GetTasksCallBack tasksCallBack,ErrorCallback errorCallback);
 
     void saveTask(Task task, SaveTaskCallBack saveTaskCallBack);
 
@@ -25,8 +24,6 @@ public interface TasksDataSource {
     interface GetTasksCallBack {
 
         void onTasksLoaded(List<Task> tasks);
-
-        void onTasksFailed(String errorMsg);
     }
 
     interface SaveTaskCallBack {
@@ -34,12 +31,5 @@ public interface TasksDataSource {
         void onTaskSaved();
 
         void onTaskFailed(String errorMsg);
-    }
-
-    interface GetTaskProgressCallBack {
-
-        void onTaskProgressed(boolean isOver90);
-
-        void onGetTaskProgressFailed(String errorMsg);
     }
 }

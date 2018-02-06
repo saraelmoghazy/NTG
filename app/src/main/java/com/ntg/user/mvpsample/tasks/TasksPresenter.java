@@ -32,21 +32,13 @@ public class TasksPresenter implements TasksContract.Presenter {
     @Override
     public void getTasks() {
         tasksView.showLoadingIndicator();
-        tasksRepository.loadData(new TasksDataSource.GetTasksCallBack() {
-            @Override
-            public void onTasksLoaded(List<Task> tasks) {
-                if (tasks != null && tasks.size() != 0) {
-                    tasksView.showTasks(tasks);
-                } else {
-                    tasksView.showNoTasks();
-                }
+        tasksRepository.loadData(tasks -> {
+            if (tasks != null && tasks.size() != 0) {
+                tasksView.showTasks(tasks);
+            } else {
+                tasksView.showNoTasks();
             }
-
-            @Override
-            public void onTasksFailed(String errorMsg) {
-                tasksView.showNetworkError(errorMsg);
-            }
-        });
+        }, this);
     }
 
     /**
@@ -61,5 +53,10 @@ public class TasksPresenter implements TasksContract.Presenter {
     public void deleteTask(Task task) {
         tasksRepository.deleteTask(task);
         getTasks();
+    }
+
+    @Override
+    public void onError(String errorMsg) {
+        tasksView.showErrorMsg(errorMsg);
     }
 }

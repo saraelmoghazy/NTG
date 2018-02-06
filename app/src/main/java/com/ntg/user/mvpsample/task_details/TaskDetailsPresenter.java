@@ -22,4 +22,9 @@ public class TaskDetailsPresenter implements TaskDetailsContract.Presenter {
     public void start() {
         taskDetailsView.showTaskDetails();
     }
+
+    @Override
+    public void onError(String errorMsg) {
+
+    }
 }

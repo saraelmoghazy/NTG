@@ -132,6 +132,11 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
         this.presenter = presenter;
     }
 
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
     /**
      * This method return to tasks activity to show tasks after saving task operation
      */

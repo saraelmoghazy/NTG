@@ -3,6 +3,7 @@ package com.ntg.user.mvpsample.data.source;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.remote.TasksRemoteDataSource;
 
@@ -28,8 +29,8 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void loadData(GetTasksCallBack getTasksCallBack) {
-        tasksRemoteDataSource.loadData(getTasksCallBack);
+    public void loadData(GetTasksCallBack getTasksCallBack, ErrorCallback errorCallback) {
+        tasksRemoteDataSource.loadData(getTasksCallBack, errorCallback);
     }
 
     @Override

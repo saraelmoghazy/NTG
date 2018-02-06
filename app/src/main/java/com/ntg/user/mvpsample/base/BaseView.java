@@ -6,4 +6,5 @@ package com.ntg.user.mvpsample.base;
 
 public interface BaseView<T> {
     void setPresenter(T presenter);
+    void showErrorMsg(String errorMsg);
 }

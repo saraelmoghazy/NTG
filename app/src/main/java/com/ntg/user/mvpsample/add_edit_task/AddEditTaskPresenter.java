@@ -58,4 +58,9 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
         });
         addTaskView.showTaskDetail(task);
     }
+
+    @Override
+    public void onError(String errorMsg) {
+
+    }
 }

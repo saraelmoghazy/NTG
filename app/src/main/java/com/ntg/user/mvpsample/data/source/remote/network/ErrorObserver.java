@@ -1,12 +1,18 @@
 package com.ntg.user.mvpsample.data.source.remote.network;
 
+import com.ntg.user.mvpsample.base.ErrorCallback;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 
-public abstract class ErrorObserver<T> implements BaseObserver<T> {
+public abstract class ErrorObserver<T> implements Observer<T> {
 
-    private static String errorMsg;
+    ErrorCallback errorCallback;
+
+    public ErrorObserver(ErrorCallback errorCallback) {
+        this.errorCallback = errorCallback;
+    }
 
     @Override
     public void onSubscribe(Disposable d) {
@@ -17,17 +23,18 @@ public abstract class ErrorObserver<T> implements BaseObserver<T> {
     public void onError(Throwable e) {
         if (e instanceof RetrofitException) {
             RetrofitException retrofitException = (RetrofitException) e;
+            String errorMsg;
             switch (retrofitException.getType()) {
                 case ErrorType.HTTP:
                     errorMsg = retrofitException.getMessage();
                     break;
                 case ErrorType.NETWORK:
-                    errorMsg = retrofitException.getMessage();
+                    errorMsg = "Server Error: Check your connection";
                     break;
                 default:
                     errorMsg = retrofitException.getMessage();
             }
-            getErrorMsg(errorMsg);
+            errorCallback.onError(errorMsg);
         }
     }
 
