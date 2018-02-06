@@ -4,7 +4,7 @@ package com.ntg.user.mvpsample;
  * Created by islam on 2/5/2018.
  */
 
-public class ApiError {
+public class ApiError extends RuntimeException{
     private int statusCode;
     private String message;
     private int type;

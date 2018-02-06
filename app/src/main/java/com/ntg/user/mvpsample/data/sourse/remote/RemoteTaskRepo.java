@@ -80,6 +80,12 @@ public class RemoteTaskRepo implements TasksDataSource{
             @Override
             public void onError(Throwable e) {
                 loadTasksCallback.onTaskLoadedFail(e.getMessage());
+                if(e instanceof ApiError){
+                    switch (((ApiError) e).getType()){
+                        case ErrorType.HTTP:
+                            Log.e("sss" , ApiError.getMessage());
+                    }
+                }
                 ApiError error =  RetrofitError.covertError(e);
                 switch (error.getType()){
                     case ErrorType.HTTP:

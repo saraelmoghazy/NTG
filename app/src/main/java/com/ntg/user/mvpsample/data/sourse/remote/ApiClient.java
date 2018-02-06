@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.data.sourse.remote;
 
+import com.ntg.user.mvpsample.data.RxErrorHandlingCallAdapterFactory;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,7 +27,7 @@ public class ApiClient {
             retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl(BASE_URL)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addCallAdapterFactory(new RxErrorHandlingCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         return retrofit;
