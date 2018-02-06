@@ -52,12 +52,13 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             return wrapCallAdapter.responseType();
         }
 
+
         @Override
-        public io.reactivex.Observable<R> adapt(Call<R> call) {
-            return ((io.reactivex.Observable) wrapCallAdapter.adapt(call))
-                    .onErrorResumeNext(new Function<Throwable, ObservableSource>() {
+        public io.reactivex.Observable<R> adapt(Call call) {
+            return ((io.reactivex.Observable<R>) wrapCallAdapter.adapt(call))
+                    .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends R>>() {
                         @Override
-                        public ObservableSource apply(Throwable throwable) throws Exception {
+                        public ObservableSource<? extends R> apply(Throwable throwable) throws Exception {
                             return io.reactivex.Observable.error(covertError(throwable));
                         }
                     });
@@ -82,6 +83,7 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             } else if (t instanceof NetworkErrorException) {
                 return new ApiError(-1, "otherException", 2);
             }
+
             return error;
         }
     }
