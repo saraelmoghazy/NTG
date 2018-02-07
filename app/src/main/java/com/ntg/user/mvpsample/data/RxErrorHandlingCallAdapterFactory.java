@@ -1,14 +1,10 @@
 package com.ntg.user.mvpsample.data;
 
-import android.util.Log;
-
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.data.sourse.remote.ApiClient;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Observer;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -19,7 +15,6 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.HttpException;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -30,8 +25,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     private RxJava2CallAdapterFactory rxJava2CallAdapterFactory;
 
-    public RxErrorHandlingCallAdapterFactory() {
+    Retrofit retrofit;
+
+    public RxErrorHandlingCallAdapterFactory(Retrofit retrofit) {
         rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create();
+        this.retrofit = retrofit;
     }
 
     @Override
@@ -60,12 +58,13 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                 }
             });
         }
+
         private RetrofitException asRetrofitException(final Throwable throwable) {
             RetrofitException retrofitException = null;
             if (throwable instanceof HttpException) {
                 HttpException httpException = (HttpException) throwable;
                 try {
-                    Converter<ResponseBody, APIError> converter = ApiClient.getClient()
+                    Converter<ResponseBody, APIError> converter = retrofit
                             .responseBodyConverter(APIError.class, new Annotation[0]);
                     APIError apiError = converter.convert(httpException.response().errorBody());
                     retrofitException = new RetrofitException(apiError.getErrorCode(),

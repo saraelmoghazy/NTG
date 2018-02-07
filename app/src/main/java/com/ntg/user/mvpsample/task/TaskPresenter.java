@@ -1,9 +1,12 @@
 package com.ntg.user.mvpsample.task;
+
 import android.os.Looper;
 import android.util.Log;
+
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
+
 import java.util.List;
 
 /**
@@ -31,9 +34,10 @@ public class TaskPresenter implements ITaskPresenter {
         tasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                    iTaskView.showTasks(tasks);
+                iTaskView.showTasks(tasks);
                 iTaskView.showLoadingIndicator(false);
             }
+
             @Override
             public void onTaskLoadedFail(String errMesg) {
                 iTaskView.showErrorMesaage(errMesg);

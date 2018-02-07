@@ -9,22 +9,30 @@ import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 public class RemoteTaskRepo implements TasksDataSource {
 
     public static final String TAG = RemoteTaskRepo.class.getSimpleName();
 
     private static RemoteTaskRepo instance;
+    @Inject
+    RetrofitProvider retrofit;
 
     private RemoteTaskRepo() {
+
     }
+
 
     public static RemoteTaskRepo getInstance() {
         if (instance == null)
             instance = new RemoteTaskRepo();
+        DaggerNetComponent.Initializer.buildComponent().inject(instance);
         return instance;
     }
 
@@ -38,7 +46,7 @@ public class RemoteTaskRepo implements TasksDataSource {
     @Override
     public int getSubTasksProgress(String id) {
         final Integer[] percent = {0};
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiInterface = retrofit.getRetrofit().create(ApiInterface.class);
         apiInterface.getSubTasks(id)
                 .flatMapIterable(subTasks -> subTasks)
                 .map(SubTask::getProgress)
@@ -49,7 +57,7 @@ public class RemoteTaskRepo implements TasksDataSource {
 
     @Override
     public void getTasks(final LoadTasksCallback loadTasksCallback) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiService = retrofit.getRetrofit().create(ApiInterface.class);
         apiService.getTasks()
                 .flatMap(this::convert)
                 .subscribeOn(Schedulers.io())
@@ -66,8 +74,10 @@ public class RemoteTaskRepo implements TasksDataSource {
 
                     @Override
                     public void onError(Throwable throwable) {
+                        RetrofitException retrofitException = null;
                         if (throwable instanceof RetrofitException) {
-                            switch (((RetrofitException) throwable).getErrorType()) {
+                            retrofitException = (RetrofitException) throwable;
+                            switch (retrofitException.getErrorType()) {
                                 case ErrorType.NETWORK: {
                                     loadTasksCallback.onTaskLoadedFail(retrofitException.getMessage());
                                     break;
