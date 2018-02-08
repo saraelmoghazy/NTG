@@ -11,12 +11,15 @@ import com.ntg.user.mvpsample.model.Task;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * TasksRemoteDataSource contains the logic of sending requests to server and getting data
@@ -27,12 +30,16 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     private static TasksRemoteDataSource INSTANCE;
 
+    @Inject
+    Retrofit retrofit;
+
     private TasksRemoteDataSource() {
     }
 
     public static TasksRemoteDataSource getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new TasksRemoteDataSource();
+            DaggerNetComponent.Intializer.buildComponent().inject(INSTANCE);
         }
 
         return INSTANCE;
