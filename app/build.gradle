@@ -58,6 +58,10 @@ dependencies {
     // required if you want to use Mockito for Android tests
     androidTestCompile 'org.mockito:mockito-android:2.7.22'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+    //Dagger
+    compile 'com.google.dagger:dagger:2.7'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.7"
+    provided 'javax.annotation:jsr250-api:1.0'
 
 
 }

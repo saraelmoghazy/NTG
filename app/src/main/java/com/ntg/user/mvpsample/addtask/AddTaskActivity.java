@@ -8,7 +8,6 @@ import com.ntg.user.mvpsample.ActivityUtils;
 import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.source.TasksRepository;
-import com.ntg.user.mvpsample.data.source.remote.ApiClient;
 
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -20,7 +19,7 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addtask_act);
-        ApiClient apiClient=new ApiClient(this);
+       // ApiClient apiClient=new ApiClient(this);
         tasksRepository = Injection.provideTasksRepository();
         addTaskFragment = (AddTaskFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.addtask_fragment);

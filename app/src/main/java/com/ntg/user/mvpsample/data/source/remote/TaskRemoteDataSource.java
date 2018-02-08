@@ -1,9 +1,6 @@
 package com.ntg.user.mvpsample.data.source.remote;
 
 
-
-import android.support.annotation.NonNull;
-
 import com.ntg.user.mvpsample.MathUtil;
 import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
@@ -11,16 +8,13 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 
 /**
@@ -30,20 +24,25 @@ import retrofit2.Response;
 public class TaskRemoteDataSource implements TasksDataSource {
     private static TaskRemoteDataSource INSTANCE;
 
+    @Inject
+    RetrofitProvider retrofitProvider;
+
     private TaskRemoteDataSource() {
     }
 
     public static TaskRemoteDataSource getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new TaskRemoteDataSource();
+            DaggerNetComponent.Initializer.buildComponent().inject(INSTANCE);
         }
 
         return INSTANCE;
     }
+
     @Override
     public void loadTask(final GetTaskCallback tasksCallBack) {
         ApiService apiService =
-                ApiClient.getClient().create(ApiService.class);
+                retrofitProvider.getRetrofit().create(ApiService.class);
 
         apiService.getTasks()
                 .flatMap(this::cast)
@@ -62,9 +61,26 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
                     @Override
                     public void onError(Throwable e) {
-                        String message = ApiErrorUtil
-                                .parseError(e).getMessage();
-                        tasksCallBack.onDataNotAvailable(message);
+
+                        RetrofitException retrofitException = null;
+                        if (e instanceof RetrofitException) {
+                            retrofitException = (RetrofitException) e;
+                            switch (retrofitException.getType()) {
+                                case ErrorType.HTTP: {
+                                    tasksCallBack.onDataNotAvailable(retrofitException.getMessage());
+                                    break;
+                                }
+                                case ErrorType.NETWORK: {
+                                    tasksCallBack.onDataNotAvailable(retrofitException.getMessage());
+                                    break;
+                                }
+                                default: {
+                                    tasksCallBack.onDataNotAvailable(retrofitException.getMessage());
+                                }
+                            }
+
+
+                        }
 
                     }
 
@@ -91,7 +107,7 @@ public class TaskRemoteDataSource implements TasksDataSource {
     @Override
     public void saveTask(Task task, final SaveTaskCallBack saveTaskCallBack) {
         ApiService apiService =
-                ApiClient.getClient().create(ApiService.class);
+                retrofitProvider.getRetrofit().create(ApiService.class);
         apiService.saveTask(task)
 
                 .subscribeOn(Schedulers.io())
@@ -121,12 +137,13 @@ public class TaskRemoteDataSource implements TasksDataSource {
                     }
                 });
     }
+
     @Override
     public boolean getTasksProgress(String taskId) {
         final boolean[] ratio = {false};
 
         ApiService apiService =
-                ApiClient.getClient().create(ApiService.class);
+                retrofitProvider.getRetrofit().create(ApiService.class);
 
         apiService.getSubTasks(taskId)
                 .flatMapIterable(subtasks -> subtasks)
@@ -136,7 +153,6 @@ public class TaskRemoteDataSource implements TasksDataSource {
 
         return ratio[0];
     }
-
 
 
 }
