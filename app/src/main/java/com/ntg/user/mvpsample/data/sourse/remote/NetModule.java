@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample.data.sourse.remote;
 
 import com.ntg.user.mvpsample.data.RxErrorHandlingCallAdapterFactory;
-import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * @author islam
  */
+@ForApplication
 @Module
 public class NetModule {
 
@@ -22,7 +23,6 @@ public class NetModule {
     }
 
     @Provides
-    @Singleton
     OkHttpClient provideOkHttp(){
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor = httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -32,7 +32,6 @@ public class NetModule {
     }
 
     @Provides
-    @Singleton
     Retrofit provideBaseRetrofit(OkHttpClient okHttpClient){
         Retrofit retrofit = new Retrofit
                 .Builder()
@@ -44,13 +43,12 @@ public class NetModule {
     }
 
     @Provides
-    @Singleton
     RxErrorHandlingCallAdapterFactory provideRxErrorHandlingCallAdapterFactory (Retrofit retrofit){
         return new RxErrorHandlingCallAdapterFactory(retrofit);
     }
 
+
     @Provides
-    @Singleton
     RetrofitProvider provideRetrofit (RxErrorHandlingCallAdapterFactory callAdapterFactory, Retrofit retrofit){
         return new RetrofitProvider(callAdapterFactory , retrofit);
     }

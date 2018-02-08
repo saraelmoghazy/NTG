@@ -9,9 +9,6 @@ public class ApiError extends RuntimeException{
     private String message;
     private int type;
 
-    public ApiError() {
-    }
-
     public ApiError(int statusCode, String message, int type) {
         this.statusCode = statusCode;
         this.message = message;

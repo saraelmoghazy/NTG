@@ -1,9 +1,10 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
+package com.ntg.user.mvpsample.add_subtask;
 
-import android.util.Log;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import javax.inject.Inject;
+import com.ntg.user.mvpsample.data.sourse.remote.ApiInterface;
+import com.ntg.user.mvpsample.data.sourse.remote.RetrofitProvider;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -16,14 +17,17 @@ import io.reactivex.schedulers.Schedulers;
 public class AddSubTaskRepo implements TasksDataSource.SaveSubTask {
 
     private static AddSubTaskRepo INSTANCE = null;
-    @Inject
+
     RetrofitProvider retrofitProvider;
 
-    public static AddSubTaskRepo getInstance() {
+    private AddSubTaskRepo (RetrofitProvider retrofitProvider){
+        this.retrofitProvider = retrofitProvider;
+    }
+
+    public static AddSubTaskRepo getInstance(RetrofitProvider retrofitProvider) {
         if (INSTANCE == null) {
-            INSTANCE = new AddSubTaskRepo();
-            DaggerNetComponent.Initializer.buildComponent().inject(INSTANCE);
-        }
+            INSTANCE = new AddSubTaskRepo(retrofitProvider);
+            }
         return INSTANCE;
     }
 

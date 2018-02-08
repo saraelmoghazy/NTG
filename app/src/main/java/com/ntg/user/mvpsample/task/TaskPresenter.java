@@ -1,10 +1,12 @@
 package com.ntg.user.mvpsample.task;
-import android.os.Looper;
-import android.util.Log;
+
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
 import java.util.List;
+
+import javax.inject.Inject;
+
 
 /**
  * @author islam class task presenter
@@ -13,27 +15,25 @@ import java.util.List;
 public class TaskPresenter implements ITaskPresenter {
 
     public static final String TAG = TaskPresenter.class.getSimpleName();
-
-    private final TasksRepository tasksRepository;
+    @Inject
+    TasksRepository tasksRepository;
     private final ITaskView iTaskView;
 
-    public TaskPresenter(TasksRepository tasksRepository, ITaskView iTaskView) {
-        this.tasksRepository = tasksRepository;
+    public TaskPresenter(ITaskView iTaskView) {
         this.iTaskView = iTaskView;
+        DaggerTaskComponent.Initializer.buildComponent().inject(this);
     }
 
-    /**
-     *
-     */
     @Override
     public void loadTasks() {
         iTaskView.showLoadingIndicator(true);
         tasksRepository.getTasks(new TasksDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                    iTaskView.showTasks(tasks);
+                iTaskView.showTasks(tasks);
                 iTaskView.showLoadingIndicator(false);
             }
+
             @Override
             public void onTaskLoadedFail(String errMesg) {
                 iTaskView.showErrorMesaage(errMesg);

@@ -10,9 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
@@ -54,7 +51,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
         ButterKnife.bind(this , view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         tasksRecyclerView.setLayoutManager(linearLayoutManager);
-        taskPresenter = new TaskPresenter(Injection.provideTasksRepository(),this);
+        taskPresenter = new TaskPresenter(this);
         addNewTask.setOnClickListener(v -> showAddNewTask());
 
         return view;
@@ -64,7 +61,6 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     public void onResume() {
         super.onResume();
         taskPresenter.start();
-
     }
 
     @Override
@@ -91,8 +87,11 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     @Override
     public void showAddNewTask() {
         AddTaskFragment addTaskFragment = AddTaskFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container, addTaskFragment)
-                .addToBackStack(null).commit();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, addTaskFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

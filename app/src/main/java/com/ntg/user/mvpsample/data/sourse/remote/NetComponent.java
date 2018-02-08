@@ -1,27 +1,22 @@
 package com.ntg.user.mvpsample.data.sourse.remote;
 
-import javax.inject.Singleton;
 import dagger.Component;
 
 /**
  * @author islam
  */
-@Singleton
+@ForApplication
 @Component(modules = {NetModule.class})
 public interface NetComponent {
-    void inject(RemoteTaskRepo remoteTaskRepo);
-    void inject(AddSubTaskRepo addSubTaskRepo);
-    void inject(AddTaskRepo addTaskRepo);
 
-    class Initializer {
-
+    RetrofitProvider getRetrofitProvider();
+        class Initializer {
+            public static final String baseUrl ="http://twilight-grass-3888.getsandbox.com/";
         private static NetComponent component;
 
         public static NetComponent buildComponent() {
             if (component == null) {
-                component = DaggerNetComponent.builder()
-                        .netModule(new NetModule("http://twilight-grass-3888.getsandbox.com/"))
-                        .build();
+               component = DaggerNetComponent.builder().netModule(new NetModule(baseUrl)).build();
             }
             return component;
         }

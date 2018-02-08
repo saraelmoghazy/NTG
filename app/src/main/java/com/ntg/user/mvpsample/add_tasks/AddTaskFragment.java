@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task.TasksFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -49,7 +49,7 @@ public class AddTaskFragment extends android.app.Fragment implements IAddTaskVie
         View view = inflater.inflate(R.layout.fragment_add_task, container, false);
         ButterKnife.bind(this , view);
         List<SubTask> subTasks = new ArrayList<>();
-        addTaskPresenter = new AddTaskPresenter(Injection.provideAddTasksRepository(), this);
+        addTaskPresenter = new AddTaskPresenter( this);
         tasksFragment = TasksFragment.newInstance();
         addNewTask.setOnClickListener(v ->{
             if (title.getText().toString().equals("") ||

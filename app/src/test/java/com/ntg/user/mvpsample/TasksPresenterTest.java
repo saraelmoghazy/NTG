@@ -2,12 +2,12 @@ package com.ntg.user.mvpsample;
 
 import com.ntg.user.mvpsample.add_tasks.AddTaskPresenter;
 import com.ntg.user.mvpsample.add_tasks.IAddTaskView;
-import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
-import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
+import com.ntg.user.mvpsample.add_tasks.AddTaskRepo;
 import com.ntg.user.mvpsample.task.ITaskView;
+import com.ntg.user.mvpsample.task.TaskModule;
 import com.ntg.user.mvpsample.task.TaskPresenter;
 
 import org.junit.Before;
@@ -19,7 +19,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.verify;
  * Created by islam on 1/31/2018.
  */
 
-public class TasksPresenterTest {
+public class TasksPresenterTest{
     @Mock
     TasksRepository tasksRepository;
     @Mock
@@ -52,8 +51,8 @@ public class TasksPresenterTest {
     @Before
     public void setupPresenter() {
         MockitoAnnotations.initMocks(this);
-        taskPresenter = new TaskPresenter(tasksRepository, iTaskView);
-        addTaskPresenter = new AddTaskPresenter(addTaskRepo , iAddTaskView);
+        taskPresenter = new TaskPresenter( iTaskView);
+        addTaskPresenter = new AddTaskPresenter( iAddTaskView);
     }
 
     @Test

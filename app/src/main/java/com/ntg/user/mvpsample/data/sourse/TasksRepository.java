@@ -19,7 +19,7 @@ public class TasksRepository implements TasksDataSource {
         this.tasksRemoteDataSource = mTasksRemoteDataSource;
     }
 
-    public static TasksRepository getInstance(TasksDataSource tasksRemoteDataSource) {
+    public static TasksRepository newInstance(TasksDataSource tasksRemoteDataSource) {
         if (INSTANCE == null) {
             INSTANCE = new TasksRepository(tasksRemoteDataSource);
         }

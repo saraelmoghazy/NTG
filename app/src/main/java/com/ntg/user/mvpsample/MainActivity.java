@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -36,6 +37,19 @@ public class MainActivity extends AppCompatActivity implements TaskItemListener{
 
     @Override
     public void onTaskClicked(Task task) {
-        getFragmentManager().beginTransaction().replace(R.id.container, TaskDetailFragment.newInstance(task)).commit();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, TaskDetailFragment.newInstance(task))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
     }
 }

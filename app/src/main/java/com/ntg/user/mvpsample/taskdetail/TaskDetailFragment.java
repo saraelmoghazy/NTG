@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +15,7 @@ import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_subtask.SubTaskDialogFragment;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -40,7 +36,6 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
     @BindView(R.id.rv_subTasks)
     RecyclerView subTaskRecycler;
     private SubTasksAdapter subTasksAdapter;
-
     ITaskDetailsPresenter iTaskDetailsPresenter;
     String id;
 
@@ -49,14 +44,13 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
         Bundle args = new Bundle();
         args.putSerializable("task" , task);
         fragment.setArguments(args);
-
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -121,5 +115,4 @@ public class TaskDetailFragment extends android.app.Fragment implements ITaskDet
         Dialog yourDialog = dialogFragment.getDialog();
         yourDialog.getWindow().setAttributes(layoutParams);
     }
-
 }

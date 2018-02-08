@@ -1,9 +1,7 @@
 package com.ntg.user.mvpsample.taskdetail;
 
 import android.util.Log;
-
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.task.ITaskPresenter;
 
 /**
  * @author islam

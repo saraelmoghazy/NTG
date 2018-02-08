@@ -2,7 +2,8 @@ package com.ntg.user.mvpsample.add_subtask;
 
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import com.ntg.user.mvpsample.data.sourse.remote.AddSubTaskRepo;
+
+import javax.inject.Inject;
 
 /**
  * @author islam
@@ -10,12 +11,13 @@ import com.ntg.user.mvpsample.data.sourse.remote.AddSubTaskRepo;
 
 public class SubTaskPresenter implements ISubTaskPresenter {
 
-    private final AddSubTaskRepo addSubTaskRepo;
+    @Inject
+    AddSubTaskRepo addSubTaskRepo;
     private final ISubTaskView iSubTaskView;
 
-    public SubTaskPresenter(AddSubTaskRepo addSubTaskRepo, ISubTaskView iSubTaskView) {
-        this.addSubTaskRepo = addSubTaskRepo;
+    public SubTaskPresenter(ISubTaskView iSubTaskView) {
         this.iSubTaskView = iSubTaskView;
+        DaggerAddSubTaskComponent.Initializer.buildComponent().inject(this);
     }
 
     @Override

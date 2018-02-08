@@ -1,23 +1,22 @@
 package com.ntg.user.mvpsample.add_tasks;
 
-import android.util.Log;
-
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
+
+import javax.inject.Inject;
 
 /**
  * @author islam
  */
 
 public class AddTaskPresenter implements IAddTaskPresenter{
-
-    private final AddTaskRepo repository;
+    @Inject
+    AddTaskRepo repository;
     private final IAddTaskView iAddTaskView;
 
-    public AddTaskPresenter(AddTaskRepo repository, IAddTaskView iAddTaskView){
-        this.repository = repository;
+    public AddTaskPresenter(IAddTaskView iAddTaskView){
         this.iAddTaskView = iAddTaskView;
+        DaggerAddTaskComponent.Initializer.buildComponent().inject(this);
     }
 
     @Override
