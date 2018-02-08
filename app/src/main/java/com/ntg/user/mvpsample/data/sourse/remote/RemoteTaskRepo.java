@@ -1,31 +1,23 @@
 package com.ntg.user.mvpsample.data.sourse.remote;
 
-import android.util.Log;
-
 import com.ntg.user.mvpsample.ApiError;
 import com.ntg.user.mvpsample.ErrorType;
-import com.ntg.user.mvpsample.RetrofitError;
 import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-
+import javax.inject.Inject;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.schedulers.IoScheduler;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RemoteTaskRepo implements TasksDataSource{
 
     private static RemoteTaskRepo instance;
+    @Inject
+    RetrofitProvider retrofitProvider;
 
     private RemoteTaskRepo(){
     }
@@ -33,6 +25,7 @@ public class RemoteTaskRepo implements TasksDataSource{
     public static RemoteTaskRepo getInstance() {
         if (instance == null)
             instance = new RemoteTaskRepo();
+        DaggerNetComponent.Initializer.buildComponent().inject(instance);
         return instance;
     }
 
@@ -46,7 +39,7 @@ public class RemoteTaskRepo implements TasksDataSource{
     @Override
     public int getSubTasksProgress(String id) {
         final Integer[] percent = {0};
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiInterface = retrofitProvider.getRetrofit().create(ApiInterface.class);
         apiInterface.getSubTasks(id)
                 .flatMapIterable(subTasks -> subTasks)
                 .map(SubTask::getProgress)
@@ -57,7 +50,7 @@ public class RemoteTaskRepo implements TasksDataSource{
 
     @Override
     public void getTasks(final LoadTasksCallback loadTasksCallback) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiService = retrofitProvider.getRetrofit().create(ApiInterface.class);
         apiService.getTasks()
                 .flatMap(this::convert)
                 .subscribeOn(Schedulers.io())
@@ -79,12 +72,11 @@ public class RemoteTaskRepo implements TasksDataSource{
 
             @Override
             public void onError(Throwable e) {
-                loadTasksCallback.onTaskLoadedFail(e.getMessage());
                 if(e instanceof ApiError){
                     ApiError error = (ApiError) e;
                     switch (error.getType()){
                         case ErrorType.HTTP:
-                            Log.e("sss" , error.getMessage());
+                            loadTasksCallback.onTaskLoadedFail(e.getMessage());
                     }
                 }
             }
@@ -94,6 +86,5 @@ public class RemoteTaskRepo implements TasksDataSource{
 
             }
         });
-
     }
 }
