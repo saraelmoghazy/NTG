@@ -38,7 +38,7 @@ public interface TasksServiceInterface {
      * @param task the task to be added
      */
     @POST("tasks")
-    Observable<Void> addTask(@Body Task task);
+    Observable<Task> addTask(@Body Task task);
 
     /**
      * editTask used to update task attribute
@@ -47,8 +47,8 @@ public interface TasksServiceInterface {
      * @param task   the task instance with updates
      */
     @PUT("tasks/updateTask/{taskId}")
-    Observable<Void> editTask(@Path("taskId") String taskId, @Body Task task);
+    Observable<Task> editTask(@Path("taskId") String taskId, @Body Task task);
 
     @DELETE("tasks/deleteTask/{taskId}")
-    Observable<Void> deleteTask(@Path("taskId") String taskId);
+    Observable<Task> deleteTask(@Path("taskId") String taskId);
 }

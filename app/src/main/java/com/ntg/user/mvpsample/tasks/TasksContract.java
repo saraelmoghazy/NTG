@@ -1,9 +1,8 @@
 package com.ntg.user.mvpsample.tasks;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.base.BaseView;
+import com.ntg.user.mvpsample.base.BaseFragment;
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 import java.util.List;
 
@@ -13,23 +12,23 @@ import java.util.List;
 
 public interface TasksContract {
 
-    interface View extends BaseView<Presenter> {
-        void showTasks(List<Task> tasks);
+    abstract class View extends BaseFragment<Presenter> {
+        public abstract void showTasks(List<Task> tasks);
 
-        void showNoTasks();
+        abstract void showNoTasks();
 
-        void showLoadingIndicator();
+        abstract void showLoadingIndicator();
 
-        void showAddNewTaskUI();
+        public abstract void showAddNewTaskUI();
 
-        void showTaskDetailsUI(Task task);
+        abstract void showTaskDetailsUI(Task task);
     }
 
-    interface Presenter extends BasePresenter {
-        void getTasks();
+    abstract class Presenter extends BasePresenter {
+        abstract void getTasks();
 
-        void navigateToAddTaskUI();
+        abstract void navigateToAddTaskUI();
 
-        void deleteTask(Task task);
+        abstract void deleteTask(Task task);
     }
 }

@@ -7,7 +7,7 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
  * AddEditTaskPresenter control adding task operation and refreshing tasks list with new task
  */
 
-public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
+public class AddEditTaskPresenter extends AddEditTaskContract.Presenter {
 
     private AddEditTaskContract.View addTaskView;
     private TasksDataSource tasksRepository;
@@ -15,7 +15,9 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
     public AddEditTaskPresenter(AddEditTaskContract.View addTaskView, TasksDataSource tasksRepository) {
         this.addTaskView = addTaskView;
         this.tasksRepository = tasksRepository;
+        super.setFragment(addTaskView);
         addTaskView.setPresenter(this);
+        tasksRepository.setPresenter(this);
     }
 
     @Override
@@ -57,10 +59,5 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
             }
         });
         addTaskView.showTaskDetail(task);
-    }
-
-    @Override
-    public void onError(String errorMsg) {
-
     }
 }

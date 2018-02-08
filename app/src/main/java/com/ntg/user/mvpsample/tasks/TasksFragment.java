@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TasksFragment extends Fragment implements TasksContract.View {
+public class TasksFragment extends TasksContract.View {
 
     public static int ADD_TASK_REQUEST_CODE = 20;
     FloatingActionButton addTaskFab;

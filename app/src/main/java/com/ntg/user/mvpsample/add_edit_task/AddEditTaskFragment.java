@@ -36,7 +36,7 @@ import static com.ntg.user.mvpsample.task_details.TaskDetailFragment.EDIT_TASK_R
  * descrption textView, descrption editText for entering task attribute
  * and floatingButton for saving
  */
-public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
+public class AddEditTaskFragment extends AddEditTaskContract.View {
 
     @BindView(R.id.titleEditText)
     EditText titleEditText;
@@ -130,11 +130,6 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
     @Override
     public void setPresenter(AddEditTaskContract.Presenter presenter) {
         this.presenter = presenter;
-    }
-
-    @Override
-    public void showErrorMsg(String errorMsg) {
-
     }
 
     /**

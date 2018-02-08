@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskDetailFragment extends Fragment implements TaskDetailsContract.View {
+public class TaskDetailFragment extends TaskDetailsContract.View {
 
     public static final int EDIT_TASK_REQUEST_CODE = 10;
     @BindView(R.id.titleContentTxtView)
@@ -112,11 +112,6 @@ public class TaskDetailFragment extends Fragment implements TaskDetailsContract.
     @Override
     public void setPresenter(TaskDetailsContract.Presenter presenter) {
         this.presenter = presenter;
-    }
-
-    @Override
-    public void showErrorMsg(String errorMsg) {
-
     }
 
     @Override

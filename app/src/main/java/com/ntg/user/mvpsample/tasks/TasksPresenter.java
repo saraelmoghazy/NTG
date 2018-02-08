@@ -9,7 +9,7 @@ import java.util.List;
  * TasksPresenter control getting data from TasksRepository and pass it to view to show
  */
 
-public class TasksPresenter implements TasksContract.Presenter {
+public class TasksPresenter extends TasksContract.Presenter {
 
     private TasksContract.View tasksView;
     private TasksDataSource tasksRepository;
@@ -17,7 +17,9 @@ public class TasksPresenter implements TasksContract.Presenter {
     public TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
         this.tasksView = tasksView;
         this.tasksRepository = tasksRepository;
+        super.setFragment(tasksView);
         tasksView.setPresenter(this);
+        tasksRepository.setPresenter(this);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class TasksPresenter implements TasksContract.Presenter {
             } else {
                 tasksView.showNoTasks();
             }
-        }, this);
+        });
     }
 
     /**
@@ -53,10 +55,5 @@ public class TasksPresenter implements TasksContract.Presenter {
     public void deleteTask(Task task) {
         tasksRepository.deleteTask(task);
         getTasks();
-    }
-
-    @Override
-    public void onError(String errorMsg) {
-        tasksView.showErrorMsg(errorMsg);
     }
 }

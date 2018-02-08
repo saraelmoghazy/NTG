@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample;
 
+import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
 import com.ntg.user.mvpsample.tasks.TasksContract;
@@ -31,6 +32,8 @@ public class TasksPresenterTest {
 
     @Captor
     private ArgumentCaptor<TasksDataSource.GetTasksCallBack> getTasksCallBackArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<ErrorCallback> errorCallbackArgumentCaptor;
 
     @Before
     public void setupPresenter() {
@@ -44,8 +47,10 @@ public class TasksPresenterTest {
         List<Task> tasks = new ArrayList<>(0);
         tasks.add(new Task("task 1", "descrption 1"));
         tasks.add(new Task("task2 2", "descrption 2"));
-        verify(tasksDataSource).loadData(getTasksCallBackArgumentCaptor.capture());
+        verify(tasksDataSource).loadData(getTasksCallBackArgumentCaptor.capture(),
+                errorCallbackArgumentCaptor.capture());
         getTasksCallBackArgumentCaptor.getValue().onTasksLoaded(tasks);
+        errorCallbackArgumentCaptor.getValue().onError("error");
         verify(tasksView).showTasks(tasks);
     }
 

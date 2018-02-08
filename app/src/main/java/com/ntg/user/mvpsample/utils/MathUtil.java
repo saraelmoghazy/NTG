@@ -17,4 +17,17 @@ public class MathUtil {
         }
         return sum;
     }
+
+    public int sum(int s1, int s2){
+        return s1 + s2;
+    }
+
+    public int diff(int s1, int s2){
+        return s1 - s2;
+    }
+
+    public double div(double d1, double d2){
+//        if (d2 == 0) return 0;
+        return d1 / d2;
+    }
 }

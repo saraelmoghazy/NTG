@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample.data.source.remote.network;
 
+import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.base.ErrorCallback;
 
 import io.reactivex.Observer;
@@ -8,14 +9,19 @@ import io.reactivex.disposables.Disposable;
 
 public abstract class ErrorObserver<T> implements Observer<T> {
 
-    ErrorCallback errorCallback;
+    private BasePresenter basePresenter;
 
-    public ErrorObserver(ErrorCallback errorCallback) {
-        this.errorCallback = errorCallback;
+    public ErrorObserver(BasePresenter basePresenter) {
+        this.basePresenter = basePresenter;
     }
 
     @Override
     public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(T t) {
 
     }
 
@@ -34,7 +40,7 @@ public abstract class ErrorObserver<T> implements Observer<T> {
                 default:
                     errorMsg = retrofitException.getMessage();
             }
-            errorCallback.onError(errorMsg);
+            basePresenter.onError(errorMsg);
         }
     }
 

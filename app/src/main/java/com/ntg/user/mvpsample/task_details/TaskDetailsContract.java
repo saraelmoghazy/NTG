@@ -1,8 +1,7 @@
 package com.ntg.user.mvpsample.task_details;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.base.BaseView;
-import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.base.BaseFragment;
 
 /**
  * TaskDetailsContract
@@ -10,10 +9,10 @@ import com.ntg.user.mvpsample.data.Task;
 
 public interface TaskDetailsContract {
 
-    interface View extends BaseView<Presenter> {
-        void showTaskDetails();
-        void navigateToEditTextUI();
+    abstract class View extends BaseFragment<Presenter> {
+        public abstract void showTaskDetails();
+        abstract void navigateToEditTextUI();
     }
 
-    interface Presenter extends BasePresenter {}
+    abstract class Presenter extends BasePresenter {}
 }
