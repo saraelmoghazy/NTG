@@ -1,18 +1,14 @@
 package com.ntg.user.mvpsample.remote;
 
-import android.util.Log;
-
+import com.ntg.user.mvpsample.RetrofitProvider;
 import com.ntg.user.mvpsample.TasksDataSource;
-
-import java.io.IOException;
-import java.util.List;
+import com.ntg.user.mvpsample.DaggerNetComponent;
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.HttpException;
 
 
 /**
@@ -20,107 +16,64 @@ import retrofit2.HttpException;
  */
 
 public class TaskRemoteRepo implements TasksDataSource {
-    
+    private static TaskRemoteRepo instance;
+    @Inject
+    RetrofitProvider retrofit;
+
     public static TaskRemoteRepo newInstance() {
-        return new TaskRemoteRepo();
+        instance = new TaskRemoteRepo();
+        DaggerNetComponent.Initializer.buildComponent().inject(instance);
+        return instance;
     }
-    
-    
+
+
     @Override
     public void getPosts(final TasksDataSource.GetPostsCallBack getPostsCallBack) {
-        APIService mAPIService = ApiClient.getClient().create(APIService.class);
+        APIService mAPIService = retrofit.getRetrofit().create(APIService.class);
         mAPIService.getPosts().
                 observeOn(AndroidSchedulers.mainThread()).
                 subscribeOn(Schedulers.io()).
-                subscribe(new Observer<List<Task>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                    }
-                    
-                    @Override
-                    public void onNext(@NonNull List<Task> tasks) {
-                        getPostsCallBack.onPostsLoaded(tasks);
-                        
-                        
-                    }
-                    
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        getPostsCallBack.onPostsFailed(e.getMessage());
-                        if (e instanceof HttpException) {
-                            // We had non-2XX http error
-                        }
-                        if (e instanceof IOException) {
-                            // A network or conversion error happened
-                        }
-                        
-                    }
-                    
-                    @Override
-                    public void onComplete() {
-                    }
-                });
+                subscribe(tasks -> getPostsCallBack.onPostsLoaded(tasks),
+                        throwable -> {
+                            if (throwable instanceof RetrofitException) {
+                                RetrofitException retrofitException = (RetrofitException) throwable;
+                                switch (((RetrofitException) throwable).getErrorType()) {
+                                    case ErrorType.HTTP:
+                                        getPostsCallBack.onPostsFailed(throwable.getMessage());
+                                    case ErrorType.NETWORK:
+                                        getPostsCallBack.onPostsFailed("Server Error: check your connection");
+                                    default:
+                                        getPostsCallBack.onPostsFailed(throwable.getMessage());
+                                }
+                            }
+                        });
     }
-    
+
     @Override
     public void saveTasks(final Task task, final SavePostsCallBack savePostsCallBack) {
-        APIService mAPIService = ApiClient.getClient().create(APIService.class);
+        APIService mAPIService = retrofit.getRetrofit().create(APIService.class);
         mAPIService.saveTask(task).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Task>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-                    
-                    @Override
-                    public void onNext(Task task) {
-                        savePostsCallBack.onPostsSaved(task);
-                    }
-                    
-                    @Override
-                    public void onError(Throwable e) {
-                        savePostsCallBack.onPostsFailed(e.getMessage());
-                    }
-                    
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-        
+                .subscribe(v -> savePostsCallBack.onPostsSaved(task),
+                        throwable -> {
+                            if (throwable instanceof RetrofitException) {
+                                RetrofitException retrofitException = (RetrofitException) throwable;
+                                switch (((RetrofitException) throwable).getErrorType()) {
+                                    case ErrorType.HTTP:
+                                        savePostsCallBack.onPostsFailed(throwable.getMessage());
+                                    case ErrorType.NETWORK:
+                                        savePostsCallBack.onPostsFailed("Server Error: check your connection");
+                                    default:
+                                        savePostsCallBack.onPostsFailed(throwable.getMessage());
+                                }
+                            }
+                        });
+
     }
-    
-    @Override
-    public void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack) {
-        APIService mAPIService = ApiClient.getClient().create(APIService.class);
-        mAPIService.updatePost("", task).
-                observeOn(AndroidSchedulers.mainThread()).
-                subscribeOn(Schedulers.io()).
-                subscribe(new Observer<Task>() {
-                    
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-                    
-                    @Override
-                    public void onNext(Task task) {
-                        //savePostsCallBack.onPostsSaved(response.body());
-                        updatePostsCallBack.onPostsUpdated(task);
-                        
-                    }
-                    
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-                    
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-        
-    }
-    
+
+
     @Override
     public void saveSubTask(String taskId, SubTask subTask, SaveSubTaskCallBack saveSubTaskCallBack) {
-        APIService service = ApiClient.getClient().create(APIService.class);
+        APIService service = retrofit.getRetrofit().create(APIService.class);
         service.saveSubTask(taskId, subTask).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
@@ -136,6 +89,38 @@ public class TaskRemoteRepo implements TasksDataSource {
                                 }
                             }
                         });
+    }
+
+    //!!!!!!>>>>>>Not used !!//
+    @Override
+    public void updateTasks(Task task, UpdatePostsCallBack updatePostsCallBack) {
+
+        APIService mAPIService = retrofit.getRetrofit().create(APIService.class);
+        mAPIService.updatePost("", task).
+                observeOn(AndroidSchedulers.mainThread()).
+                subscribeOn(Schedulers.io()).
+                subscribe(new Observer<Task>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Task task) {
+                        //savePostsCallBack.onPostsSaved(response.body());
+                        updatePostsCallBack.onPostsUpdated(task);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+
     }
 }
 

@@ -1,13 +1,10 @@
 package com.ntg.user.mvpsample.tasks;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +12,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ntg.user.mvpsample.BaseActivity;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TasksRepo;
+import com.ntg.user.mvpsample.remote.SubTask;
 import com.ntg.user.mvpsample.remote.Task;
 import com.ntg.user.mvpsample.task_details.ShowActivity;
 
@@ -26,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements TasksContract.View {
+public class MainActivity extends BaseActivity implements TasksContract.View {
     TaskAdapter adapter;
     TasksRepo tasksRepo;
     TasksContract.Presenter presenter;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
     FloatingActionButton btn;
     EditText taskName, taskDesc;
     List<Task> taskList;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
         tasksRepo = new TasksRepo();
         presenter = new TaskPresenter(this, tasksRepo);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TaskAdapter(new ArrayList<Task>(0));
+        adapter = new TaskAdapter(new ArrayList<Task>(0),context);
         recyclerView.setAdapter(adapter);
-       // presenter.getTask();
-        dialog();
+        presenter.getTask();
+        dialog(context);
         // add btn listener
         btn.setOnClickListener((View v) -> {
             {
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
                         intent.putExtra("Task", task);
                         startActivity(intent);
                     }
-                    
+
                     @Override
                     public void onLongItemClick(View view, int position) {
                         // do whatever
@@ -89,57 +88,44 @@ public class MainActivity extends AppCompatActivity implements TasksContract.Vie
                 })
         );
     }
-    
+
     Task getTaskFromUser() {
         String title = taskName.getText().toString();
         String desc = taskDesc.getText().toString();
         return new Task(title, desc);
     }
-    
+
     @Override
     public void showTasks(List<Task> tasks) {
         adapter.replaceData(tasks);
         taskList = tasks;
+
     }
-    
+
     @Override
     public void showEmptyTasks() {
     }
-    
+
     @Override
     public void showErrorMessage(String errMsg) {
         Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void showSaveTaskSuccessMsg() {
-        dialog();
+        dialog(context);
+        presenter.getTask();
         Toast.makeText(getApplicationContext(), "Task is Saved", Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void showSaveTaskFailedMsg() {
         Toast.makeText(getApplicationContext(), "task failed", Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void setPresenter(TasksContract.Presenter presenter) {
         this.presenter = presenter;
     }
-   public void dialog(){
-        ProgressDialog pd = new ProgressDialog(MainActivity.this);
-        pd.setMessage("loading");
-        pd.show();
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                pd.dismiss();
-            }
-        }).start();
-        presenter.getTask();
-    }
+
 }

@@ -1,11 +1,9 @@
 package com.ntg.user.mvpsample.task_details;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,11 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ntg.user.mvpsample.BaseActivity;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TasksRepo;
+import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.remote.SubTask;
 import com.ntg.user.mvpsample.remote.Task;
-import com.ntg.user.mvpsample.tasks.MainActivity;
+import com.ntg.user.mvpsample.tasks.TaskAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowActivity extends AppCompatActivity implements TaskDetailsContract.View {
+public class ShowActivity extends BaseActivity implements TaskDetailsContract.View {
+
     @BindView(R.id.tvTaskTitle)
     TextView tvTitle;
     @BindView(R.id.tvTaskDesc)
@@ -43,7 +44,6 @@ public class ShowActivity extends AppCompatActivity implements TaskDetailsContra
     TaskDetailsContract.Presenter presenter;
     TasksRepo tasksRepo;
     Task task;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +55,11 @@ public class ShowActivity extends AppCompatActivity implements TaskDetailsContra
         task = intent.getParcelableExtra("Task");
         tvTitle.setText(task.getTitle());
         tvDesc.setText(task.getBody());
-        dialog();
+        dialog(context);
         List<SubTask> subTasks = task.getSubTasks();
-      //  List<SubTask> subTaskProgress = ;
+        //  List<SubTask> subTaskProgress = ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        subTaskAdapter = new SubTaskAdapter(subTasks);
+        subTaskAdapter = new SubTaskAdapter(context,subTasks);
         recyclerView.setAdapter(subTaskAdapter);
         btn.setOnClickListener((View v) -> {
             {
@@ -79,7 +79,7 @@ public class ShowActivity extends AppCompatActivity implements TaskDetailsContra
                                     String progress = subTaskProgress.getText().toString();
                                     SubTask subTask = new SubTask(title, progress);
                                     presenter.saveSubTask(task.getId(), subTask);
-                            
+
                                 }
                         )
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
@@ -88,45 +88,32 @@ public class ShowActivity extends AppCompatActivity implements TaskDetailsContra
             }
         });
     }
-    
+
     @Override
     public void setPresenter(TaskDetailsContract.Presenter presenter) {
         this.presenter = presenter;
     }
-    
+
     @Override
     public void showNewSubTaskInList(SubTask subTask) {
         subTaskAdapter.addSubTask(subTask);
 //        List<Integer> subTaskProgress =new ArrayList<>();
-//               subTaskProgress.add(Integer.parseInt(subTask.getProgress()));
+//        subTaskProgress.add(Integer.parseInt(subTask.getProgress()));
+//        Utils utils=new Utils();
+//        utils.percentage(subTaskProgress);
     }
-    
+
     @Override
     public void showSavingSubTaskError() {
         Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
     }
-    
+
     @Override
     public void showSavingSubTaskSuccess() {
         Log.d("tag", "show");
         Toast.makeText(this, "SubTask Saved", Toast.LENGTH_SHORT).show();
-        dialog();
+        dialog(context);
     }
-    
-    public void dialog() {
-        ProgressDialog pd = new ProgressDialog(ShowActivity.this);
-        pd.setMessage("loading");
-        pd.show();
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                pd.dismiss();
-            }
-        }).start();
-        //presenter.getTask();
-    }
+
+
 }

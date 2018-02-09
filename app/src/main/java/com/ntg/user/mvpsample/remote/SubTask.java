@@ -31,7 +31,6 @@ public class SubTask implements Parcelable {
         this.Progress = Progress;
     }
     
-    
     public String getSubTitle() {
         return subTitle;
     }
