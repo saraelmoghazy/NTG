@@ -1,9 +1,6 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
-
-import android.util.Log;
+package com.ntg.user.mvpsample.data.remote;
 
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 
 import javax.inject.Inject;
 
@@ -11,10 +8,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by islam on 1/30/2018.

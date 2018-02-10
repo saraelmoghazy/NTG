@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
+package com.ntg.user.mvpsample.data.remote;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;

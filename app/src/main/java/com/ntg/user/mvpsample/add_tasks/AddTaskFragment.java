@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;

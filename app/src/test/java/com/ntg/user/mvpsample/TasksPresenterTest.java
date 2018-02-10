@@ -3,9 +3,9 @@
 //import com.ntg.user.mvpsample.add_tasks.AddTaskPresenter;
 //import com.ntg.user.mvpsample.add_tasks.IAddTaskView;
 //import com.ntg.user.mvpsample.data.Task;
-//import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-//import com.ntg.user.mvpsample.data.sourse.TasksRepository;
-//import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
+//import com.ntg.user.mvpsample.data.remote.TasksDataSource;
+//import com.ntg.user.mvpsample.data.remote.TasksRepository;
+//import com.ntg.user.mvpsample.data.remote.AddTaskRepo;
 //import com.ntg.user.mvpsample.task.ITaskView;
 //import com.ntg.user.mvpsample.task.TaskPresenter;
 //

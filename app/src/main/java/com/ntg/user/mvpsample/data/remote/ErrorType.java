@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.data;
+package com.ntg.user.mvpsample.data.remote;
 
 /**
  * Created by Sara Elmoghazy on 05/02/2018.

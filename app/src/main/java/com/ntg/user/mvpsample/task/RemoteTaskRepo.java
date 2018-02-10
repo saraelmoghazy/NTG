@@ -1,11 +1,15 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
+package com.ntg.user.mvpsample.task;
 
 import com.ntg.user.mvpsample.Utils;
-import com.ntg.user.mvpsample.data.ErrorType;
-import com.ntg.user.mvpsample.data.RetrofitException;
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
+import com.ntg.user.mvpsample.data.remote.ApiInterface;
+import com.ntg.user.mvpsample.data.remote.BaseObserver;
+import com.ntg.user.mvpsample.data.remote.DaggerNetComponent;
+import com.ntg.user.mvpsample.data.remote.ErrorType;
+import com.ntg.user.mvpsample.data.remote.RetrofitException;
+import com.ntg.user.mvpsample.data.remote.RetrofitProvider;
+import com.ntg.user.mvpsample.data.remote.TasksDataSource;
 
 import java.util.List;
 
@@ -14,7 +18,6 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
 public class RemoteTaskRepo implements TasksDataSource {
 

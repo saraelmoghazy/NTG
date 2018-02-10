@@ -1,14 +1,4 @@
-package com.ntg.user.mvpsample.data;
-
-import android.support.annotation.IntDef;
-
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-
-import okhttp3.ResponseBody;
-import retrofit2.Converter;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+package com.ntg.user.mvpsample.data.remote;
 
 /**
  * Created by Sara Elmoghazy on 04/02/2018.

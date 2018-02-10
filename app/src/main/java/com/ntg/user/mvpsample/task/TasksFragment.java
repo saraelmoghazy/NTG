@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.ntg.user.mvpsample.Injection;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;

@@ -1,6 +1,4 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
-
-import com.ntg.user.mvpsample.data.RxErrorHandlingCallAdapterFactory;
+package com.ntg.user.mvpsample.data.remote;
 
 import retrofit2.Retrofit;
 

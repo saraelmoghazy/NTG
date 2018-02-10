@@ -1,8 +1,8 @@
 package com.ntg.user.mvpsample.add_subtask;
 
 import com.ntg.user.mvpsample.data.SubTask;
-import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import com.ntg.user.mvpsample.data.sourse.remote.AddSubTaskRepo;
+import com.ntg.user.mvpsample.data.remote.TasksDataSource;
+import com.ntg.user.mvpsample.data.remote.AddSubTaskRepo;
 
 /**
  * @author islam

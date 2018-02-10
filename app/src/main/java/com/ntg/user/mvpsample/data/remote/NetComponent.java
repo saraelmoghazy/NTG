@@ -1,6 +1,6 @@
-package com.ntg.user.mvpsample.data.sourse.remote;
+package com.ntg.user.mvpsample.data.remote;
 
-import com.ntg.user.mvpsample.data.RxErrorHandlingCallAdapterFactory;
+import com.ntg.user.mvpsample.task.RemoteTaskRepo;
 
 import javax.inject.Singleton;
 

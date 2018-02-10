@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.data.sourse;
+package com.ntg.user.mvpsample.data.remote;
 
 import com.ntg.user.mvpsample.data.SubTask;
 import com.ntg.user.mvpsample.data.Task;

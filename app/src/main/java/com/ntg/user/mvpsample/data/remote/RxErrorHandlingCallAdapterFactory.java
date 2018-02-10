@@ -1,4 +1,4 @@
-package com.ntg.user.mvpsample.data;
+package com.ntg.user.mvpsample.data.remote;
 
 import com.ntg.user.mvpsample.R;
 

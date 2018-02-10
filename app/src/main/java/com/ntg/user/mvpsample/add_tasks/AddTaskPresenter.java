@@ -1,10 +1,8 @@
 package com.ntg.user.mvpsample.add_tasks;
 
-import android.util.Log;
-
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
-import com.ntg.user.mvpsample.data.sourse.remote.AddTaskRepo;
+import com.ntg.user.mvpsample.data.remote.TasksDataSource;
+import com.ntg.user.mvpsample.data.remote.AddTaskRepo;
 
 /**
  * @author islam
