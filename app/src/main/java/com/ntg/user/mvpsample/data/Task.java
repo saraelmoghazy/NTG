@@ -97,7 +97,7 @@ public class Task implements Parcelable {
         this.title = in.readString();
         this.description = in.readString();
         this.isCompleted = in.readByte() != 0;
-        this.subtasks = new ArrayList<Subtask>();
+        this.subtasks = new ArrayList<>();
         in.readList(this.subtasks, Subtask.class.getClassLoader());
     }
 

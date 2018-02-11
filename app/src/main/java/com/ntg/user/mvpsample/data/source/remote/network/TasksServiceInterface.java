@@ -50,5 +50,5 @@ public interface TasksServiceInterface {
     Observable<Task> editTask(@Path("taskId") String taskId, @Body Task task);
 
     @DELETE("tasks/deleteTask/{taskId}")
-    Observable<Task> deleteTask(@Path("taskId") String taskId);
+    Observable<Void> deleteTask(@Path("taskId") String taskId);
 }

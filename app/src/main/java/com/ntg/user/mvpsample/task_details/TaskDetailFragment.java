@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 public class TaskDetailFragment extends TaskDetailsContract.View {
 
     public static final int EDIT_TASK_REQUEST_CODE = 10;
+    public static final String TASK_DETAIL_INTENT_KEY = "task";
     @BindView(R.id.titleContentTxtView)
     TextView titleContentTxtView;
     @BindView(R.id.descrptionContentTxtView)
@@ -74,7 +75,7 @@ public class TaskDetailFragment extends TaskDetailsContract.View {
         super.onActivityCreated(savedInstanceState);
 
         Intent intent = getActivity().getIntent();
-        task = intent.getParcelableExtra("task");
+        task = intent.getParcelableExtra(TASK_DETAIL_INTENT_KEY);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class TaskDetailFragment extends TaskDetailsContract.View {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == EDIT_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            task = data.getParcelableExtra("task");
+            task = data.getParcelableExtra(TASK_DETAIL_INTENT_KEY);
         }
     }
 

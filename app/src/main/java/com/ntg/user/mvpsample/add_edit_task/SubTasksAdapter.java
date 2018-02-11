@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.data.Subtask;
-import com.ntg.user.mvpsample.data.Task;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class SubTasksAdapter extends RecyclerView.Adapter<SubTasksAdapter.SubTas
         return subtasks.size();
     }
 
-    public void addSubTaskToList(Subtask subtask){
+    void addSubTaskToList(Subtask subtask){
         subtasks.add(subtask);
         notifyDataSetChanged();
     }
@@ -66,14 +65,9 @@ public class SubTasksAdapter extends RecyclerView.Adapter<SubTasksAdapter.SubTas
         @BindView(R.id.pb_subtask_progress)
         ProgressBar subTaskProgressBar;
 
-        public SubTasksViewHolder(View itemView) {
+        SubTasksViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface SubTaskItemListener {
-
-        void onSubTaskClick(Task clickedTask);
     }
 }

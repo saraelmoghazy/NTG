@@ -1,5 +1,6 @@
 package com.ntg.user.mvpsample.data.source.remote.network;
 
+import com.ntg.user.mvpsample.data.source.remote.ForApplication;
 import com.ntg.user.mvpsample.utils.App;
 
 import java.io.File;
@@ -18,38 +19,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by ilias on 07/02/2018.
  */
-
+@ForApplication
 @Module
-public class NetworkModule {
-
-
+class NetworkModule {
 
     @Provides
-    public OkHttpClient provideOkHttpClient(){
-//        File cacheFile = new File(App.context.getCacheDir(), "responses");
-//        int cacheSize = 10 * 1024 * 1024;
-//        Cache cache = new Cache(cacheFile, cacheSize);
-//        CachingInterceptor cachingInterceptor = new CachingInterceptor();
+    OkHttpClient provideOkHttpClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
-//                .addNetworkInterceptor(cachingInterceptor)
-//                .cache(cache)
                 .build();
     }
 
     @Provides
-    @Singleton
-    public Retrofit provideRetrofit(OkHttpClient okHttpClient){
+    Retrofit provideBaseRetrofit(OkHttpClient okHttpClient) {
         String baseURL = "http://mesawer.getsandbox.com/";
         return new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
-   }
+    }
+
+    @Provides
+    RxErrorHandlingCallAdapterFactory provideRxErrorHandlerCallAdapter(Retrofit retrofit) {
+        return (RxErrorHandlingCallAdapterFactory) RxErrorHandlingCallAdapterFactory.create(retrofit);
+    }
+
+
+    @Provides
+    RetrofitProvider provideRetrofit(RxErrorHandlingCallAdapterFactory rxErrorHandlingCallAdapterFactory, Retrofit retrofit) {
+        return new RetrofitProvider(retrofit, rxErrorHandlingCallAdapterFactory);
+    }
+
 }

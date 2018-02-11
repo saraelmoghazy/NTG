@@ -5,19 +5,23 @@ import android.util.Log;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
+import javax.inject.Inject;
+
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.HttpException;
+import retrofit2.Retrofit;
 
 /**
  * Created by ilias on 05/02/2018.
  */
 
-public class RetrofitExceptionConverter {
+class RetrofitExceptionConverter {
 
     private static final String TAG = RetrofitExceptionConverter.class.getSimpleName();
 
-    public static RetrofitException convertToRetrofitException(Throwable t) {
+
+    static RetrofitException convertToRetrofitException(Throwable t, Retrofit retrofit) {
         RetrofitException retrofitException = null;
         if (t instanceof IOException) {
             IOException ioException = (IOException) t;
@@ -25,8 +29,8 @@ public class RetrofitExceptionConverter {
                     ErrorType.NETWORK);
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
-            Converter<ResponseBody, TasksAPIError> converter = TasksAPI.getClient()
-                    .responseBodyConverter(TasksAPIError.class, new Annotation[0]);
+            Converter<ResponseBody, TasksAPIError> converter =
+                    retrofit.responseBodyConverter(TasksAPIError.class, new Annotation[0]);
             ResponseBody responseErrorBody = httpException.response().errorBody();
             if (responseErrorBody != null) {
                 try {

@@ -7,12 +7,10 @@ import android.view.MenuItem;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.utils.ActivityUtils;
-import com.ntg.user.mvpsample.utils.Injection;
-import com.ntg.user.mvpsample.data.source.TasksRepository;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 
-    TasksRepository tasksRepository;
+
     TaskDetailsPresenter taskDetailsPresenter;
     TaskDetailFragment taskDetailFragment;
 
@@ -21,7 +19,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_task_details);
-        tasksRepository = Injection.provideTasksRepository();
         taskDetailFragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.task_details_fragment);
         if (taskDetailFragment == null) {
@@ -30,7 +27,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
                     , taskDetailFragment, R.id.task_details_fragment);
         }
 
-        taskDetailsPresenter = new TaskDetailsPresenter(taskDetailFragment, tasksRepository);
+        taskDetailsPresenter = new TaskDetailsPresenter(taskDetailFragment);
     }
 
     @Override

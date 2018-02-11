@@ -1,9 +1,7 @@
 package com.ntg.user.mvpsample.data.source;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.source.remote.network.ErrorObserver;
 
 import java.util.List;
 

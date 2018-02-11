@@ -1,7 +1,11 @@
 package com.ntg.user.mvpsample.add_edit_task;
 
 import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.data.source.RepositoryComponent;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
+import com.ntg.user.mvpsample.data.source.TasksRepository;
+
+import javax.inject.Inject;
 
 /**
  * AddEditTaskPresenter control adding task operation and refreshing tasks list with new task
@@ -10,11 +14,12 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 public class AddEditTaskPresenter extends AddEditTaskContract.Presenter {
 
     private AddEditTaskContract.View addTaskView;
-    private TasksDataSource tasksRepository;
+    @Inject
+    TasksRepository tasksRepository;
 
-    public AddEditTaskPresenter(AddEditTaskContract.View addTaskView, TasksDataSource tasksRepository) {
+    public AddEditTaskPresenter(AddEditTaskContract.View addTaskView) {
+        RepositoryComponent.Initializer.getRepositoryComponent().inject(this);
         this.addTaskView = addTaskView;
-        this.tasksRepository = tasksRepository;
         super.setFragment(addTaskView);
         addTaskView.setPresenter(this);
         tasksRepository.setPresenter(this);

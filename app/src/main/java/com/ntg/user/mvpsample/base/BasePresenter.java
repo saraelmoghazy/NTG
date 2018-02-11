@@ -6,9 +6,9 @@ package com.ntg.user.mvpsample.base;
 
 public abstract class BasePresenter implements IPresenter {
 
-    BaseFragment fragment;
+    private BaseFragment fragment;
 
-    public void setFragment(BaseFragment fragment) {
+    protected void setFragment(BaseFragment fragment) {
         this.fragment = fragment;
     }
 

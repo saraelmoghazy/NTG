@@ -1,10 +1,6 @@
 package com.ntg.user.mvpsample.data.source;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.base.ErrorCallback;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.remote.TasksRemoteDataSource;
 
@@ -16,7 +12,6 @@ public class TasksRepository implements TasksDataSource {
 
     private static TasksRepository INSTANCE = null;
     private TasksDataSource tasksRemoteDataSource;
-    private BasePresenter basePresenter;
 
     private TasksRepository(TasksRemoteDataSource tasksRemoteDataSource) {
         this.tasksRemoteDataSource = tasksRemoteDataSource;
@@ -32,7 +27,7 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void setPresenter(BasePresenter basePresenter) {
-        this.basePresenter = basePresenter;
+        tasksRemoteDataSource.setPresenter(basePresenter);
     }
 
     @Override

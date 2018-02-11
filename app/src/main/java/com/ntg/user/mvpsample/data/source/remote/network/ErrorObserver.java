@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.data.source.remote.network;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.base.ErrorCallback;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -11,7 +10,7 @@ public abstract class ErrorObserver<T> implements Observer<T> {
 
     private BasePresenter basePresenter;
 
-    public ErrorObserver(BasePresenter basePresenter) {
+    protected ErrorObserver(BasePresenter basePresenter) {
         this.basePresenter = basePresenter;
     }
 

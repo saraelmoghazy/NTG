@@ -1,9 +1,10 @@
 package com.ntg.user.mvpsample.tasks;
 
 import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.source.TasksDataSource;
+import com.ntg.user.mvpsample.data.source.RepositoryComponent;
+import com.ntg.user.mvpsample.data.source.TasksRepository;
 
-import java.util.List;
+import javax.inject.Inject;
 
 /**
  * TasksPresenter control getting data from TasksRepository and pass it to view to show
@@ -12,11 +13,12 @@ import java.util.List;
 public class TasksPresenter extends TasksContract.Presenter {
 
     private TasksContract.View tasksView;
-    private TasksDataSource tasksRepository;
+    @Inject
+    TasksRepository tasksRepository;
 
-    public TasksPresenter(TasksContract.View tasksView, TasksDataSource tasksRepository) {
+    public TasksPresenter(TasksContract.View tasksView) {
+        RepositoryComponent.Initializer.getRepositoryComponent().inject(this);
         this.tasksView = tasksView;
-        this.tasksRepository = tasksRepository;
         super.setFragment(tasksView);
         tasksView.setPresenter(this);
         tasksRepository.setPresenter(this);
@@ -53,6 +55,7 @@ public class TasksPresenter extends TasksContract.Presenter {
 
     @Override
     public void deleteTask(Task task) {
+        tasksRepository.setPresenter(this);
         tasksRepository.deleteTask(task);
         getTasks();
     }

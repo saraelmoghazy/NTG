@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.task_details;
 
-import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.data.source.TasksDataSource;
+import com.ntg.user.mvpsample.base.BasePresenter;
 
 /**
  * TaskDetailsPresenter control of showing task details
@@ -9,12 +8,10 @@ import com.ntg.user.mvpsample.data.source.TasksDataSource;
 
 public class TaskDetailsPresenter extends TaskDetailsContract.Presenter {
 
-    private TasksDataSource taskRepository;
     private TaskDetailsContract.View taskDetailsView;
 
-    public TaskDetailsPresenter(TaskDetailsContract.View taskDetailsView, TasksDataSource taskRepository) {
+    public TaskDetailsPresenter(TaskDetailsContract.View taskDetailsView) {
         this.taskDetailsView = taskDetailsView;
-        this.taskRepository = taskRepository;
         super.setFragment(taskDetailsView);
         taskDetailsView.setPresenter(this);
     }

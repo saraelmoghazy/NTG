@@ -5,12 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.utils.ActivityUtils;
-import com.ntg.user.mvpsample.utils.Injection;
-import com.ntg.user.mvpsample.data.source.TasksRepository;
 
 public class TasksActivity extends AppCompatActivity {
     TasksFragment tasksFragment;
-    TasksRepository tasksRepository;
     TasksPresenter presenter;
 
     @Override
@@ -25,7 +22,6 @@ public class TasksActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     tasksFragment, R.id.tasks_fragment);
         }
-        tasksRepository = Injection.provideTasksRepository();
-        presenter = new TasksPresenter(tasksFragment, tasksRepository);
+        presenter = new TasksPresenter(tasksFragment);
     }
 }

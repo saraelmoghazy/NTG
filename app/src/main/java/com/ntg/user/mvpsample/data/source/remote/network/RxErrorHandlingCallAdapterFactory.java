@@ -20,13 +20,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
 
     private final RxJava2CallAdapterFactory rxJava2CallAdapterFactory;
+    private final Retrofit retrofit;
 
-    private RxErrorHandlingCallAdapterFactory() {
+    private RxErrorHandlingCallAdapterFactory(Retrofit retrofit) {
         rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create();
+        this.retrofit = retrofit;
     }
 
-    public static CallAdapter.Factory create(){
-        return new RxErrorHandlingCallAdapterFactory();
+    public static CallAdapter.Factory create(Retrofit retrofit) {
+        return new RxErrorHandlingCallAdapterFactory(retrofit);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,15 +36,17 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     public CallAdapter<?, ?> get(@NonNull Type returnType,
                                  @NonNull Annotation[] annotations, @NonNull Retrofit retrofit) {
         return new ErrorHandlingRxCallAdapter(rxJava2CallAdapterFactory.get(returnType,
-                annotations, retrofit));
+                annotations, retrofit),retrofit);
     }
 
-    static class ErrorHandlingRxCallAdapter<T> implements CallAdapter<T, Observable<T>>{
+    static class ErrorHandlingRxCallAdapter<T> implements CallAdapter<T, Observable<T>> {
 
         private CallAdapter<T, Observable<T>> callAdapter;
+        Retrofit retrofit;
 
-        public ErrorHandlingRxCallAdapter(CallAdapter<T, Observable<T>> callAdapter) {
+        ErrorHandlingRxCallAdapter(CallAdapter<T, Observable<T>> callAdapter, Retrofit retrofit) {
             this.callAdapter = callAdapter;
+            this.retrofit = retrofit;
         }
 
         @Override
@@ -55,8 +59,8 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             return callAdapter.adapt(call).onErrorResumeNext(throwable -> {
 
                 return Observable.error(
-                        RetrofitExceptionConverter.convertToRetrofitException(throwable));
-            }) ;
+                        RetrofitExceptionConverter.convertToRetrofitException(throwable,retrofit));
+            });
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.ntg.user.mvpsample.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,33 +10,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by ilias on 29/01/2018.
  */
 
 class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
-    List<Task> taskList;
-    TaskItemListener taskItemListener;
-    Context context;
 
-    public TasksAdapter(Context context, List<Task> taskList, TaskItemListener taskItemListener) {
+    private List<Task> taskList;
+    private Context context;
+    private PublishSubject<ItemEvent> taskObservable;
+
+    TasksAdapter(Context context, List<Task> taskList, PublishSubject<ItemEvent> taskObservable) {
         this.taskList = taskList;
-        this.taskItemListener = taskItemListener;
         this.context = context;
+        this.taskObservable = taskObservable;
     }
 
     @Override
     public TasksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_task, parent, false);
+
         return new TasksViewHolder(view);
     }
 
@@ -66,9 +67,17 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
                         task.setCompleted(false);
                     }
                 });
-        holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClick(task));
+        ItemEvent itemEvent = new ItemEvent(task);
+        holder.itemView.setOnClickListener(view -> {
+            itemEvent.setEventType(ItemEvent.EventType.CLICK);
+            taskObservable.onNext(itemEvent);
+        });
         holder.itemView.setOnLongClickListener(view ->
-                taskItemListener.onTaskLongClick(task, holder.itemView));
+        {
+            itemEvent.setEventType(ItemEvent.EventType.LONG_CLICK);
+            taskObservable.onNext(itemEvent);
+            return true;
+        });
     }
 
     @Override
@@ -76,7 +85,7 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
         return taskList.size();
     }
 
-    public void replaceData(List<Task> tasks) {
+    void replaceData(List<Task> tasks) {
         setList(tasks);
         notifyDataSetChanged();
     }
@@ -98,17 +107,10 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
         @BindView(R.id.taskLayout)
         LinearLayout taskLayout;
 
-        public TasksViewHolder(View itemView) {
+        TasksViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface TaskItemListener {
-
-        void onTaskClick(Task clickedTask);
-
-        boolean onTaskLongClick(Task longClickedTask, View view);
     }
 }
 

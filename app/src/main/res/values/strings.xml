@@ -6,4 +6,7 @@
     <string name="title_activity_tasks">TasksActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="no_tasks_string">No Tasks</string>
+    <string name="title_label_string">Title</string>
+    <string name="descrption_label_string">Descrption</string>
 </resources>

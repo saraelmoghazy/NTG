@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.ntg.user.mvpsample.task_details.TaskDetailFragment.EDIT_TASK_REQUEST_CODE;
+import static com.ntg.user.mvpsample.task_details.TaskDetailFragment.TASK_DETAIL_INTENT_KEY;
 
 /**
  * AddFragmentClass show UI with title textView, title editText,
@@ -57,6 +58,7 @@ public class AddEditTaskFragment extends AddEditTaskContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
     }
 
@@ -121,6 +123,7 @@ public class AddEditTaskFragment extends AddEditTaskContract.View {
                         .setNegativeButton("Cancel",
                                 ((dialogInterface, i) -> dialogInterface.cancel()))
                         .show();
+
                 return true;
             default:
                 return false;
@@ -144,7 +147,7 @@ public class AddEditTaskFragment extends AddEditTaskContract.View {
     @Override
     public void showTaskDetail(Task task) {
         Intent intent = new Intent();
-        intent.putExtra("task", task);
+        intent.putExtra(TASK_DETAIL_INTENT_KEY, task);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }

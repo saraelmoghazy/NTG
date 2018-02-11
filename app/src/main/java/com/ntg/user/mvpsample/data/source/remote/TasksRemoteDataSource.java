@@ -1,15 +1,14 @@
 package com.ntg.user.mvpsample.data.source.remote;
 
+import android.util.Log;
+
 import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.data.source.remote.network.ErrorObserver;
-import com.ntg.user.mvpsample.data.source.remote.network.ErrorType;
 import com.ntg.user.mvpsample.data.source.remote.network.NetworkComponent;
-import com.ntg.user.mvpsample.data.source.remote.network.RetrofitException;
 import com.ntg.user.mvpsample.utils.MathUtil;
 import com.ntg.user.mvpsample.data.Subtask;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.source.TasksDataSource;
-import com.ntg.user.mvpsample.data.source.remote.network.TasksAPI;
 import com.ntg.user.mvpsample.data.source.remote.network.TasksServiceInterface;
 
 import java.util.ArrayList;
@@ -31,16 +30,15 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     private static TasksRemoteDataSource INSTANCE;
     private BasePresenter basePresenter;
-    @Inject
     Retrofit retrofit;
 
-    private TasksRemoteDataSource() {
-        NetworkComponent.Initializer.getNetworkComponent().inject(this);
-    }
+    private TasksRemoteDataSource(Retrofit retrofit) {
+        this.retrofit = retrofit;
+        }
 
-    public static TasksRemoteDataSource getInstance() {
+    public static TasksRemoteDataSource getInstance(Retrofit retrofit) {
         if (INSTANCE == null) {
-            INSTANCE = new TasksRemoteDataSource();
+            INSTANCE = new TasksRemoteDataSource(retrofit);
         }
 
         return INSTANCE;
@@ -68,12 +66,12 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 retrofit.create(TasksServiceInterface.class);
         serviceInterface.getTasks()
                 .subscribeOn(Schedulers.io())
-                .flatMap(this::convert)
+                .flatMap(this::changeStatusUponProgressAverage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(errorObserver);
     }
 
-    private Observable<List<Task>> convert(List<Task> tasks) {
+    private Observable<List<Task>> changeStatusUponProgressAverage(List<Task> tasks) {
         for (Task task : tasks)
             if (task.getSubtasks() != null && !task.getSubtasks().isEmpty()) {
                 task.setCompleted(getTaskProgress(task));
@@ -82,6 +80,15 @@ public class TasksRemoteDataSource implements TasksDataSource {
             }
 
         return Observable.just(tasks);
+    }
+
+    private boolean getTaskProgress(Task task) {
+        List<Subtask> subtasks = task.getSubtasks();
+        List<Integer> progressList = new ArrayList<>(subtasks.size());
+        for (Subtask subtask : subtasks) {
+            progressList.add(subtask.getProgress());
+        }
+        return MathUtil.average(progressList) > 90;
     }
 
     /**
@@ -128,9 +135,9 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void deleteTask(Task task) {
-        ErrorObserver<Task> errorObserver = new ErrorObserver<Task>(basePresenter) {
+        ErrorObserver<Void> errorObserver = new ErrorObserver<Void>(basePresenter) {
             @Override
-            public void onNext(Task task) {
+            public void onNext(Void task) {
                 super.onNext(task);
             }
         };
@@ -140,25 +147,5 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(errorObserver);
-    }
-
-
-    public boolean getTaskProgress(Task task) {
-        List<Subtask> subtasks = task.getSubtasks();
-        List<Integer> progressList = new ArrayList<>(subtasks.size());
-        for (Subtask subtask : subtasks) {
-            progressList.add(subtask.getProgress());
-        }
-        return MathUtil.average(progressList) > 90;
-//        final boolean[] isOver90 = {false};
-//        TasksServiceInterface serviceInterface =
-//                retrofit.create(TasksServiceInterface.class);
-//
-//        serviceInterface.getSubTasks(taskId)
-//                .flatMapIterable(subtasks -> subtasks)
-//                .map(Subtask::getProgress)
-//                .toList()
-//                .subscribe(list -> isOver90[0] = MathUtil.average(list) > 90, throwable -> {});
-//        return isOver90[0];
     }
 }

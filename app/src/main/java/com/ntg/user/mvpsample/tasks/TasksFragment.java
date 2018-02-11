@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
@@ -27,6 +26,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
+
+import static com.ntg.user.mvpsample.task_details.TaskDetailFragment.TASK_DETAIL_INTENT_KEY;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -46,6 +48,7 @@ public class TasksFragment extends TasksContract.View {
     LinearLayoutManager llm;
     ActionMode actionMode;
     Task taskFromAdapter;
+    PublishSubject<ItemEvent> taskObservable = PublishSubject.create();
 
     public static TasksFragment newInstance() {
         return new TasksFragment();
@@ -67,9 +70,18 @@ public class TasksFragment extends TasksContract.View {
         llm = new LinearLayoutManager(getContext());
         rvTasks.setLayoutManager(llm);
         tasksAdapter = new TasksAdapter(getContext(),
-                new ArrayList<>(0),
-                itemListener);
+                new ArrayList<>(0), taskObservable);
         rvTasks.setAdapter(tasksAdapter);
+        taskObservable.subscribe(itemEvent -> {
+            switch (itemEvent.getEventType()) {
+                case ItemEvent.EventType.CLICK:
+                    showTaskDetailsUI(itemEvent.getTask());
+                    break;
+                case ItemEvent.EventType.LONG_CLICK:
+                    showActionMode(itemEvent.getTask());
+                    break;
+            }
+        });
 
         return view;
     }
@@ -85,7 +97,7 @@ public class TasksFragment extends TasksContract.View {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == ADD_TASK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             presenter.getTasks();
         }
     }
@@ -112,7 +124,7 @@ public class TasksFragment extends TasksContract.View {
     @Override
     public void showNoTasks() {
         noTasksTxtView.setVisibility(View.VISIBLE);
-        noTasksTxtView.setText("No Tasks");
+        noTasksTxtView.setText(R.string.no_tasks_string);
     }
 
     @Override
@@ -129,7 +141,7 @@ public class TasksFragment extends TasksContract.View {
     @Override
     public void showTaskDetailsUI(Task task) {
         Intent intent = new Intent(getContext(), TaskDetailsActivity.class);
-        intent.putExtra("task", task);
+        intent.putExtra(TASK_DETAIL_INTENT_KEY, task);
         startActivity(intent);
     }
 
@@ -163,21 +175,11 @@ public class TasksFragment extends TasksContract.View {
         }
     };
 
-    TasksAdapter.TaskItemListener itemListener = new TasksAdapter.TaskItemListener() {
-        @Override
-        public void onTaskClick(Task clickedTask) {
-            showTaskDetailsUI(clickedTask);
+    void showActionMode(Task longClickedTask) {
+        taskFromAdapter = longClickedTask;
+        if (actionMode != null) {
+            return;
         }
-
-        @Override
-        public boolean onTaskLongClick(Task longClickedTask, View view) {
-            taskFromAdapter = longClickedTask;
-            if (actionMode != null) {
-                return false;
-            }
-            actionMode = getActivity().startActionMode(callback);
-            view.setSelected(true);
-            return true;
-        }
-    };
+        actionMode = getActivity().startActionMode(callback);
+    }
 }
