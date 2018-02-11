@@ -1,13 +1,14 @@
 package com.ntg.user.mvpsample.model.taskdatasources;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.ntg.user.mvpsample.RxErrorHandlingCallAdapterFactory;
-import com.ntg.user.mvpsample.data.source.remote.error_handeling.RetrofitException;
-import com.ntg.user.mvpsample.model.ErrorType;
 import com.ntg.user.mvpsample.tasks.CalculatAverage;
 import com.ntg.user.mvpsample.model.Subtask;
 import com.ntg.user.mvpsample.model.Task;
+import com.ntg.user.mvpsample.model.taskdatasources.TasksDataSource;
+import com.ntg.user.mvpsample.model.taskdatasources.TasksAPI;
+import com.ntg.user.mvpsample.model.taskdatasources.TasksServiceInterface;
 
 import java.util.List;
 
@@ -59,16 +60,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tasksCallBack::onTasksLoaded,
-                        throwable -> {
-
-                            if (throwable instanceof RetrofitException){
-                                RetrofitException retrofitException = (RetrofitException) throwable;
-                                switch (retrofitException.getErrorType()){
-                                    case ErrorType.HTTP:
-                                        Log.e("message" , retrofitException.getErrorMessage());
-                                }
-                            }
-                        });
+                        t -> tasksCallBack.onTasksFailed(t.getMessage()));
     }
 
     private Observable<List<Task>> convert(List<Task> tasks) {
@@ -104,7 +96,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
             }
         });
-    }
+}
 
     @Override
     public boolean getTaskProgress(String taskId) {

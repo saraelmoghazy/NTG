@@ -2,8 +2,6 @@ package com.ntg.user.mvpsample.model.taskdatasources;
 
 import android.content.Context;
 
-import com.ntg.user.mvpsample.RxErrorHandlingCallAdapterFactory;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +25,7 @@ public class TasksAPI {
         return new Retrofit.Builder()
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(new RxErrorHandlingCallAdapterFactory())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 }
