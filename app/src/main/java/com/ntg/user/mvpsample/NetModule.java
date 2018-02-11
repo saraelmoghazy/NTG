@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.ntg.user.mvpsample.remote.RxErrorHandlingCallAdapterFactory;
 
@@ -21,23 +22,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 @Module
-class ApiModule {
+class NetModule {
 
     String mBaseUrl;
 
-    ApiModule(String mBaseUrl) {
+    NetModule(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;
     }
 
     @Provides
-    @Singleton
-    Cache provideHttpCache(Application application) {
+    Cache provideHttpCache(Context context) {
         int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache(application.getCacheDir(), cacheSize);
+        Cache cache = new Cache(context.getCacheDir(), cacheSize);
+
         return cache;
     }
+
     @Provides
-    @Singleton
     OkHttpClient provideOkHttp(Cache cache) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor = httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -47,11 +48,11 @@ class ApiModule {
                 .addInterceptor(httpLoggingInterceptor)
                 .cache(cache)
                 .build();
+
         return okHttpClient;
     }
 
     @Provides
-    @Singleton
     Retrofit provideBaseRetrofit(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit
                 .Builder()
@@ -65,14 +66,15 @@ class ApiModule {
 
 
     @Provides
-    @Singleton
     RxErrorHandlingCallAdapterFactory provideRxErrorHandlerCallAdapter(Retrofit retrofit) {
+
         return new RxErrorHandlingCallAdapterFactory(retrofit);
     }
 
     @Provides
     @Singleton
     RetrofitProvider provideRetrofit(RxErrorHandlingCallAdapterFactory callAdapterFactory, Retrofit retrofit) {
+
         return new RetrofitProvider(callAdapterFactory, retrofit);
     }
 

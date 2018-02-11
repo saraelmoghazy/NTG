@@ -1,8 +1,9 @@
 package com.ntg.user.mvpsample.remote;
 
+import com.ntg.user.mvpsample.DaggerNetComponent;
 import com.ntg.user.mvpsample.RetrofitProvider;
 import com.ntg.user.mvpsample.TasksDataSource;
-import com.ntg.user.mvpsample.DaggerNetComponent;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observer;

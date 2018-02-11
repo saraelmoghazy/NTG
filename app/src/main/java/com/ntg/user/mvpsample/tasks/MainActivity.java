@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements TasksContract.View {
         tasksRepo = new TasksRepo();
         presenter = new TaskPresenter(this, tasksRepo);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TaskAdapter(new ArrayList<Task>(0),context);
+        adapter = new TaskAdapter(new ArrayList<Task>(0), context);
         recyclerView.setAdapter(adapter);
         presenter.getTask();
         dialog(context);
@@ -87,6 +87,8 @@ public class MainActivity extends BaseActivity implements TasksContract.View {
                     }
                 })
         );
+
+
     }
 
     Task getTaskFromUser() {

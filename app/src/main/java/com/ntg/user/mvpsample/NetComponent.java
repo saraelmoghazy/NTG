@@ -11,7 +11,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {ApiModule.class})
+@Component(dependencies = {ApplicationComponent.class}, modules = {NetModule.class})
 public interface NetComponent {
     void inject(TaskRemoteRepo remoteTaskRepo);
 
@@ -21,9 +21,9 @@ public interface NetComponent {
 
         public static NetComponent buildComponent() {
             if (component == null) {
-
                 component = DaggerNetComponent.builder()
-                        .apiModule(new ApiModule("http://quiet-shape-7108.getsandbox.com/"))
+                        .applicationComponent(NTGApplication.getApplicationComponent())
+                        .netModule(new NetModule("http://quiet-shape-7108.getsandbox.com/"))
                         .build();
             }
 
