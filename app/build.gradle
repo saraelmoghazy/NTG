@@ -48,5 +48,6 @@ dependencies {
     androidTestCompile 'org.mockito:mockito-android:2.7.22'
     compile 'com.google.dagger:dagger:2.7'
     annotationProcessor "com.google.dagger:dagger-compiler:2.7"
+    testCompile "com.google.dagger:dagger-compiler:2.7"
 
 }

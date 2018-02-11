@@ -3,6 +3,7 @@ package com.ntg.user.mvpsample.task;
 import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.data.sourse.TasksDataSource;
 import com.ntg.user.mvpsample.data.sourse.TasksRepository;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,10 +19,16 @@ public class TaskPresenter implements ITaskPresenter {
     @Inject
     TasksRepository tasksRepository;
     private final ITaskView iTaskView;
+    TaskComponent taskComponent;
 
     public TaskPresenter(ITaskView iTaskView) {
         this.iTaskView = iTaskView;
-        DaggerTaskComponent.Initializer.buildComponent().inject(this);
+        getTaskComponent().inject(this);
+    }
+
+    public TaskComponent getTaskComponent() {
+        taskComponent = DaggerTaskComponent.Initializer.buildComponent();
+        return taskComponent;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class TaskPresenter implements ITaskPresenter {
 
             @Override
             public void onTaskLoadedFail(String errMesg) {
-                iTaskView.showErrorMesaage(errMesg);
+                iTaskView.showErrorMessage(errMesg);
             }
         });
     }

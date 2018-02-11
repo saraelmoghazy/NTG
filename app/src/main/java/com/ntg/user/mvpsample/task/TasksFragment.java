@@ -10,19 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_tasks.AddTaskFragment;
 import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * @author islam fragment that present list of tasks
  */
 
-public class TasksFragment extends Fragment implements ITaskView , TaskItemListener {
+public class TasksFragment extends Fragment implements ITaskView{
 
     private TaskPresenter taskPresenter;
     @BindView(R.id.btn_addNewTaskActivity)
@@ -32,7 +38,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     RecyclerView tasksRecyclerView;
     @BindView(R.id.loadinIndicator)
     ProgressBar loadingIndicator;
-    TaskItemListener taskItemListener;
+    PublishSubject<Task> taskSubject = PublishSubject.create();
 
     public static TasksFragment newInstance() {
         TasksFragment fragment = new TasksFragment();
@@ -53,6 +59,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
         tasksRecyclerView.setLayoutManager(linearLayoutManager);
         taskPresenter = new TaskPresenter(this);
         addNewTask.setOnClickListener(v -> showAddNewTask());
+        taskSubject.subscribe(this::navigateToTaskDetails);
 
         return view;
     }
@@ -66,11 +73,6 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        if (activity instanceof TaskItemListener){
-            taskItemListener = (TaskItemListener)activity;
-        }else {
-            throw new ClassCastException(activity.toString() + "must implement");
-        }
     }
 
     @Override
@@ -80,7 +82,7 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
 
     @Override
     public void showTasks(List<Task> tasks) {
-        taskAdapter = new TaskAdapter(tasks ,this);
+        taskAdapter = new TaskAdapter(tasks , taskSubject);
         tasksRecyclerView.setAdapter(taskAdapter);
     }
 
@@ -95,7 +97,8 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     }
 
     @Override
-    public void showErrorMesaage(String errMessasg) {
+    public void showErrorMessage(String errMessage){
+        Toast.makeText(getActivity() , errMessage , Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -108,11 +111,15 @@ public class TasksFragment extends Fragment implements ITaskView , TaskItemListe
     }
 
     @Override
-    public void setPresenter(Object presenter) {
+    public void navigateToTaskDetails(Task task) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, TaskDetailFragment.newInstance(task))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
-    public void onTaskClicked(Task task) {
-        taskItemListener.onTaskClicked(task);
+    public void setPresenter(Object presenter) {
     }
 }

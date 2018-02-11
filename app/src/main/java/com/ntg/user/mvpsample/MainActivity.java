@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.ntg.user.mvpsample.data.Task;
 import com.ntg.user.mvpsample.task.TasksFragment;
-import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
 
-public class MainActivity extends AppCompatActivity implements TaskItemListener{
+public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +33,6 @@ public class MainActivity extends AppCompatActivity implements TaskItemListener{
         }
     }
 
-    @Override
-    public void onTaskClicked(Task task) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, TaskDetailFragment.newInstance(task))
-                .addToBackStack(null)
-                .commit();
-    }
 
     @Override
     public void onBackPressed() {

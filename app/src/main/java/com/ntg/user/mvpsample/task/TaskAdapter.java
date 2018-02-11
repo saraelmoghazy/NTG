@@ -15,15 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList = new ArrayList<>();
-    private TaskItemListener taskItemListener;
+    private PublishSubject<Task> taskPublishSubject;
 
-    public TaskAdapter(List<Task> taskList , TaskItemListener taskItemListener) {
+    public TaskAdapter(List<Task> taskList
+            , PublishSubject<Task> taskPublishSubject) {
         this.taskList = taskList;
-        this.taskItemListener = taskItemListener;
+        this.taskPublishSubject = taskPublishSubject;
     }
 
     @Override
@@ -40,7 +42,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.description.setText(task.getDescription());
         holder.progressBar.setProgress(task.getProgress());
         holder.progress.setText(String.valueOf(task.getProgress()));
-        holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClicked(task));
+        //holder.itemView.setOnClickListener(view -> taskItemListener.onTaskClicked(task));
+        holder.itemView.setOnClickListener(view -> taskPublishSubject.onNext(task));
     }
 
     @Override
