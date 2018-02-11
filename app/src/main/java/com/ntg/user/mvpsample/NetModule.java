@@ -1,6 +1,5 @@
 package com.ntg.user.mvpsample;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.ntg.user.mvpsample.remote.RxErrorHandlingCallAdapterFactory;
@@ -24,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 class NetModule {
 
+    public static final String TAG = NetModule.class.getSimpleName();
+
     String mBaseUrl;
 
     NetModule(String mBaseUrl) {
@@ -34,18 +35,19 @@ class NetModule {
     Cache provideHttpCache(Context context) {
         int cacheSize = 10 * 1024 * 1024;
         Cache cache = new Cache(context.getCacheDir(), cacheSize);
-
         return cache;
     }
 
     @Provides
     OkHttpClient provideOkHttp(Cache cache) {
+        CachingInterceptor cachingInterceptor = new CachingInterceptor();
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor = httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(httpLoggingInterceptor)
+                .addNetworkInterceptor(cachingInterceptor)
                 .cache(cache)
                 .build();
 

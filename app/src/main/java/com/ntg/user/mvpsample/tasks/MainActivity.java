@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.ntg.user.mvpsample.BaseActivity;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TasksRepo;
-import com.ntg.user.mvpsample.remote.SubTask;
 import com.ntg.user.mvpsample.remote.Task;
 import com.ntg.user.mvpsample.task_details.ShowActivity;
 
@@ -87,7 +86,6 @@ public class MainActivity extends BaseActivity implements TasksContract.View {
                     }
                 })
         );
-
 
     }
 

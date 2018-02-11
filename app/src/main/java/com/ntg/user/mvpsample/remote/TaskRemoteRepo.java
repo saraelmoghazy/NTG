@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.remote;
 
+import android.util.Log;
+
 import com.ntg.user.mvpsample.DaggerNetComponent;
 import com.ntg.user.mvpsample.RetrofitProvider;
 import com.ntg.user.mvpsample.TasksDataSource;
@@ -17,6 +19,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class TaskRemoteRepo implements TasksDataSource {
+    public static final String TAG = TaskRemoteRepo.class.getSimpleName();
+
     private static TaskRemoteRepo instance;
     @Inject
     RetrofitProvider retrofit;

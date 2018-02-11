@@ -9,11 +9,10 @@ import android.content.Context;
 
 public class NTGApplication extends Application {
     private static ApplicationComponent applicationComponent;
-
+    private static Context context;
     public static ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
-
 
     public static ApplicationComponent createApplicationComponent(Context context) {
         if (applicationComponent == null) {
@@ -30,7 +29,10 @@ public class NTGApplication extends Application {
         super.onCreate();
 
         createApplicationComponent(this);
+        NTGApplication.context = getApplicationContext();
+    }
 
-
+    public static Context getAppContext() {
+        return NTGApplication.context;
     }
 }

@@ -1,5 +1,9 @@
 package com.ntg.user.mvpsample;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.util.List;
 /**
  * Created by GM7 on 2/6/2018.
@@ -19,4 +23,12 @@ public class Utils {
             return (sum/integers.size()) ;
         }
     }
-}
+    public static boolean isNetworkAvailable(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if ((activeNetworkInfo != null)&&(activeNetworkInfo.isConnected())){
+            return true;
+        }else{
+            return false;
+        }
+}}
