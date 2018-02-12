@@ -19,7 +19,6 @@ public class NTGApplication extends Application {
     public void onCreate() {
         super.onCreate();
         createApplicationComponent(this);
-
     }
 
     public static void createApplicationComponent(Context context) {

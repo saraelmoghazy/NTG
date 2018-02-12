@@ -93,6 +93,7 @@ public class TaskFragment extends Fragment  implements TaskContract.View, TaskIt
     public void showTasks(List<Task> taskList) {
         mNoTasks.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        noTasksTxtView.setVisibility(View.GONE);
         mTasksView.setVisibility(View.VISIBLE);
         taskAdapter.replaceData(taskList);
     }
@@ -116,7 +117,8 @@ public class TaskFragment extends Fragment  implements TaskContract.View, TaskIt
     @Override
     public void onTaskClicked(Task task) {
         Crouton.makeText(getActivity(), "Selected Item : " + task.getTitle() +
-                "   Description : " + task.getDesc() + "   Complete : " + task.isCompleted() , Style.INFO).show();
+                "   Description : " + task.getDesc() + "   Complete : " + task.isCompleted()
+                 , Style.INFO).show();
 
     }
     @Override

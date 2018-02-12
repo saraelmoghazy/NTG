@@ -26,9 +26,7 @@ public class NetModule {
 
     public NetModule(String BaseUrl) {
         this.BASE_URL = BaseUrl;
-
     }
-
     @Provides
     @Singleton
     OkHttpClient provideOkHttp(Context context) {
@@ -36,9 +34,9 @@ public class NetModule {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .addInterceptor(Util.provideCacheIntercptor())
-                .addNetworkInterceptor(Util.provideOfflineCacheInterceptor(context))
                 .cache(new Cache(context.getCacheDir(), 10 * 1024 * 1024))
+                .addInterceptor(Util.provideOfflineCacheInterceptor(context))
+                .addNetworkInterceptor(Util.provideCacheIntercptor())
                 .build();
         return client;
     }

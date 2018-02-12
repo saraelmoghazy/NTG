@@ -3,6 +3,7 @@ package com.ntg.user.mvpsample.addtask;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -136,9 +137,14 @@ public class AddTaskFragment extends Fragment implements AddTaskContract.View{
                 Toast.LENGTH_LONG).show();
     }
     Task getTaskFromUser() {
+
         String title = mTitle.getText().toString();
         String descrption = mDescription.getText().toString();
         List<Subtask> subtasks = subTasksAdapter.getSubtasks();
+        if(title.isEmpty()|| descrption.isEmpty() || subtasks.isEmpty()){
+            Snackbar.make(mTitle, getString(R.string.empty_task_message), Snackbar.LENGTH_LONG).show();
+
+        }
         return new Task(title, descrption, subtasks);
     }
 
