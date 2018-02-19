@@ -8,6 +8,7 @@ import dagger.Component;
 @ForApplication
 @Component(modules = {NetModule.class})
 public interface NetComponent {
+    public static final String BaseUrl = "http://twilight-grass-3888.getsandbox.com/";
 
     RetrofitProvider getRetrofitProvider();
 
@@ -18,7 +19,7 @@ public interface NetComponent {
         public static NetComponent buildComponent() {
             if (component == null) {
                 component = DaggerNetComponent.builder()
-                        .netModule(new NetModule("http://twilight-grass-3888.getsandbox.com/"))
+                        .netModule(new NetModule(BaseUrl))
                         .build();
             }
 

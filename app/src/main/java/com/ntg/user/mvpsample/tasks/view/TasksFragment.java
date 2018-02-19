@@ -1,6 +1,5 @@
 package com.ntg.user.mvpsample.tasks.view;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,14 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_task.AddTaskFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
-import com.ntg.user.mvpsample.base.BaseView;
 import com.ntg.user.mvpsample.network.Task;
 import com.ntg.user.mvpsample.tasks.presenter.TaskPresenter;
 
@@ -29,7 +25,7 @@ import butterknife.ButterKnife;
  * @author islam fragment that present list of tasks
  */
 
-public class TasksFragment extends BaseFragment implements ITaskView, TaskItemListener {
+public class TasksFragment extends BaseFragment implements TaskViewContract, TaskItemListener {
 
 
     @BindView(R.id.btn_addNewTaskActivity)

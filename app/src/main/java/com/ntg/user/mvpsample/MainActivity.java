@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ntg.user.mvpsample.network.Task;
-import com.ntg.user.mvpsample.task_details.TaskDetailFragment;
+import com.ntg.user.mvpsample.task_details.TaskDetailsFragment;
 import com.ntg.user.mvpsample.tasks.view.TasksFragment;
 
 public class MainActivity extends AppCompatActivity implements TaskItemListener{
@@ -37,6 +37,6 @@ public class MainActivity extends AppCompatActivity implements TaskItemListener{
 
     @Override
     public void onTaskClicked(Task task) {
-        getFragmentManager().beginTransaction().replace(R.id.container, TaskDetailFragment.newInstance(task)).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, TaskDetailsFragment.newInstance(task)).commit();
     }
 }

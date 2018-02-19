@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ntg.user.mvpsample.task_details.TaskDetailFragment">
+    tools:context="com.ntg.user.mvpsample.task_details.TaskDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

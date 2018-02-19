@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * @author islam
  */
 
-public class SubTaskDialogFragment extends DialogFragment implements ISubTaskView {
+public class SubTaskDialogFragment extends DialogFragment implements SubTaskViewContract {
 
     @BindView(R.id.subTaskTitle)
     EditText subTaskTitle;

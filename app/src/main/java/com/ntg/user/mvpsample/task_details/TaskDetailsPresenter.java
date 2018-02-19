@@ -7,11 +7,11 @@ import com.ntg.user.mvpsample.network.Task;
  * @author islam
  */
 
-public class TaskDetailsPresenter extends BasePresenter<ITaskDetailsView> {
+public class TaskDetailsPresenter extends BasePresenter<TaskDetailsViewContract> {
 
     private Task task;
 
-    public TaskDetailsPresenter(ITaskDetailsView view, Task task) {
+    public TaskDetailsPresenter(TaskDetailsViewContract view, Task task) {
         super(view);
         this.task = task;
     }

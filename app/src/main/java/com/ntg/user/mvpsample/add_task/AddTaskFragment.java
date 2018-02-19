@@ -22,7 +22,7 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddTaskFragment extends android.app.Fragment implements IAddTaskView {
+public class AddTaskFragment extends android.app.Fragment implements AddTaskViewContract {
 
     @BindView(R.id.tv_title)
     EditText title;

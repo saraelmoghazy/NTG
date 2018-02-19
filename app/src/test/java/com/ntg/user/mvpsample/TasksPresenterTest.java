@@ -4,7 +4,7 @@ import com.ntg.user.mvpsample.add_task.presenter.AddTaskPresenter;
 import com.ntg.user.mvpsample.network.Task;
 import com.ntg.user.mvpsample.tasks.model.GetTasksDataSource;
 import com.ntg.user.mvpsample.tasks.model.GetTasksRepository;
-import com.ntg.user.mvpsample.tasks.view.ITaskView;
+import com.ntg.user.mvpsample.tasks.view.TaskViewContract;
 import com.ntg.user.mvpsample.tasks.presenter.TaskPresenter;
 
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class TasksPresenterTest {
     GetTasksRepository tasksRepository;
 
     @Mock
-    ITaskView iTaskView;
+    TaskViewContract taskViewContract;
 
     TaskPresenter taskPresenter;
 
@@ -48,7 +48,7 @@ public class TasksPresenterTest {
     //   NetTestComponent component = DaggerN.builder()
 //                .myModule(new TestModule()).build();
 //         component.inject(this);
-        taskPresenter = new TaskPresenter(tasksRepository, iTaskView);
+        taskPresenter = new TaskPresenter(tasksRepository, taskViewContract);
         //addTaskPresenter = new AddTaskPresenter(addTaskRepo, iAddTaskView);
     }
 
@@ -60,7 +60,7 @@ public class TasksPresenterTest {
         tasks.add(new Task("title", "description"));
         verify(tasksRepository).getTasks(loadTasksCallbackArgumentCaptor.capture());
         loadTasksCallbackArgumentCaptor.getValue().onTasksLoaded(tasks);
-        verify(iTaskView).showTasks(tasks);
+        verify(taskViewContract).showTasks(tasks);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TasksPresenterTest {
         taskPresenter.loadTasks();
         verify(tasksRepository).getTasks(loadTasksCallbackArgumentCaptor.capture());
         loadTasksCallbackArgumentCaptor.getValue().onTaskLoadedFail("something went wrong");
-        verify(iTaskView).showErrorMesaage("something went wrong");
+        verify(taskViewContract).showErrorMesaage("something went wrong");
     }
 
     @Test
