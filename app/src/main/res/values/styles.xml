@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="GeneralTextView" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="loadingIndicatorText" parent="GeneralTextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/ntg_white</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
 </resources>

@@ -5,6 +5,6 @@ package com.ntg.user.mvpsample.add_subtask;
  */
 
 public interface ISubTaskView {
+
     void showSuccess(String success);
-    void showFail(String fail);
 }

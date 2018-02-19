@@ -1,6 +1,6 @@
 package com.ntg.user.mvpsample;
 
-import com.ntg.user.mvpsample.data.Task;
+import com.ntg.user.mvpsample.network.Task;
 
 /**
  * @author islam listner to help to send object when task clicked from recyclerview

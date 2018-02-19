@@ -11,8 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.data.SubTask;
+import com.ntg.user.mvpsample.add_subtask.presenter.SubTaskPresenter;
+import com.ntg.user.mvpsample.network.SubTask;
+
 import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,6 +24,7 @@ import butterknife.ButterKnife;
  */
 
 public class SubTaskDialogFragment extends DialogFragment implements ISubTaskView {
+
     @BindView(R.id.subTaskTitle)
     EditText subTaskTitle;
     @BindView(R.id.subTaskDescription)
@@ -43,39 +47,34 @@ public class SubTaskDialogFragment extends DialogFragment implements ISubTaskVie
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_subtask_dialog , container , false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_subtask_dialog, container, false);
+        ButterKnife.bind(this, view);
 
-
-        subTaskPresenter = new SubTaskPresenter(Injection.provideAddSubTaskRepository(), this);
+        subTaskPresenter = new SubTaskPresenter(this);
         addSubTask.setOnClickListener(v -> {
-            if (subTaskTitle.getText().toString().equals("")){
+            if (subTaskTitle.getText().toString().equals("")) {
                 subTaskTitle.setError(getResources().getString(R.string.fill_data));
-            }else if (subTaskDescription.getText().toString().equals("")){
+            } else if (subTaskDescription.getText().toString().equals("")) {
                 subTaskDescription.setError(getResources().getString(R.string.fill_data));
-            }else if (subTaskProgress.getText().toString().equals("")){
+            } else if (subTaskProgress.getText().toString().equals("")) {
                 subTaskProgress.setError(getResources().getString(R.string.fill_data));
-            }else if (Integer.parseInt(subTaskProgress.getText().toString())> 100){
+            } else if (Integer.parseInt(subTaskProgress.getText().toString()) > 100) {
                 subTaskProgress.setError(getResources().getString(R.string.less_than_100));
-            }
-            else {
+            } else {
                 SubTask subTask = new SubTask(UUID.randomUUID().toString()
-                        ,subTaskTitle.getText().toString()
-                        ,subTaskDescription.getText().toString()
-                        ,Integer.parseInt(subTaskProgress.getText().toString()));
-                subTaskPresenter.saveSubTask(getArguments().get("id").toString(),subTask);}
-           });
+                        , subTaskTitle.getText().toString()
+                        , subTaskDescription.getText().toString()
+                        , Integer.parseInt(subTaskProgress.getText().toString()));
+                subTaskPresenter.saveSubTask(getArguments().get("id").toString(), subTask);
+            }
+        });
         return view;
     }
 
     @Override
-    public void showSuccess(String success){
-        Toast.makeText(getActivity() , success , Toast.LENGTH_SHORT).show();
+    public void showSuccess(String success) {
+        Toast.makeText(getActivity(), success, Toast.LENGTH_SHORT).show();
         dismiss();
     }
 
-    @Override
-    public void showFail(String fail) {
-        Toast.makeText(getActivity() , fail , Toast.LENGTH_SHORT).show();
-    }
 }

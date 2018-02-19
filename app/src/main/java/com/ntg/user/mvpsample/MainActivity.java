@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.ntg.user.mvpsample.data.Task;
-import com.ntg.user.mvpsample.task.TasksFragment;
-import com.ntg.user.mvpsample.taskdetail.TaskDetailFragment;
+
+import com.ntg.user.mvpsample.network.Task;
+import com.ntg.user.mvpsample.task_details.TaskDetailFragment;
+import com.ntg.user.mvpsample.tasks.view.TasksFragment;
 
 public class MainActivity extends AppCompatActivity implements TaskItemListener{
     @Override

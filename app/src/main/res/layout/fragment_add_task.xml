@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.ntg.user.mvpsample.add_tasks.AddTaskFragment">
+    tools:context="com.ntg.user.mvpsample.add_task.AddTaskFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
