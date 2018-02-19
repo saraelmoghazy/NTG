@@ -9,7 +9,7 @@ import java.util.List;
  * @author islam task view
  */
 
-public interface ITaskView extends BaseView {
+public interface TaskViewContract extends BaseView {
 
     void showTasks(List<Task> tasks);
 

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * @author Islam Eldsoke
  *         Fragment that represent Task Details
  */
-public class TaskDetailFragment extends BaseFragment implements ITaskDetailsView {
+public class TaskDetailsFragment extends BaseFragment implements TaskDetailsViewContract {
 
     @BindView(R.id.tv_titleDetail)
     TextView titleTv;
@@ -44,8 +44,8 @@ public class TaskDetailFragment extends BaseFragment implements ITaskDetailsView
     TaskDetailsPresenter presenter;
     String id;
 
-    public static TaskDetailFragment newInstance(Task task) {
-        TaskDetailFragment fragment = new TaskDetailFragment();
+    public static TaskDetailsFragment newInstance(Task task) {
+        TaskDetailsFragment fragment = new TaskDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable("task", task);
         fragment.setArguments(args);

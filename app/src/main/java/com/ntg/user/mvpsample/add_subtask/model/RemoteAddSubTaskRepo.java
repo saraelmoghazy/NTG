@@ -11,18 +11,18 @@ import io.reactivex.Observable;
  * @author islam
  */
 
-public class BaseAddSubTaskRepo extends BaseObservable implements AddSubTaskDataSource {
+public class RemoteAddSubTaskRepo extends BaseObservable implements AddSubTaskDataSource {
 
-    private static BaseAddSubTaskRepo INSTANCE = null;
+    private static RemoteAddSubTaskRepo INSTANCE = null;
     RetrofitProvider retrofitProvider;
 
-    private BaseAddSubTaskRepo(RetrofitProvider retrofitProvider) {
+    private RemoteAddSubTaskRepo(RetrofitProvider retrofitProvider) {
         this.retrofitProvider = retrofitProvider;
     }
 
-    public static BaseAddSubTaskRepo getInstance(RetrofitProvider retrofitProvider) {
+    public static RemoteAddSubTaskRepo getInstance(RetrofitProvider retrofitProvider) {
         if (INSTANCE == null)
-            INSTANCE = new BaseAddSubTaskRepo(retrofitProvider);
+            INSTANCE = new RemoteAddSubTaskRepo(retrofitProvider);
 
         return INSTANCE;
     }

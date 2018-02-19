@@ -9,7 +9,7 @@ import java.util.List;
  * Created by islam on 1/30/2018.
  */
 
-public interface ITaskDetailsView extends BaseView {
+public interface TaskDetailsViewContract extends BaseView {
 
     void showTitle(String title);
 

@@ -6,6 +6,6 @@ import com.ntg.user.mvpsample.network.SubTask;
  * @author islam
  */
 
-public interface ISubTaskPresenter extends BasePresenter {
-    void saveSubTask(String id ,  SubTask subTasks);
+public interface SubTaskPresenterContract {
+    void saveSubTask(String id, SubTask subTasks);
 }

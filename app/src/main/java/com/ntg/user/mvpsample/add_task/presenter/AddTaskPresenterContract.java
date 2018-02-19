@@ -6,6 +6,6 @@ import com.ntg.user.mvpsample.network.Task;
  * @author islam
  */
 
-public interface IAddTaskPresenter extends BasePresenter {
+public interface AddTaskPresenterContract extends BasePresenter {
     void saveTask(Task task);
 }
