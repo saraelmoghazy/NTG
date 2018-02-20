@@ -1,9 +1,8 @@
 package com.ntg.user.mvpsample.network.remote;
 
 /**
- * Created by Sara Elmoghazy on 04/02/2018.
+ * @author Sara Elmoghazy
  */
-
 public class RetrofitException extends RuntimeException {
 
     private int code;
@@ -17,7 +16,6 @@ public class RetrofitException extends RuntimeException {
         this.message = message;
         this.errorType = errorType;
     }
-
 
     public int getCode() {
         return code;

@@ -5,9 +5,8 @@ import android.support.annotation.NonNull;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by Sara Elmoghazy on 19/02/2018.
+ * @author Sara Elmoghazy
  */
-
 public class BasePresenter<V extends BaseView> {
 
     private WeakReference<V> viewRef;

@@ -1,10 +1,17 @@
 package com.ntg.user.mvpsample.add_task;
 
+import com.ntg.user.mvpsample.base.BaseView;
+
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
+public interface AddTaskViewContract extends BaseView {
 
-public interface AddTaskViewContract {
+    void showAddTaskSuccess(String taskTitle);
 
-    void showAddTaskSuccess(String s);
+    void navigateToTasksFragments();
+
+    void showTitleMissedError();
+
+    void showDescriptionMissedError();
 }

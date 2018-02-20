@@ -4,36 +4,45 @@ import com.ntg.user.mvpsample.add_task.AddTaskViewContract;
 import com.ntg.user.mvpsample.add_task.model.AddTaskComponent;
 import com.ntg.user.mvpsample.add_task.model.AddTaskRepository;
 import com.ntg.user.mvpsample.base.BaseFetchObserver;
+import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.network.Task;
 
 import javax.inject.Inject;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
-public class AddTaskPresenter implements AddTaskPresenterContract {
+public class AddTaskPresenter extends BasePresenter<AddTaskViewContract> {
 
     @Inject
     AddTaskRepository repository;
-    private final AddTaskViewContract addTaskViewContract;
 
     public AddTaskPresenter(AddTaskViewContract addTaskViewContract) {
+        super(addTaskViewContract);
         AddTaskComponent.Initializer.buildComponent().inject(this);
-        this.addTaskViewContract = addTaskViewContract;
     }
 
-    @Override
-    public void start() {}
-
-    @Override
-    public void saveTask(Task task) {
-        BaseFetchObserver<Task> observer = new BaseFetchObserver<Task>() {
+    private void saveTask(Task task) {
+        showLoadingIndicator();
+        BaseFetchObserver<Task> observer = new BaseFetchObserver<Task>(this) {
             @Override
-            public void onNext(Task tasks) {
-                addTaskViewContract.showAddTaskSuccess("Task Added");
+            public void onNext(Task task) {
+                hideLoadingIndicator();
+                getView().showAddTaskSuccess(task.getTitle());
+                getView().navigateToTasksFragments();
             }
         };
         repository.saveTask(task).subscribe(observer);
+    }
+
+    public void onTaskClicked(String title, String description) {
+        if (title.isEmpty()) {
+            getView().showTitleMissedError();
+        } else if (description.isEmpty()) {
+            getView().showDescriptionMissedError();
+        } else {
+            saveTask(new Task(title, description));
+        }
     }
 }

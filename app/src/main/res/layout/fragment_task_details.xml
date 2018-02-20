@@ -1,10 +1,7 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.ntg.user.mvpsample.task_details.TaskDetailsFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,45 +9,41 @@
         android:orientation="vertical">
 
         <TextView
-            android:padding="4dp"
-            android:textSize="64sp"
+            android:id="@+id/tvTitle"
             style="@style/Base.TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_titleDetail"/>
+            android:padding="4dp"
+            android:textSize="64sp" />
 
         <TextView
-            android:textSize="24sp"
-            android:id="@+id/tv_descriptionDetail"
+            android:id="@+id/tvDescription"
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp" />
-        <TextView
             android:padding="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_stateDetail"/>
+            android:textSize="24sp" />
+
         <TextView
+            android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/subtasks"
-            android:textSize="24sp"
-            android:padding="2dp"/>
+            android:padding="4dp" />
+
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSubTasks"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rv_subTasks">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_addSubTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"/>
+        android:src="@android:drawable/ic_input_add" />
 </FrameLayout>

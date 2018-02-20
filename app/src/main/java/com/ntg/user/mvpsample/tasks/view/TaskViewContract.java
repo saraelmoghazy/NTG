@@ -6,12 +6,13 @@ import com.ntg.user.mvpsample.network.Task;
 import java.util.List;
 
 /**
- * @author islam task view
+ * @author Sara Elmoghazy
  */
-
 public interface TaskViewContract extends BaseView {
 
     void showTasks(List<Task> tasks);
 
     void showAddNewTask();
+
+    void navigateToTaskDetails(Task task);
 }

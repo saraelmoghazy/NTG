@@ -8,7 +8,7 @@ import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
 import io.reactivex.Observable;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
 public class RemoteAddSubTaskRepo extends BaseObservable implements AddSubTaskDataSource {
@@ -28,7 +28,7 @@ public class RemoteAddSubTaskRepo extends BaseObservable implements AddSubTaskDa
     }
 
     @Override
-    public Observable<SubTask> saveSubTask(String id, SubTask subTasks) {
+    public Observable<SubTask> saveSubTask(int id, SubTask subTasks) {
         APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
         return getObservable(APIEndPoint.saveSubTask(id, subTasks));
     }

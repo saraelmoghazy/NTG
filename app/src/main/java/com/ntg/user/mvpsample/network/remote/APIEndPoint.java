@@ -14,22 +14,20 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
- * Created by islam on 1/28/2018.
+ * @author Sara Elmoghazy
  */
-
 public interface APIEndPoint {
 
 
     @GET("tasks")
-    @Headers("Content-type: application/json")
     Observable<List<Task>> getTasks();
 
-    @POST("tasks")
+    @POST("saveTask")
     Observable<Task> saveTask(@Body Task task);
 
-    @PUT("tasks/{id}")
-    Observable<SubTask> saveSubTask(@Path("id")String id , @Body SubTask subTasks);
+    @PUT("saveSubTask/{id}")
+    Observable<SubTask> saveSubTask(@Path("id") int id, @Body SubTask subTasks);
 
     @GET("tasks/{id}/subTasks")
-    Observable<List<SubTask>> getSubTasks(@Path("id") String id);
+    Observable<List<SubTask>> getSubTasks(@Path("id") int id);
 }

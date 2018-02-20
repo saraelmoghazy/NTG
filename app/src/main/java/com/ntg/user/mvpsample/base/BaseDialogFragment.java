@@ -1,11 +1,9 @@
 package com.ntg.user.mvpsample.base;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.ProgressDialog;
+import android.app.DialogFragment;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.ntg.user.mvpsample.R;
 
@@ -13,10 +11,9 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
- * Created by Sara Elmoghazy on 19/02/2018.
+ * @author Sara Elmoghazy
  */
-
-public class BaseFragment extends Fragment implements BaseView {
+public class BaseDialogFragment extends DialogFragment implements BaseView {
     private Dialog loadingIndicator = null;
 
     @Override
@@ -42,11 +39,6 @@ public class BaseFragment extends Fragment implements BaseView {
     @Override
     public void showErrorMessage(String message) {
         Crouton.makeText(getActivity(), message, Style.ALERT).show();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Crouton.cancelAllCroutons();
+        dismiss();
     }
 }

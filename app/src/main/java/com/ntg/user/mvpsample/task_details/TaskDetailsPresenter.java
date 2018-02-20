@@ -4,7 +4,7 @@ import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.network.Task;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
 public class TaskDetailsPresenter extends BasePresenter<TaskDetailsViewContract> {
@@ -18,8 +18,11 @@ public class TaskDetailsPresenter extends BasePresenter<TaskDetailsViewContract>
 
     @Override
     public void start() {
+        super.start();
+
         getView().showTitle(task.getTitle());
         getView().showDescription(task.getDescription());
-        getView().showSubTasks(task.getSubTasks());
+        if (task.getSubTasks() != null && task.getSubTasks().size() > 0)
+            getView().showSubTasks(task.getSubTasks());
     }
 }

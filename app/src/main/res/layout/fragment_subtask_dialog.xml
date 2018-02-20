@@ -3,28 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/subTaskTitle"
+        android:id="@+id/tvTitle"
         android:hint="@string/title"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/subTaskDescription"
+        android:id="@+id/tvDescription"
         android:hint="@string/description"/>
-    <EditText
-        android:layout_width="match_parent"
+
+
+    <com.shawnlin.numberpicker.NumberPicker
+        android:id="@+id/npProgress"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="@string/progress"
-        android:id="@+id/subTaskProgress"/>
+        android:layout_centerInParent="true"
+        app:np_width="64dp"
+        app:np_height="180dp"
+        app:np_dividerColor="@color/colorPrimary"
+        app:np_max="100"
+        app:np_min="0"
+        app:np_selectedTextColor="@color/colorPrimary"
+        app:np_textColor="@color/colorPrimary"
+        app:np_value="3" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/subTaskAddBtn"
+        android:id="@+id/btnAddSubTask"
         android:text="@string/add"/>
 </LinearLayout>

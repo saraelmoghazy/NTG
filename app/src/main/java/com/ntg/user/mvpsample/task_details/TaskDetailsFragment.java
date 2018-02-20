@@ -1,9 +1,7 @@
 package com.ntg.user.mvpsample.task_details;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.add_subtask.SubTaskDialogFragment;
+import com.ntg.user.mvpsample.add_subtask.view.SubTaskDialogFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
 import com.ntg.user.mvpsample.network.SubTask;
 import com.ntg.user.mvpsample.network.Task;
@@ -22,99 +20,85 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * @author Islam Eldsoke
- *         Fragment that represent Task Details
+ * @author Sara Elmoghazy
  */
 public class TaskDetailsFragment extends BaseFragment implements TaskDetailsViewContract {
 
-    @BindView(R.id.tv_titleDetail)
-    TextView titleTv;
-    @BindView(R.id.tv_descriptionDetail)
-    TextView descriptionTv;
-    @BindView(R.id.tv_stateDetail)
-    TextView stateTv;
-    @BindView(R.id.btn_addSubTask)
-    FloatingActionButton navigateToSubTaskDialog;
-    @BindView(R.id.rv_subTasks)
-    RecyclerView subTaskRecycler;
-    private SubTasksAdapter subTasksAdapter;
+    public static final String TASK = "task";
 
-    TaskDetailsPresenter presenter;
-    String id;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
+    @BindView(R.id.tvStatus)
+    TextView tvState;
+    @BindView(R.id.rvSubTasks)
+    RecyclerView rvSubTask;
+
+    private SubTasksAdapter subTasksAdapter;
+    private TaskDetailsPresenter presenter;
+    private Task task;
 
     public static TaskDetailsFragment newInstance(Task task) {
         TaskDetailsFragment fragment = new TaskDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("task", task);
+        args.putSerializable(TASK, task);
         fragment.setArguments(args);
 
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_details, container, false);
         ButterKnife.bind(this, view);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        subTaskRecycler.setLayoutManager(linearLayoutManager);
+        initSubTaskList();
         if (getArguments() != null) {
-            Task task = (Task) getArguments().get("task");
-            id = task.getId();
+            task = (Task) getArguments().get(TASK);
             presenter = new TaskDetailsPresenter(this, task);
             presenter.start();
         }
-        navigateToSubTaskDialog.setOnClickListener(v -> navigateToSubTasksFragment());
+
         return view;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
+    @OnClick(R.id.btn_addSubTask)
+    void addSubTask() {
+        navigateToSubTasksFragment();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    private void initSubTaskList() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvSubTask.setLayoutManager(linearLayoutManager);
     }
 
     @Override
     public void showTitle(String title) {
-        titleTv.setText(title);
+        tvTitle.setText(title);
     }
 
     @Override
     public void showDescription(String description) {
-        descriptionTv.setText(description);
-
+        tvDescription.setText(description);
     }
 
     @Override
     public void showSubTasks(List<SubTask> subTasks) {
         subTasksAdapter = new SubTasksAdapter(subTasks);
-        subTaskRecycler.setAdapter(subTasksAdapter);
+        rvSubTask.setAdapter(subTasksAdapter);
     }
 
     @Override
     public void navigateToSubTasksFragment() {
-        SubTaskDialogFragment dialogFragment = SubTaskDialogFragment.newInstance(id);
-        dialogFragment.show(getFragmentManager(), "islam");
-        this.getActivity().getFragmentManager().executePendingTransactions();
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        Dialog yourDialog = dialogFragment.getDialog();
-        yourDialog.getWindow().setAttributes(layoutParams);
+        SubTaskDialogFragment subTaskDialogFragment = SubTaskDialogFragment.newInstance(task.getId());
+        subTaskDialogFragment.show(getFragmentManager(), TASK);
+        getFragmentManager().executePendingTransactions();
+        Dialog scalableDialog = subTaskDialogFragment.getDialog();
+        scalableDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
     }
-
 }

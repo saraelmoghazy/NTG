@@ -6,10 +6,10 @@ import com.ntg.user.mvpsample.network.Task;
 import io.reactivex.Observable;
 
 /**
- * Created by Sara Elmoghazy on 11/02/2018.
+ * @author Sara Elmoghazy
  */
 
 public interface AddSubTaskDataSource {
 
-    Observable<SubTask> saveSubTask(String id, SubTask subTask);
+    Observable<SubTask> saveSubTask(int id, SubTask subTask);
 }

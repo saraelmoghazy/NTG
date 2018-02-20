@@ -16,9 +16,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by islam on 2/4/2018.
+ * @author Sara Elmoghazy
  */
-
 public class SubTasksAdapter extends RecyclerView.Adapter<SubTasksAdapter.SubTaskViewHolder> {
 
     private List<SubTask> subTasks;

@@ -7,21 +7,25 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Islam Eldsoke
- *POJO Class that contains info about mt task
+ * @Author Islam Eldsoke
+ * POJO Class that contains info about mt task
  */
 
 public class Task implements Serializable {
+
     @SerializedName("id")
-    private String id;
+    private int id;
+
     @SerializedName("title")
     private String title;
+
     @SerializedName("description")
     private String description;
-    @SerializedName("progress")
-    private int progress;
+
     @SerializedName("subTasks")
     private List<SubTask> subTasks;
+
+    private int progress;
 
     public int getProgress() {
         return progress;
@@ -32,7 +36,6 @@ public class Task implements Serializable {
     }
 
 
-
     public List<SubTask> getSubTasks() {
         return subTasks;
     }
@@ -41,26 +44,9 @@ public class Task implements Serializable {
         this.subTasks = subTasks;
     }
 
-    public Task(String title , String description){
-        this.title=title;
-        this.description=description;
-    }
-    public Task() {
-    }
-
-    public Task(String id, String title, String description , List<SubTask> subTasks) {
-        this.id = id;
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.subTasks = subTasks;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -77,5 +63,13 @@ public class Task implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

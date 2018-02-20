@@ -3,9 +3,8 @@ package com.ntg.user.mvpsample.network.remote;
 import retrofit2.Retrofit;
 
 /**
- * Created by Sara Elmoghazy on 07/02/2018.
+ * @author Sara Elmoghazy
  */
-
 public class RetrofitProvider {
     RxErrorHandlingCallAdapterFactory callAdapterFactory;
     Retrofit retrofit;

@@ -1,9 +1,8 @@
 package com.ntg.user.mvpsample.base;
 
 /**
- * Created by Sara Elmoghazy on 19/02/2018.
+ * @author Sara Elmoghazy
  */
-
 public interface BaseView {
 
     void showLoadingIndicator();

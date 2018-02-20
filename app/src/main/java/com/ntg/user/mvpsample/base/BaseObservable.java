@@ -6,9 +6,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by Sara Elmoghazy on 19/02/2018.
+ * @author Sara Elmoghazy
  */
-
 public class BaseObservable<M> {
 
     private final Scheduler subscribeOnThread;

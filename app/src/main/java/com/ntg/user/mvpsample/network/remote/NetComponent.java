@@ -3,12 +3,12 @@ package com.ntg.user.mvpsample.network.remote;
 import dagger.Component;
 
 /**
- * Created by Sara Elmoghazy on 07/02/2018.
+ * @author Sara Elmoghazy
  */
 @ForApplication
 @Component(modules = {NetModule.class})
 public interface NetComponent {
-    public static final String BaseUrl = "http://twilight-grass-3888.getsandbox.com/";
+    public static final String BaseUrl = "http://endpoints.getsandbox.com/";
 
     RetrofitProvider getRetrofitProvider();
 

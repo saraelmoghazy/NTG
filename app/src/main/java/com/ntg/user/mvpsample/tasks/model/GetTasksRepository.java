@@ -7,7 +7,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
 public class GetTasksRepository implements GetTasksDataSource {
@@ -27,8 +27,8 @@ public class GetTasksRepository implements GetTasksDataSource {
     }
 
     @Override
-    public int getSubTasksProgress(String id) {
-        return tasksRemoteDataSource.getSubTasksProgress(id);
+    public Observable<Integer> getTaskProgress(int id) {
+        return tasksRemoteDataSource.getTaskProgress(id);
     }
 
     @Override

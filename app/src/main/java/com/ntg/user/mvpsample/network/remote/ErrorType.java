@@ -1,7 +1,7 @@
 package com.ntg.user.mvpsample.network.remote;
 
 /**
- * Created by Sara Elmoghazy on 05/02/2018.
+ * @author Sara Elmoghazy
  */
 
 import android.support.annotation.IntDef;

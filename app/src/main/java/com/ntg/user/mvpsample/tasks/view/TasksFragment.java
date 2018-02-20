@@ -1,6 +1,5 @@
 package com.ntg.user.mvpsample.tasks.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,23 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.TaskItemListener;
 import com.ntg.user.mvpsample.add_task.AddTaskFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
 import com.ntg.user.mvpsample.network.Task;
+import com.ntg.user.mvpsample.task_details.TaskDetailsFragment;
 import com.ntg.user.mvpsample.tasks.presenter.TaskPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
- * @author islam fragment that present list of tasks
+ * @author Sara Elmoghazy
  */
-
-public class TasksFragment extends BaseFragment implements TaskViewContract, TaskItemListener {
-
+public class TasksFragment extends BaseFragment implements TaskViewContract {
 
     @BindView(R.id.btn_addNewTaskActivity)
     FloatingActionButton addNewTask;
@@ -34,12 +33,12 @@ public class TasksFragment extends BaseFragment implements TaskViewContract, Tas
     RecyclerView tasksRecyclerView;
     private TaskAdapter taskAdapter;
     private TaskPresenter taskPresenter;
-    private TaskItemListener taskItemListener;
+    private Subject<Task> onTaskClicked = PublishSubject.create();
+
 
     public static TasksFragment newInstance() {
-        TasksFragment fragment = new TasksFragment();
 
-        return fragment;
+        return new TasksFragment();
     }
 
     @Override
@@ -67,35 +66,24 @@ public class TasksFragment extends BaseFragment implements TaskViewContract, Tas
     }
 
     @Override
-    public void onAttach(Context activity) {
-        super.onAttach(activity);
-        if (activity instanceof TaskItemListener) {
-            taskItemListener = (TaskItemListener) activity;
-        } else {
-            throw new ClassCastException(activity.toString() + "must implement");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void showTasks(List<Task> tasks) {
-        taskAdapter = new TaskAdapter(tasks, this);
+        onTaskClicked.subscribe(task -> taskPresenter.onTaskClicked(task));
+        taskAdapter = new TaskAdapter(tasks, onTaskClicked);
         tasksRecyclerView.setAdapter(taskAdapter);
     }
 
+
     @Override
     public void showAddNewTask() {
-        AddTaskFragment addTaskFragment = AddTaskFragment.newInstance();
-        getFragmentManager().beginTransaction().replace(R.id.container, addTaskFragment)
-                .addToBackStack(null).commit();
+        getFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.container, AddTaskFragment.newInstance()).commit();
     }
 
     @Override
-    public void onTaskClicked(Task task) {
-        taskItemListener.onTaskClicked(task);
+    public void navigateToTaskDetails(Task task) {
+        getFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.container, TaskDetailsFragment.newInstance(task)).commit();
     }
 }

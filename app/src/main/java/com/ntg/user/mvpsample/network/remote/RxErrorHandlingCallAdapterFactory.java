@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.network.remote;
 
+import android.util.Log;
+
 import com.ntg.user.mvpsample.R;
 
 import java.io.IOException;
@@ -19,9 +21,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * Created by Sara Elmoghazy on 29/01/2018.
+ * @author Sara Elmoghazy
  */
-
 public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     private RxJava2CallAdapterFactory rxJava2CallAdapterFactory;
 
@@ -67,16 +68,14 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                     Converter<ResponseBody, APIError> converter = retrofit
                             .responseBodyConverter(APIError.class, new Annotation[0]);
                     APIError apiError = converter.convert(httpException.response().errorBody());
-                    retrofitException = new RetrofitException(apiError.getErrorCode(),
-                            apiError.getErrorMessage(), ErrorType.HTTP);
+                    retrofitException = new RetrofitException(apiError.getCode(),
+                            apiError.getMessage(), ErrorType.HTTP);
                 } catch (Exception e) {
+                    Log.e("parse error", e.getMessage());
                 }
-            }
-            // A network error happened
-            else if (throwable instanceof IOException) {
+            } else if (throwable instanceof IOException) {
                 retrofitException = new RetrofitException(-1, throwable.getMessage(), ErrorType.NETWORK);
             } else {
-                // We don't know what happened. We need to simply convert to an unknown error
                 retrofitException = new RetrofitException(-1, throwable.getMessage(), ErrorType.UNEXPECTED);
             }
 

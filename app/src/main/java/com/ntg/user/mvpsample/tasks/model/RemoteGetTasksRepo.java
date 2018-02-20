@@ -13,7 +13,6 @@ import io.reactivex.Observable;
 
 public class RemoteGetTasksRepo extends BaseObservable implements GetTasksDataSource {
 
-    public static final String TAG = RemoteGetTasksRepo.class.getSimpleName();
     private static RemoteGetTasksRepo instance;
     RetrofitProvider retrofitProvider;
 
@@ -24,33 +23,35 @@ public class RemoteGetTasksRepo extends BaseObservable implements GetTasksDataSo
     public static RemoteGetTasksRepo getInstance(RetrofitProvider retrofitProvider) {
         if (instance == null)
             instance = new RemoteGetTasksRepo(retrofitProvider);
+
         return instance;
     }
 
 
     private io.reactivex.Observable<List<Task>> convert(List<Task> tasks) {
         for (Task task : tasks) {
-            task.setProgress(getSubTasksProgress(task.getId()));
+            if (task.getSubTasks() != null && task.getSubTasks().size() > 0) {
+                getTaskProgress(task.getId()).subscribe(progress -> task.setProgress(progress));
+            }
         }
-        return io.reactivex.Observable.just(tasks);
+
+        return Observable.just(tasks);
     }
 
     @Override
-    public int getSubTasksProgress(String id) {
-        final Integer[] percent = {0};
+    public Observable<Integer> getTaskProgress(int taskId) {
         APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
-        APIEndPoint.getSubTasks(id)
+        return APIEndPoint.getSubTasks(taskId)
                 .flatMapIterable(subTasks -> subTasks)
-                .map(SubTask::getProgress)
+                .map(subTask -> subTask.getProgress())
                 .toList()
-                .subscribe(list -> percent[0] = Utils.percentage(list));
-        return percent[0];
+                .map(progress -> Utils.getAverage(progress)).toObservable();
     }
 
     @Override
     public Observable<List<Task>> getTasks() {
         APIEndPoint apiService = retrofitProvider.getRetrofit().create(APIEndPoint.class);
-        return getObservable(apiService.getTasks()
-                .flatMap(this::convert));
+
+        return getObservable(apiService.getTasks().flatMap(this::convert));
     }
 }

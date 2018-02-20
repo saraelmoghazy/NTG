@@ -1,33 +1,53 @@
 package com.ntg.user.mvpsample.add_subtask.presenter;
 
-import com.ntg.user.mvpsample.add_subtask.SubTaskViewContract;
 import com.ntg.user.mvpsample.add_subtask.model.AddSubTaskRepository;
 import com.ntg.user.mvpsample.add_subtask.model.DaggerAddSubTaskComponent;
+import com.ntg.user.mvpsample.add_subtask.view.SubTaskViewContract;
+import com.ntg.user.mvpsample.base.BaseFetchObserver;
+import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.network.SubTask;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
-public class SubTaskPresenter implements SubTaskPresenterContract {
+public class SubTaskPresenter extends BasePresenter<SubTaskViewContract> {
+
     @Inject
     AddSubTaskRepository addSubTaskRepository;
-    private final SubTaskViewContract subTaskViewContract;
 
-    public SubTaskPresenter(SubTaskViewContract subTaskViewContract) {
-        this.subTaskViewContract = subTaskViewContract;
+    public SubTaskPresenter(SubTaskViewContract view) {
+        super(view);
         DaggerAddSubTaskComponent.Initializer.buildComponent().inject(this);
     }
 
-    @Override
-    public void start() {
+    private void saveSubTask(int id, SubTask subTask) {
+        showLoadingIndicator();
+        BaseFetchObserver<SubTask> observer = new BaseFetchObserver<SubTask>(this) {
+            @Override
+            public void onNext(SubTask subTask1) {
+                hideLoadingIndicator();
+                getView().showAddSubTaskSuccess(subTask1.getTitle());
+            }
+        };
+        addSubTaskRepository.saveSubTask(id, subTask).subscribe(observer);
     }
 
-    @Override
-    public void saveSubTask(String id, SubTask subTask) {
-        addSubTaskRepository.saveSubTask(id, subTask)
-                .subscribe(savedSubTask -> subTaskViewContract.showSuccess(savedSubTask.getTitle()));
+    public void onAddSubTaskClicked(String title, String description, int progress, int taskId) {
+        if (title.isEmpty()) {
+            getView().showTitleMissedError();
+        } else if (description.isEmpty()) {
+            getView().showDescriptionMissedError();
+        } else {
+            SubTask subTask = new SubTask(UUID.randomUUID().toString()
+                    , title
+                    , description
+                    , progress);
+            saveSubTask(taskId, subTask);
+        }
     }
 }

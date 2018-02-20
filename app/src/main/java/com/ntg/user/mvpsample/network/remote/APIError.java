@@ -1,26 +1,25 @@
 package com.ntg.user.mvpsample.network.remote;
 
 /**
- * Created by Sara Elmoghazy on 18/01/2018.
+ * @author Sara Elmoghazy
  */
-
 public class APIError {
-    private int errorCode;
-    private String errorMessage;
+    private int code;
+    private String message;
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

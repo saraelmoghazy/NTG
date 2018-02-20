@@ -6,7 +6,7 @@ import com.ntg.user.mvpsample.network.Task;
 import io.reactivex.Observable;
 
 /**
- * @author islam
+ * @author Sara Elmoghazy
  */
 
 public class AddSubTaskRepository implements AddSubTaskDataSource {
@@ -27,7 +27,7 @@ public class AddSubTaskRepository implements AddSubTaskDataSource {
     }
 
     @Override
-    public Observable<SubTask> saveSubTask(String id, SubTask subTask) {
+    public Observable<SubTask> saveSubTask(int id, SubTask subTask) {
 
         return addSubTaskDataSource.saveSubTask(id, subTask);
     }

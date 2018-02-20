@@ -12,10 +12,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * @author islam class task presenter
+ * @author Sara Elmoghazy
  */
 
-public class TaskPresenter extends BasePresenter<TaskViewContract> implements TaskPresenterContract {
+public class TaskPresenter extends BasePresenter<TaskViewContract> {
 
     @Inject
     GetTasksRepository tasksRepository;
@@ -25,14 +25,14 @@ public class TaskPresenter extends BasePresenter<TaskViewContract> implements Ta
         GetTasksComponent.Initializer.buildComponent().inject(this);
     }
 
-    @Override
-    public void loadTasks() {
-        getView().showLoadingIndicator();
+
+    private void loadTasks() {
+        showLoadingIndicator();
         BaseFetchObserver<List<Task>> observer = new BaseFetchObserver<List<Task>>(this) {
             @Override
             public void onNext(List<Task> tasks) {
+                hideLoadingIndicator();
                 getView().showTasks(tasks);
-                getView().hideLoadingIndicator();
             }
         };
         tasksRepository.getTasks().subscribe(observer);
@@ -42,5 +42,9 @@ public class TaskPresenter extends BasePresenter<TaskViewContract> implements Ta
     public void start() {
         super.start();
         loadTasks();
+    }
+
+    public void onTaskClicked(Task task) {
+        getView().navigateToTaskDetails(task);
     }
 }

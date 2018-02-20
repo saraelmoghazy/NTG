@@ -6,7 +6,7 @@ import com.ntg.user.mvpsample.network.SubTask;
 import java.util.List;
 
 /**
- * Created by islam on 1/30/2018.
+ * @author Sara Elmoghazy
  */
 
 public interface TaskDetailsViewContract extends BaseView {
