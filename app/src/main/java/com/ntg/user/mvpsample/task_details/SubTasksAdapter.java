@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.network.SubTask;
 
 import java.util.List;
 

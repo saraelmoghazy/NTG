@@ -5,8 +5,9 @@ import com.ntg.user.mvpsample.add_subtask.model.DaggerAddSubTaskComponent;
 import com.ntg.user.mvpsample.add_subtask.view.SubTaskViewContract;
 import com.ntg.user.mvpsample.base.BaseFetchObserver;
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.network.SubTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -34,7 +35,11 @@ public class SubTaskPresenter extends BasePresenter<SubTaskViewContract> {
                 getView().showAddSubTaskSuccess(subTask1.getTitle());
             }
         };
-        addSubTaskRepository.saveSubTask(id, subTask).subscribe(observer);
+        SubTasks subTasksRequest = new SubTasks();
+        List<SubTask> subTasks = new ArrayList<>();
+        subTasks.add(subTask);
+        subTasksRequest.setSubTasks(subTasks);
+        addSubTaskRepository.saveSubTask(id, subTasksRequest).subscribe(observer);
     }
 
     public void onAddSubTaskClicked(String title, String description, int progress, int taskId) {

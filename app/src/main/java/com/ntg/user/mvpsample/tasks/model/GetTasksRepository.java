@@ -1,7 +1,5 @@
 package com.ntg.user.mvpsample.tasks.model;
 
-import com.ntg.user.mvpsample.network.Task;
-
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -27,8 +25,8 @@ public class GetTasksRepository implements GetTasksDataSource {
     }
 
     @Override
-    public Observable<Integer> getTaskProgress(int id) {
-        return tasksRemoteDataSource.getTaskProgress(id);
+    public Observable<Integer> getTaskProgress(List<SubTask> subTasks) {
+        return tasksRemoteDataSource.getTaskProgress(subTasks);
     }
 
     @Override

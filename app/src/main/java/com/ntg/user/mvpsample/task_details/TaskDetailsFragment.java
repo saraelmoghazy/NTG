@@ -7,14 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_subtask.view.SubTaskDialogFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
-import com.ntg.user.mvpsample.network.SubTask;
-import com.ntg.user.mvpsample.network.Task;
 
 import java.util.List;
 

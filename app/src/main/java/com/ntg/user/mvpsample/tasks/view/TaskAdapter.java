@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.ntg.user.mvpsample.R;
-import com.ntg.user.mvpsample.network.Task;
 
 import java.util.ArrayList;
 import java.util.List;

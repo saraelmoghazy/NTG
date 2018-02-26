@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.add_task.model;
 
 import com.ntg.user.mvpsample.base.BaseObservable;
-import com.ntg.user.mvpsample.network.Task;
 import com.ntg.user.mvpsample.network.remote.APIEndPoint;
 import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
 

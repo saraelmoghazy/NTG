@@ -2,8 +2,6 @@ package com.ntg.user.mvpsample.tasks.model;
 
 import com.ntg.user.mvpsample.base.BaseObservable;
 import com.ntg.user.mvpsample.Utils;
-import com.ntg.user.mvpsample.network.SubTask;
-import com.ntg.user.mvpsample.network.Task;
 import com.ntg.user.mvpsample.network.remote.APIEndPoint;
 import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
 
@@ -31,7 +29,7 @@ public class RemoteGetTasksRepo extends BaseObservable implements GetTasksDataSo
     private io.reactivex.Observable<List<Task>> convert(List<Task> tasks) {
         for (Task task : tasks) {
             if (task.getSubTasks() != null && task.getSubTasks().size() > 0) {
-                getTaskProgress(task.getId()).subscribe(progress -> task.setProgress(progress));
+                getTaskProgress(task.getSubTasks()).subscribe(progress -> task.setProgress(progress));
             }
         }
 
@@ -39,13 +37,13 @@ public class RemoteGetTasksRepo extends BaseObservable implements GetTasksDataSo
     }
 
     @Override
-    public Observable<Integer> getTaskProgress(int taskId) {
-        APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
-        return APIEndPoint.getSubTasks(taskId)
-                .flatMapIterable(subTasks -> subTasks)
-                .map(subTask -> subTask.getProgress())
-                .toList()
-                .map(progress -> Utils.getAverage(progress)).toObservable();
+    public Observable<Integer> getTaskProgress(List<SubTask> tasks) {
+        return
+                Observable.just(tasks)
+                        .flatMapIterable(subTask -> subTask)
+                        .map(subTask -> subTask.getProgress())
+                        .toList()
+                        .map(progress -> Utils.getAverage(progress)).toObservable();
     }
 
     @Override

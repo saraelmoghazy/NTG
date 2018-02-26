@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.add_subtask.model;
 
 import com.ntg.user.mvpsample.base.BaseObservable;
-import com.ntg.user.mvpsample.network.SubTask;
 import com.ntg.user.mvpsample.network.remote.APIEndPoint;
 import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
 
@@ -28,7 +27,7 @@ public class RemoteAddSubTaskRepo extends BaseObservable implements AddSubTaskDa
     }
 
     @Override
-    public Observable<SubTask> saveSubTask(int id, SubTask subTasks) {
+    public Observable<SubTask> saveSubTask(int id, SubTasks subTasks) {
         APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
         return getObservable(APIEndPoint.saveSubTask(id, subTasks));
     }

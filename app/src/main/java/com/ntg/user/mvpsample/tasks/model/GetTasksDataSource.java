@@ -1,7 +1,5 @@
 package com.ntg.user.mvpsample.tasks.model;
 
-import com.ntg.user.mvpsample.network.Task;
-
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -12,7 +10,7 @@ import io.reactivex.Observable;
 
 public interface GetTasksDataSource {
 
-    Observable<Integer> getTaskProgress(int id);
+    Observable<Integer> getTaskProgress(List<SubTask> subTasks);
 
     Observable<List<Task>> getTasks();
 }

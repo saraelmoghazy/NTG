@@ -1,7 +1,6 @@
 package com.ntg.user.mvpsample.task_details;
 
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.network.Task;
 
 /**
  * @author Sara Elmoghazy

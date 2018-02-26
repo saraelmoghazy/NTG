@@ -5,7 +5,6 @@ import com.ntg.user.mvpsample.add_task.model.AddTaskComponent;
 import com.ntg.user.mvpsample.add_task.model.AddTaskRepository;
 import com.ntg.user.mvpsample.base.BaseFetchObserver;
 import com.ntg.user.mvpsample.base.BasePresenter;
-import com.ntg.user.mvpsample.network.Task;
 
 import javax.inject.Inject;
 

@@ -1,8 +1,5 @@
 package com.ntg.user.mvpsample.add_subtask.model;
 
-import com.ntg.user.mvpsample.network.SubTask;
-import com.ntg.user.mvpsample.network.Task;
-
 import io.reactivex.Observable;
 
 /**
@@ -27,8 +24,8 @@ public class AddSubTaskRepository implements AddSubTaskDataSource {
     }
 
     @Override
-    public Observable<SubTask> saveSubTask(int id, SubTask subTask) {
+    public Observable<SubTask> saveSubTask(int id, SubTasks subTasks) {
 
-        return addSubTaskDataSource.saveSubTask(id, subTask);
+        return addSubTaskDataSource.saveSubTask(id, subTasks);
     }
 }

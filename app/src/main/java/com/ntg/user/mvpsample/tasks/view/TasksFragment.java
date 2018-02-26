@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_task.AddTaskFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
-import com.ntg.user.mvpsample.network.Task;
 import com.ntg.user.mvpsample.task_details.TaskDetailsFragment;
 import com.ntg.user.mvpsample.tasks.presenter.TaskPresenter;
 
