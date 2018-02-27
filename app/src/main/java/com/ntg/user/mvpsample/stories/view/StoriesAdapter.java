@@ -51,10 +51,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.TaskView
         ColorGenerator generator = ColorGenerator.MATERIAL;
         int color = generator.getRandomColor();
         TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .withBorder(4)
-                .endConfig()
-                .buildRoundRect("" + story.getTitle().charAt(0), color, 10);
+                .buildRoundRect(String.valueOf(story.getTitle().charAt(0)), color, 10);
         holder.txtStoryConsumption.setText("" + 80);
         holder.icStory.setImageDrawable(drawable);
         holder.progressBar.setProgress(80);

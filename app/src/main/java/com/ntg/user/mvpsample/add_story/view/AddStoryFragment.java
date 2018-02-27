@@ -18,6 +18,7 @@ import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_story.presenter.AddStoryPresenter;
 import com.ntg.user.mvpsample.add_task.view.AddTaskFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
+import com.ntg.user.mvpsample.util.ViewUtility;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,12 +32,13 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
     EditText tvTitle;
     @BindView(R.id.tv_description)
     EditText tvDescription;
-    @BindView(R.id.btn_add_story)
-    Button btnAddNewStory;
     @BindView(R.id.input_title)
     TextInputLayout inputTitle;
     @BindView(R.id.input_description)
     TextInputLayout inputDescription;
+    @BindView(R.id.partial_add_story)
+    TextInputLayout partialAddStory;
+
     private AddStoryPresenter presenter;
 
 
@@ -50,12 +52,9 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
 
         View view = inflater.inflate(R.layout.fragment_add_story, container, false);
         ButterKnife.bind(this, view);
+        ViewUtility.addShadowToView(getActivity(), partialAddStory);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Story");
-
         presenter = new AddStoryPresenter(this);
-        btnAddNewStory.setOnClickListener(v -> {
-            presenter.onSubmitStory(tvTitle.getText().toString(), tvDescription.getText().toString());
-        });
 
         return view;
     }

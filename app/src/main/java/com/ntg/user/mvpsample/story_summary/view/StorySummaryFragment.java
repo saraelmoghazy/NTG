@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.base.BaseFragment;
 import com.ntg.user.mvpsample.model.Story;
 import com.ntg.user.mvpsample.story_summary.presenter.StorySummaryPresenter;
+import com.ntg.user.mvpsample.util.ViewUtility;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +36,9 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
     TextView txtDone;
     @BindView(R.id.txtInit)
     TextView txtInit;
+    @BindView(R.id.partial_story_summary)
+    RelativeLayout partialStorySummary;
+
 
     private StorySummaryPresenter presenter;
 
@@ -50,6 +56,7 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_story_summary, container, false);
         ButterKnife.bind(this, view);
+        ViewUtility.addShadowToView(getActivity(), partialStorySummary);
         if (getArguments() != null && getArguments().getSerializable(STORY) != null)
             presenter = new StorySummaryPresenter(this
                     , (Story) getArguments().getSerializable(STORY));

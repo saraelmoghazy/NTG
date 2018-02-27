@@ -2,7 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F5F5F5">
+    style="@style/CardStyle">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="Ok"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/btnCancel"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/btnOk"
                 android:text="Cancel"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorPrimary" />
         </RelativeLayout>
     </LinearLayout>
 

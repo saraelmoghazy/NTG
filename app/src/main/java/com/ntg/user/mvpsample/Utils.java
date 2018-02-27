@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 import java.util.List;
 
 public class Utils {
@@ -15,5 +17,11 @@ public class Utils {
         } else {
             return (sum / integers.size());
         }
+    }
+
+
+    public static int generateColor() {
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        return generator.getRandomColor();
     }
 }

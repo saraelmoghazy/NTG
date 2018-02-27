@@ -6,6 +6,7 @@ import com.ntg.user.mvpsample.model.StoryTask;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -22,8 +23,8 @@ public interface APIEndPoint {
     Observable<List<Story>> getStories();
 
     @POST("saveStory")
-    Observable<Story> saveStory(@Body Story story);
+    Observable<Integer> saveStory(@Body Story story);
 
     @PUT("saveTasks/{taskId}")
-    Observable<StoryTask> saveTasks(@Path("taskId") int id, @Body List<StoryTask> storyTasks);
+    Observable<Response<Void>> saveTasks(@Path("taskId") int id, @Body List<StoryTask> storyTasks);
 }

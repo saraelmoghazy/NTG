@@ -5,6 +5,7 @@ import com.ntg.user.mvpsample.model.StoryTask;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * @author Sara Elmoghazy
@@ -28,7 +29,7 @@ public class AddTaskRepository implements AddTaskDataSource {
     }
 
     @Override
-    public Observable<Void> saveTasks(int storyId, List<StoryTask> storyTasks) {
+    public Observable<Response<Void>> saveTasks(int storyId, List<StoryTask> storyTasks) {
 
         return addTaskDataSource.saveTasks(storyId, storyTasks);
     }

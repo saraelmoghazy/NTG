@@ -1,138 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_addon_card"
-    style="@style/CardStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="30dp">
+    android:layout_height="match_parent"
+    android:background="@color/off_white">
 
-    <ImageView
-        android:id="@+id/ic_story"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="10dp"
-        android:src="@drawable/ic_arrow_right" />
-
-    <TextView
-        android:id="@+id/txt_title"
-        style="@style/StoryTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ic_story"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        tools:text="Story Title" />
-
-    <TextView
-        android:id="@+id/txt_progress"
-        style="@style/StoryProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        tools:text="Progress: 90%" />
-
-    <View
-        android:id="@+id/v_separator_one"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_height"
-        android:layout_below="@+id/txt_progress"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/grey" />
-
-    <TextView
-        android:id="@+id/txt_acceptance_criteria"
-        style="@style/StoryProgress"
-        android:layout_below="@+id/v_separator_one"
-        android:layout_marginTop="3dp"
-        tools:text="User has to be able to see list of stories , show summary and update sub tasks." />
-
-    <View
-        android:id="@+id/v_separator_two"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_height"
-        android:layout_below="@+id/txt_acceptance_criteria"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/grey" />
-
-    <LinearLayout
+    <include
+        android:id="@+id/partial_story_summary"
+        style="@style/CardStyle"
+        layout="@layout/partial_story_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/v_separator_two"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtInit"
-                style="@style/StoryCount"
-                tools:text="13" />
-
-            <TextView
-                style="@style/StoryCountHeader"
-                android:layout_marginTop="3dp"
-                android:text="Not Started" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="@dimen/separator_height"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtInProgress"
-                style="@style/StoryCount"
-                android:layout_gravity="center"
-                tools:text="13" />
-
-            <TextView
-                style="@style/StoryCountHeader"
-                android:layout_marginTop="3dp"
-                android:text="In Progress" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="@dimen/separator_height"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtDone"
-                style="@style/StoryCount"
-                tools:text="13" />
-
-            <TextView
-                style="@style/StoryCountHeader"
-                android:layout_marginTop="3dp"
-                android:text="Done" />
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_marginTop="@dimen/card_top_margin"/>
 
 </RelativeLayout>

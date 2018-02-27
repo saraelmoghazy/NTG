@@ -2,14 +2,20 @@ package com.ntg.user.mvpsample.add_task.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.model.StoryTask;
+import com.ntg.user.mvpsample.util.ViewUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +37,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent,
                 false);
+        ViewUtility.addShadowToView(parent.getContext(), view);
+
         return new TaskHolder(view);
     }
 
@@ -38,6 +46,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     public void onBindViewHolder(TaskHolder holder, int position) {
         StoryTask storyTask = storyTasks.get(position);
         holder.title.setText(storyTask.getTitle());
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(String.valueOf(storyTask.getTitle().charAt(0)),
+                        Utils.generateColor());
+        holder.icTask.setImageDrawable(drawable);
         initProgressColor(holder, storyTask);
 
     }
@@ -69,6 +81,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
 
     class TaskHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.ic_task)
+        ImageView icTask;
         @BindView(R.id.txtTitle)
         TextView title;
         @BindView(R.id.txtProgress)

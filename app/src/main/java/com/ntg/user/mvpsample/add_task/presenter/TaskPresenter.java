@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit2.Response;
+
 /**
  * @author Sara Elmoghazy
  */
@@ -22,6 +24,7 @@ public class TaskPresenter extends BasePresenter<AddTaskViewContract> {
 
     public TaskPresenter(AddTaskViewContract view) {
         super(view);
+
         DaggerAddTaskComponent.Initializer.buildComponent().inject(this);
     }
 
@@ -29,17 +32,15 @@ public class TaskPresenter extends BasePresenter<AddTaskViewContract> {
     public void onAddTask(String title, int progress) {
         StoryTask storyTask = new StoryTask(title, progress);
         getView().updateTasks(storyTask);
-
     }
 
     public void onSubmitTasks(int taskId, List<StoryTask> storyTasks) {
         showLoadingIndicator();
-        BaseFetchObserver<Void> observer = new BaseFetchObserver<Void>(this) {
+        BaseFetchObserver<Response<Void>> observer = new BaseFetchObserver<Response<Void>>(this) {
             @Override
-            public void onNext(Void aVoid) {
+            public void onNext(Response<Void> aVoid) {
                 hideLoadingIndicator();
                 getView().navigateToStoriesActivity();
-
             }
         };
         addTaskRepository.saveTasks(taskId, storyTasks).subscribe(observer);

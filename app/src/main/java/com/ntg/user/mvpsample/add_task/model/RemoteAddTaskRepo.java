@@ -8,6 +8,7 @@ import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 
 /**
  * @author Sara Elmoghazy
@@ -29,7 +30,7 @@ public class RemoteAddTaskRepo extends BaseObservable implements AddTaskDataSour
         return INSTANCE;
     }
 
-    public Observable<Void> saveTasks(int storyId, List<StoryTask> storyTasks) {
+    public Observable<Response<Void>> saveTasks(int storyId, List<StoryTask> storyTasks) {
         APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
         return getObservable(APIEndPoint.saveTasks(storyId, storyTasks));
     }

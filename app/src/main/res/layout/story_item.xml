@@ -1,100 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CardStyle"
-    android:orientation="horizontal"
-    android:weightSum="10">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@id/ic_story"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:id="@+id/ic_story"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_add_white_24dp"
+        android:transitionName="shareView" />
+
+    <TextView
+        android:id="@+id/txt_story_title"
+        style="@style/ListItemTitle"
+        android:layout_toEndOf="@id/ic_story"
+        android:text="Title"
+        android:textColor="@color/black" />
+
+    <View
+        android:id="@+id/v_separator_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separator_height"
+        android:layout_below="@+id/txt_story_title"
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@id/ic_story"
+        android:background="@color/grey" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="9"
-        android:orientation="vertical">
+        android:id="@+id/story_consumption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_separator_one"
+        android:layout_toEndOf="@id/ic_story"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txt_story_title"
-            style="@style/ListItemTitle"
-            tools:text="Story title" />
+            android:id="@+id/txt_story_consumption"
+            style="@style/ListItemConsumption"
+            android:layout_marginEnd="3dp"
+            android:text="20 "
+            android:textColor="@color/pink"
+            tools:text="20 left" />
 
-        <View
-            android:id="@+id/v_separator_one"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator_height"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_story_consumption"
-                style="@style/ListItemConsumption"
-                android:layout_marginEnd="3dp"
-                android:textColor="@color/pink"
-                tools:text="20 left" />
-
-            <TextView
-                android:id="@+id/txt_task_total"
-                style="@style/ListItemConsumption"
-                android:text="of 100" />
-
-        </LinearLayout>
-
-
-        <ProgressBar
-            android:id="@+id/progress_story_consumption"
-            style="@style/ProgressBarHorizontal"
-            android:progressDrawable="@drawable/progress_bar"
-            tools:progress="40" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-
-            <TextView
-                style="@style/ListLink"
-                android:layout_alignParentStart="true"
-                android:text="@string/story_summary" />
-
-            <ImageView
-                android:id="@+id/iv_story_summery_arrow"
-                android:layout_width="@dimen/ic_arrow_width"
-                android:layout_height="@dimen/ic_arrow_height"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_arrow_right" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                style="@style/ListLink"
-                android:layout_alignParentStart="true"
-                android:text="@string/update_tasks" />
-
-            <ImageView
-                android:id="@+id/iv_update_tasks_arrow"
-                android:layout_width="@dimen/ic_arrow_width"
-                android:layout_height="@dimen/ic_arrow_height"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_arrow_right" />
-        </RelativeLayout>
-
+        <TextView
+            android:id="@+id/txt_task_total"
+            style="@style/ListItemConsumption"
+            android:text="of 100" />
     </LinearLayout>
-</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_story_consumption"
+        style="@style/ProgressBarHorizontal"
+        android:layout_below="@+id/story_consumption"
+        android:layout_toEndOf="@id/ic_story"
+        android:progressDrawable="@drawable/progress_bar"
+        tools:progress="40" />
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_story_consumption"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/ic_story">
+
+        <TextView
+            style="@style/ListLink"
+            android:layout_alignParentStart="true"
+            android:text="@string/story_summary" />
+
+        <ImageView
+            android:id="@+id/iv_story_summery_arrow"
+            android:layout_width="@dimen/ic_arrow_width"
+            android:layout_height="@dimen/ic_arrow_height"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_layout"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/ic_story">
+
+        <TextView
+            style="@style/ListLink"
+            android:layout_alignParentStart="true"
+            android:text="@string/update_tasks" />
+
+        <ImageView
+            android:id="@+id/iv_update_tasks_arrow"
+            android:layout_width="@dimen/ic_arrow_width"
+            android:layout_height="@dimen/ic_arrow_height"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+</RelativeLayout><!--</android.support.v7.widget.CardView>-->
