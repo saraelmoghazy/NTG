@@ -1,5 +1,8 @@
 package com.ntg.user.mvpsample.network.remote;
 
+import com.ntg.user.mvpsample.model.Story;
+import com.ntg.user.mvpsample.model.StoryTask;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -15,12 +18,12 @@ import retrofit2.http.Path;
 public interface APIEndPoint {
 
 
-    @GET("tasks")
-    Observable<List<Task>> getTasks();
+    @GET("stories")
+    Observable<List<Story>> getStories();
 
-    @POST("saveTask")
-    Observable<Task> saveTask(@Body Task task);
+    @POST("saveStory")
+    Observable<Story> saveStory(@Body Story story);
 
-    @PUT("saveSubTask/{taskId}")
-    Observable<SubTask> saveSubTask(@Path("taskId") int id, @Body SubTasks subTasks);
+    @PUT("saveTasks/{taskId}")
+    Observable<StoryTask> saveTasks(@Path("taskId") int id, @Body List<StoryTask> storyTasks);
 }

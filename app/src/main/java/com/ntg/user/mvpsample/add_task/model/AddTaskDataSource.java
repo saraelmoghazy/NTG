@@ -1,5 +1,9 @@
 package com.ntg.user.mvpsample.add_task.model;
 
+import com.ntg.user.mvpsample.model.StoryTask;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 
 /**
@@ -8,5 +12,5 @@ import io.reactivex.Observable;
 
 public interface AddTaskDataSource {
 
-    Observable<Task> saveTask(Task task);
+    Observable<Void> saveTasks(int storyId, List<StoryTask> storyTasks);
 }

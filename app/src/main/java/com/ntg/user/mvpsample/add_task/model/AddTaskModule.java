@@ -14,12 +14,12 @@ import dagger.Provides;
 public class AddTaskModule {
 
     @Provides
-    RemoteAddTaskRepo provideRemoteTaskRepo(RetrofitProvider retrofitProvider) {
+    RemoteAddTaskRepo provideRemoteAddTaskRepo(RetrofitProvider retrofitProvider) {
         return RemoteAddTaskRepo.getInstance(retrofitProvider);
     }
 
     @Provides
-    AddTaskRepository provideTaskRepo(RemoteAddTaskRepo remoteTaskRepo) {
-        return AddTaskRepository.getInstance(remoteTaskRepo);
+    AddTaskRepository provideAddTaskRepo(RemoteAddTaskRepo remoteAddTaskRepo) {
+        return AddTaskRepository.getInstance(remoteAddTaskRepo);
     }
 }

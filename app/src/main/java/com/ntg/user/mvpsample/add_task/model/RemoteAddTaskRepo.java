@@ -1,8 +1,11 @@
 package com.ntg.user.mvpsample.add_task.model;
 
 import com.ntg.user.mvpsample.base.BaseObservable;
+import com.ntg.user.mvpsample.model.StoryTask;
 import com.ntg.user.mvpsample.network.remote.APIEndPoint;
 import com.ntg.user.mvpsample.network.remote.RetrofitProvider;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -15,7 +18,6 @@ public class RemoteAddTaskRepo extends BaseObservable implements AddTaskDataSour
     private static RemoteAddTaskRepo INSTANCE = null;
     RetrofitProvider retrofitProvider;
 
-
     private RemoteAddTaskRepo(RetrofitProvider retrofitProvider) {
         this.retrofitProvider = retrofitProvider;
     }
@@ -23,12 +25,12 @@ public class RemoteAddTaskRepo extends BaseObservable implements AddTaskDataSour
     public static RemoteAddTaskRepo getInstance(RetrofitProvider retrofitProvider) {
         if (INSTANCE == null)
             INSTANCE = new RemoteAddTaskRepo(retrofitProvider);
+
         return INSTANCE;
     }
 
-    @Override
-    public Observable<Task> saveTask(Task task) {
-        APIEndPoint addNewTask = retrofitProvider.getRetrofit().create(APIEndPoint.class);
-        return getObservable(addNewTask.saveTask(task));
+    public Observable<Void> saveTasks(int storyId, List<StoryTask> storyTasks) {
+        APIEndPoint APIEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
+        return getObservable(APIEndPoint.saveTasks(storyId, storyTasks));
     }
 }

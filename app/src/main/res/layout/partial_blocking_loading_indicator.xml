@@ -11,7 +11,7 @@
         android:id="@+id/loading_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@color/ntg_white" />
+        android:indeterminateTint="@color/white" />
 
     <TextView
         android:id="@+id/text"

@@ -1,8 +1,7 @@
 package com.ntg.user.mvpsample.add_task.model;
 
-import com.ntg.user.mvpsample.add_task.presenter.AddTaskPresenter;
+import com.ntg.user.mvpsample.add_task.presenter.TaskPresenter;
 import com.ntg.user.mvpsample.network.remote.NetComponent;
-import com.ntg.user.mvpsample.tasks.presenter.TaskPresenter;
 
 import javax.inject.Singleton;
 
@@ -15,7 +14,7 @@ import dagger.Component;
 @Component(dependencies = {NetComponent.class}, modules = {AddTaskModule.class})
 public interface AddTaskComponent {
 
-    void inject(AddTaskPresenter taskPresenter);
+    void inject(TaskPresenter taskPresenter);
 
     class Initializer {
 

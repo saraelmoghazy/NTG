@@ -28,6 +28,7 @@ public class BasePresenter<V extends BaseView> {
     }
 
     public void start() {
+
     }
 
     public void showLoadingIndicator() {

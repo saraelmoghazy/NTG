@@ -7,5 +7,10 @@
     <string name="tile_missing_error">Title must be set</string>
     <string name="description_missing_error">Description must be set</string>
     <string name="loading_indicator_message">"Wheels are turning..."</string>
-    <string name="task_added_successfully">"Task Added successfully"</string>
+    <string name="story_summary">"Story Summary"</string>
+    <string name="update_tasks">"Update Tasks"</string>
+    <string name="progress">"Progress"</string>
+    <string name="state_in_progress">"In Progress"</string>
+    <string name="state_done">"Done"</string>
+    <string name="state_not_started">"Not started"</string>
 </resources>

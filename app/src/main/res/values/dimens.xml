@@ -1,0 +1,21 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="card_view_padding">15dp</dimen>
+    <dimen name="body">16sp</dimen>
+    <dimen name="header_five">18sp</dimen>
+    <dimen name="header_four">20sp</dimen>
+    <dimen name="header_three">24sp</dimen>
+    <dimen name="header_two">28sp</dimen>
+    <dimen name="header_one">32sp</dimen>
+    <dimen name="separator_height">1dp</dimen>
+    <dimen name="separator_margin_mid">18dp</dimen>
+    <dimen name="ic_arrow_width">40dp</dimen>
+    <dimen name="ic_arrow_height">20dp</dimen>
+    <dimen name="card_margin_horizontal_big_activity">8dp</dimen>
+    <dimen name="card_margin_vertical_big_activity">4dp</dimen>
+    <dimen name="card_recycler_corner_radius">2dp</dimen>
+    <dimen name="card_recycler_elevation">2dp</dimen>
+
+</resources>

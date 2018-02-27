@@ -1,17 +1,22 @@
 package com.ntg.user.mvpsample.add_task.model;
 
+import com.ntg.user.mvpsample.model.StoryTask;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 
 /**
  * @author Sara Elmoghazy
  */
+
 public class AddTaskRepository implements AddTaskDataSource {
 
     private static AddTaskRepository INSTANCE = null;
-    private final AddTaskDataSource remoteAddTaskRepo;
+    private final AddTaskDataSource addTaskDataSource;
 
-    private AddTaskRepository(AddTaskDataSource remoteAddTaskRepo) {
-        this.remoteAddTaskRepo = remoteAddTaskRepo;
+    private AddTaskRepository(AddTaskDataSource addTaskDataSource) {
+        this.addTaskDataSource = addTaskDataSource;
     }
 
     public static AddTaskRepository getInstance(AddTaskDataSource remoteAddTaskRepo) {
@@ -23,7 +28,8 @@ public class AddTaskRepository implements AddTaskDataSource {
     }
 
     @Override
-    public Observable<Task> saveTask(Task task) {
-        return remoteAddTaskRepo.saveTask(task);
+    public Observable<Void> saveTasks(int storyId, List<StoryTask> storyTasks) {
+
+        return addTaskDataSource.saveTasks(storyId, storyTasks);
     }
 }
