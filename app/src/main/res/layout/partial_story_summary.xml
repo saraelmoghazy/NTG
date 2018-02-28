@@ -9,10 +9,11 @@
 
     <ImageView
         android:id="@+id/ic_story"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/txt_title"
@@ -61,8 +62,8 @@
 
     <include
         layout="@layout/partial_story_summary_tabs"
-        android:layout_below="@+id/v_separator_two"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_below="@+id/v_separator_two" />
 
 </RelativeLayout>

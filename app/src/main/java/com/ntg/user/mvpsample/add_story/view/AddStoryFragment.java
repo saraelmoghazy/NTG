@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_story.presenter.AddStoryPresenter;
@@ -37,7 +38,7 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
     @BindView(R.id.input_description)
     TextInputLayout inputDescription;
     @BindView(R.id.partial_add_story)
-    TextInputLayout partialAddStory;
+    LinearLayout partialAddStory;
 
     private AddStoryPresenter presenter;
 

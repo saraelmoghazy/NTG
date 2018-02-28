@@ -3,6 +3,7 @@ package com.ntg.user.mvpsample.stories.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,13 +29,15 @@ import io.reactivex.subjects.Subject;
  */
 public class StoriesFragment extends BaseFragment implements StoriesViewContract {
 
+    public static final String TAG = StoriesFragment.class.getSimpleName();
+
     @BindView(R.id.fab_add_story)
     FloatingActionButton fabAddStory;
     @BindView(R.id.rv_stories)
     RecyclerView rvStories;
     private StoriesAdapter storiesAdapter;
     private StoryPresenter storyPresenter;
-    private Subject<Story> storySummaryObservable = PublishSubject.create();
+    private Subject<StorySummaryItem> storySummaryObservable = PublishSubject.create();
     private Subject<Story> updateTasksObservable = PublishSubject.create();
 
     public static StoriesFragment newInstance() {
@@ -68,7 +71,9 @@ public class StoriesFragment extends BaseFragment implements StoriesViewContract
 
     @Override
     public void showStories(List<Story> stories) {
-        storySummaryObservable.subscribe(story -> storyPresenter.onStorySummaryClicked(story));
+        storySummaryObservable.subscribe(storySummaryItem ->
+                storyPresenter.onStorySummaryClicked(storySummaryItem.getSharedElement(),
+                        storySummaryItem.getStory()));
         updateTasksObservable.subscribe(story -> storyPresenter.onUpdateTasksClicked(story));
         storiesAdapter = new StoriesAdapter(stories, storySummaryObservable, updateTasksObservable);
         rvStories.setAdapter(storiesAdapter);
@@ -82,9 +87,9 @@ public class StoriesFragment extends BaseFragment implements StoriesViewContract
     }
 
     @Override
-    public void navigateToStorySummaryFragment(Story story) {
+    public void navigateToStorySummaryFragment(View sharedElement, Story story) {
         getFragmentManager().beginTransaction()
-                .addToBackStack(null)
+                .addToBackStack(TAG)
                 .replace(R.id.container, StorySummaryFragment.newInstance(story)).commit();
     }
 

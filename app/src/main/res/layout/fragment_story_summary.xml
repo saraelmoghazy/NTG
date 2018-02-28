@@ -10,6 +10,6 @@
         layout="@layout/partial_story_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/card_top_margin"/>
+        android:layout_marginTop="@dimen/card_top_margin" />
 
 </RelativeLayout>

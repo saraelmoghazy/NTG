@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.stories.view;
 
+import android.view.View;
+
 import com.ntg.user.mvpsample.base.BaseView;
 import com.ntg.user.mvpsample.model.Story;
 
@@ -14,7 +16,7 @@ public interface StoriesViewContract extends BaseView {
 
     void addNewStory();
 
-    void navigateToStorySummaryFragment(Story story);
+    void navigateToStorySummaryFragment(View sharedElement, Story story);
 
     void navigateToUpdateTasksFragment(Story story);
 }

@@ -8,6 +8,8 @@ import com.ntg.user.mvpsample.base.BaseView;
 
 public interface StorySummaryViewContract extends BaseView {
 
+    void showIcon(String title);
+
     void showTitle(String title);
 
     void showDescription(String description);

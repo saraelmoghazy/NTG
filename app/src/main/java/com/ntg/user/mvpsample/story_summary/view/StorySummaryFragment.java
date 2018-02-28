@@ -1,12 +1,16 @@
 package com.ntg.user.mvpsample.story_summary.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.base.BaseFragment;
@@ -24,6 +28,8 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
 
     private static final String STORY = "story";
 
+    @BindView(R.id.ic_story)
+    ImageView icStory;
     @BindView(R.id.txt_title)
     TextView txtTitle;
     @BindView(R.id.txt_progress)
@@ -65,11 +71,17 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
         return view;
     }
 
+    @Override
+    public void showIcon(String title) {
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRoundRect(String.valueOf(title.charAt(0)), Utils.generateColor(), 10);
+
+        icStory.setImageDrawable(drawable);
+    }
 
     @Override
     public void showTitle(String title) {
         txtTitle.setText(title);
-
     }
 
     @Override

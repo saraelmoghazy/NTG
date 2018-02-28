@@ -10,7 +10,7 @@
     <string name="story_summary">"Story Summary"</string>
     <string name="update_tasks">"Update Tasks"</string>
     <string name="progress">"Progress"</string>
-    <string name="state_in_progress">"In Progress"</string>
+    <string name="state_in_progress">"Progress"</string>
     <string name="state_done">"Done"</string>
-    <string name="state_not_started">"Not started"</string>
+    <string name="state_not_started">"Intial"</string>
 </resources>

@@ -34,6 +34,8 @@ public class StorySummaryPresenter extends BasePresenter<StorySummaryViewContrac
                 else if (task.getProgress() == 100) done++;
             }
         }
+        getView().showIcon(story.getTitle());
+        getView().showProgress(story.getProgress());
         getView().showDoneSubTasks(done);
         getView().showNotStartedSubTasks(notStarted);
         getView().showInProgressSubTasks(inProgress);

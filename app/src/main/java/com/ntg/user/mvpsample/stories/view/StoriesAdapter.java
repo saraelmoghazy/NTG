@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.model.Story;
 import com.ntg.user.mvpsample.util.ViewUtility;
 
@@ -24,10 +25,10 @@ import io.reactivex.subjects.Subject;
 public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.TaskViewHolder> {
 
     private List<Story> stories;
-    private Subject<Story> onStorySummaryClicked;
+    private Subject<StorySummaryItem> onStorySummaryClicked;
     private Subject<Story> onUpdateTasksClicked;
 
-    public StoriesAdapter(List<Story> stories, Subject<Story> onStorySummaryClicked,
+    public StoriesAdapter(List<Story> stories, Subject<StorySummaryItem> onStorySummaryClicked,
                           Subject<Story> onUpdateTasksClicked) {
         this.stories = stories;
         this.onStorySummaryClicked = onStorySummaryClicked;
@@ -48,15 +49,13 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.TaskView
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         Story story = stories.get(position);
         holder.txtStoryTitle.setText(story.getTitle());
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        int color = generator.getRandomColor();
         TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect(String.valueOf(story.getTitle().charAt(0)), color, 10);
-        holder.txtStoryConsumption.setText("" + 80);
+                .buildRoundRect(String.valueOf(story.getTitle().charAt(0)), Utils.generateColor(), 10);
+        holder.txtStoryConsumption.setText("" + story.getProgress());
         holder.icStory.setImageDrawable(drawable);
-        holder.progressBar.setProgress(80);
+        holder.progressBar.setProgress(story.getProgress());
         holder.ivStorySummary.setOnClickListener(view -> onStorySummaryClicked
-                .onNext(story));
+                .onNext(new StorySummaryItem(holder.icStory, story)));
         holder.ivUpdateTasks.setOnClickListener(view -> onUpdateTasksClicked
                 .onNext(story));
     }

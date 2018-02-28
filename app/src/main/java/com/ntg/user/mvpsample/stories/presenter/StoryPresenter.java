@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.stories.presenter;
 
+import android.view.View;
+
 import com.ntg.user.mvpsample.base.BaseFetchObserver;
 import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.model.Story;
@@ -30,9 +32,9 @@ public class StoryPresenter extends BasePresenter<StoriesViewContract> {
         showLoadingIndicator();
         BaseFetchObserver<List<Story>> observer = new BaseFetchObserver<List<Story>>(this) {
             @Override
-            public void onNext(List<Story> tasks) {
+            public void onNext(List<Story> stories) {
                 hideLoadingIndicator();
-                getView().showStories(tasks);
+                getView().showStories(stories);
             }
         };
         getStoriesRepository.getStories().subscribe(observer);
@@ -45,12 +47,12 @@ public class StoryPresenter extends BasePresenter<StoriesViewContract> {
         loadStories();
     }
 
-    public void onStorySummaryClicked(Story story) {
-        getView().navigateToStorySummaryFragment(story);
+    public void onStorySummaryClicked(View sharedElement, Story story) {
+        getView().navigateToStorySummaryFragment(sharedElement, story);
     }
 
 
     public void onUpdateTasksClicked(Story story) {
-        getView().navigateToStorySummaryFragment(story);
+        getView().navigateToUpdateTasksFragment(story);
     }
 }

@@ -16,7 +16,7 @@ public class Story implements Serializable {
     @SerializedName("description")
     private String description;
 
-    @SerializedName("SubTasks")
+    @SerializedName("subTasks")
     private List<StoryTask> storyTasks;
 
     @SerializedName("taskId")
