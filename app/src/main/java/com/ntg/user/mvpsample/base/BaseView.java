@@ -10,4 +10,6 @@ public interface BaseView {
     void hideLoadingIndicator();
 
     void showErrorMessage(String message);
+
+    void showNoInternetConnectionMessage();
 }

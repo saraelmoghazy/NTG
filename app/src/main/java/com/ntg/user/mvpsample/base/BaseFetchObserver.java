@@ -1,8 +1,10 @@
 package com.ntg.user.mvpsample.base;
 
+import com.ntg.user.mvpsample.network.remote.ErrorType;
 import com.ntg.user.mvpsample.network.remote.RetrofitException;
 
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -22,7 +24,6 @@ public abstract class BaseFetchObserver<T> implements Observer<T> {
     public void onSubscribe(Disposable d) {
     }
 
-
     @Override
     public void onError(Throwable throwable) {
         presenter.hideLoadingIndicator();
@@ -30,7 +31,7 @@ public abstract class BaseFetchObserver<T> implements Observer<T> {
         if (throwable instanceof RetrofitException) {
             retrofitException = (RetrofitException) throwable;
         }
-        presenter.handelError(retrofitException.getMessage());
+        presenter.handelError(retrofitException);
     }
 
     @Override

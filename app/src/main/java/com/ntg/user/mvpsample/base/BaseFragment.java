@@ -57,6 +57,11 @@ public class BaseFragment extends Fragment implements BaseView {
     }
 
     @Override
+    public void showNoInternetConnectionMessage() {
+        Crouton.makeText(getActivity(), getString(R.string.lose_internet_connection), Style.ALERT).show();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         Crouton.cancelAllCroutons();

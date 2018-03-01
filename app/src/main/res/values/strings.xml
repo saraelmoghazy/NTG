@@ -19,7 +19,7 @@
     <string name="update_task">"Update Tasks"</string>
     <string name="no_stories">"No Stories Added"</string>
     <string name="no_tasks">"No Tasks Added"</string>
-
     <string name="dashboard">"Dashboard"</string>
+    <string name="lose_internet_connection">"Internet Connection not available"</string>
 
 </resources>

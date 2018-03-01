@@ -2,6 +2,9 @@ package com.ntg.user.mvpsample.base;
 
 import android.support.annotation.NonNull;
 
+import com.ntg.user.mvpsample.network.remote.ErrorType;
+import com.ntg.user.mvpsample.network.remote.RetrofitException;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -46,8 +49,11 @@ public class BasePresenter<V extends BaseView> {
         }
     }
 
-    public void handelError(String message) {
-        getView().showErrorMessage(message);
+    public void handelError(RetrofitException retrofitException) {
+        if (retrofitException.getErrorType() == ErrorType.HTTP)
+            getView().showErrorMessage(retrofitException.getMessage());
+        else
+            getView().showNoInternetConnectionMessage();
     }
 
 }
