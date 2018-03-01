@@ -13,12 +13,16 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
- * Created by Sara Elmoghazy on 19/02/2018.
+ * Acts as base class for all fragments in the app
+ *
+ * @author Sara Elmoghazy
  */
-
 public class BaseFragment extends Fragment implements BaseView {
     private Dialog loadingIndicator = null;
 
+    /**
+     * Display progress that indicates loading process is in progress.
+     */
     @Override
     public void showLoadingIndicator() {
         if (loadingIndicator == null && isAdded()) {
@@ -31,6 +35,9 @@ public class BaseFragment extends Fragment implements BaseView {
         }
     }
 
+    /**
+     * Hide previously displayed progress indicator to indicates that the process was finished.
+     */
     @Override
     public void hideLoadingIndicator() {
         if (loadingIndicator != null) {
@@ -39,6 +46,11 @@ public class BaseFragment extends Fragment implements BaseView {
         }
     }
 
+    /**
+     * Handle common errors
+     *
+     * @param message
+     */
     @Override
     public void showErrorMessage(String message) {
         Crouton.makeText(getActivity(), message, Style.ALERT).show();

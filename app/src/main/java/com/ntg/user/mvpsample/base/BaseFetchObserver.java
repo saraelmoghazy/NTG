@@ -6,6 +6,8 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
+ * Default {@link Observer} base class to be used whenever you want default error handling.
+ *
  * @author Sara Elmoghazy
  */
 public abstract class BaseFetchObserver<T> implements Observer<T> {

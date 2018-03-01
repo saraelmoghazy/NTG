@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import java.lang.ref.WeakReference;
 
 /**
+ * Base Presenter to handle view attachment and define common
+ * behavior across all presenters in the application.
+ *
  * @author Sara Elmoghazy
  */
 public class BasePresenter<V extends BaseView> {

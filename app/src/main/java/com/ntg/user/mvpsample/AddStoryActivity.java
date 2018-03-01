@@ -1,6 +1,5 @@
 package com.ntg.user.mvpsample;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -8,12 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.ntg.user.mvpsample.add_story.view.AddStoryFragment;
-import com.ntg.user.mvpsample.stories.view.StoriesFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
+/**
+ * @author Sara Elmoghazy
+ */
 public class AddStoryActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
@@ -30,12 +30,6 @@ public class AddStoryActivity extends AppCompatActivity {
 
         getFragmentManager().beginTransaction().add(R.id.container,
                 AddStoryFragment.newInstance()).commit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Crouton.cancelAllCroutons();
     }
 
     @Override

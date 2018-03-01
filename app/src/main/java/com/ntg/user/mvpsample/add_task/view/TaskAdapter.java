@@ -2,7 +2,6 @@ package com.ntg.user.mvpsample.add_task.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.model.StoryTask;
@@ -31,7 +29,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     private List<StoryTask> storyTasks = new ArrayList<>();
     Context context;
     private Subject<StoryTask> onTaskSelectedObservable = PublishSubject.create();
-
 
     public TaskAdapter(Context context, List<StoryTask> storyTasks,
                        Subject<StoryTask> onTaskSelectedObservable) {
@@ -57,13 +54,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
                 .buildRound(String.valueOf(storyTask.getTitle().charAt(0)),
                         Utils.generateColor());
         holder.icTask.setImageDrawable(drawable);
-        initProgressColor(holder, storyTask);
+        initProgressBar(holder, storyTask);
         holder.taskLayout.setOnClickListener(v -> onTaskSelectedObservable.onNext(storyTask));
-
-
     }
 
-    private void initProgressColor(TaskHolder holder, StoryTask storyTask) {
+    /**
+     * set progress bar color and value based on percentage.
+     */
+    private void initProgressBar(TaskHolder holder, StoryTask storyTask) {
         if (storyTask.getProgress() == 0) {
             holder.txtTaskProgress.setTextColor(Color.RED);
             holder.txtTaskProgress.setText(context.getString(R.string.state_not_started));
@@ -88,7 +86,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
         storyTasks.addAll(tasks);
         notifyDataSetChanged();
     }
-
 
     class TaskHolder extends RecyclerView.ViewHolder {
 

@@ -5,6 +5,13 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import java.util.List;
 
 public class Utils {
+
+    /**
+     * get average of list of integers
+     *
+     * @param integers
+     * @return average
+     */
     public static int getAverage(List<Integer> integers) {
         Integer sum = 0;
         if (integers != null) {
@@ -20,6 +27,11 @@ public class Utils {
     }
 
 
+    /**
+     * generate random color
+     *
+     * @return color
+     */
     public static int generateColor() {
         ColorGenerator generator = ColorGenerator.MATERIAL;
         return generator.getRandomColor();
