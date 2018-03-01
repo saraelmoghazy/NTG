@@ -10,9 +10,11 @@ import com.ntg.user.mvpsample.model.Story;
 import javax.inject.Inject;
 
 /**
+ * Story Presenter which handle add story screen events
+ * Help to add story
+ *
  * @author Sara Elmoghazy
  */
-
 public class AddStoryPresenter extends BasePresenter<AddStoryViewContract> {
 
     @Inject
@@ -23,18 +25,29 @@ public class AddStoryPresenter extends BasePresenter<AddStoryViewContract> {
         AddStoryComponent.Initializer.buildComponent().inject(this);
     }
 
+    /**
+     * Save story
+     *
+     * @param story
+     */
     private void saveStory(Story story) {
         showLoadingIndicator();
-        BaseFetchObserver<Integer> observer = new BaseFetchObserver<Integer>(this) {
+        BaseFetchObserver<Story> observer = new BaseFetchObserver<Story>(this) {
             @Override
-            public void onNext(Integer storyId) {
+            public void onNext(Story addedStory) {
                 hideLoadingIndicator();
-                getView().navigateToAddTasksFragments(storyId);
+                getView().navigateToAddTasks(addedStory);
             }
         };
         repository.saveStory(story).subscribe(observer);
     }
 
+    /**
+     * triggered when screen click submit story
+     *
+     * @param title
+     * @param description
+     */
     public void onSubmitStory(String title, String description) {
         if (title.isEmpty()) {
             getView().showTitleMissingError();

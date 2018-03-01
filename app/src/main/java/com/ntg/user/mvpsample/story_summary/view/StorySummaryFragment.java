@@ -2,6 +2,7 @@ package com.ntg.user.mvpsample.story_summary.view;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * Fragment show story title , acceptance criteria , progress and tasks summary.
+ *
  * @author Sara Elmoghazy
  */
 public class StorySummaryFragment extends BaseFragment implements StorySummaryViewContract {
@@ -44,8 +47,6 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
     TextView txtInit;
     @BindView(R.id.partial_story_summary)
     RelativeLayout partialStorySummary;
-
-
     private StorySummaryPresenter presenter;
 
     public static StorySummaryFragment newInstance(Story story) {
@@ -63,6 +64,7 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
         View view = inflater.inflate(R.layout.fragment_story_summary, container, false);
         ButterKnife.bind(this, view);
         ViewUtility.addShadowToView(getActivity(), partialStorySummary);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.story_summary));
         if (getArguments() != null && getArguments().getSerializable(STORY) != null)
             presenter = new StorySummaryPresenter(this
                     , (Story) getArguments().getSerializable(STORY));
@@ -71,41 +73,75 @@ public class StorySummaryFragment extends BaseFragment implements StorySummaryVi
         return view;
     }
 
+    /**
+     * Show Story icon
+     *
+     * @param title
+     */
     @Override
     public void showIcon(String title) {
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(String.valueOf(title.charAt(0)), Utils.generateColor(), 10);
-
         icStory.setImageDrawable(drawable);
     }
 
+    /**
+     * Show Story title
+     *
+     * @param title
+     */
     @Override
     public void showTitle(String title) {
         txtTitle.setText(title);
     }
 
+    /**
+     * Show Story acceptance criteria
+     *
+     * @param description
+     */
     @Override
     public void showDescription(String description) {
         txtAcceptanceCriteria.setText(description);
     }
 
+    /**
+     * Show New Tasks count
+     *
+     * @param newCount
+     */
     @Override
-    public void showNotStartedSubTasks(int notStartedCount) {
-        txtInit.setText("" + notStartedCount);
+    public void showNewTasks(int newCount) {
+        txtInit.setText(String.valueOf(newCount));
     }
 
+    /**
+     * Show story progress
+     *
+     * @param progress
+     */
     @Override
-    public void showProgress(int progress) {
+    public void showStoryProgress(int progress) {
         txtProgress.setText(getString(R.string.progress) + ":" + progress);
     }
 
+    /**
+     * Show done tasks count
+     *
+     * @param doneTasks
+     */
     @Override
-    public void showDoneSubTasks(int doneSubTasks) {
-        txtDone.setText("" + doneSubTasks);
+    public void showDoneTasks(int doneTasks) {
+        txtDone.setText(String.valueOf(doneTasks));
     }
 
+    /**
+     * Show in progress tasks count
+     *
+     * @param inProgressTasks
+     */
     @Override
-    public void showInProgressSubTasks(int inProgressSubTasks) {
-        txtInProgress.setText("" + inProgressSubTasks);
+    public void showInProgressTasks(int inProgressTasks) {
+        txtInProgress.setText(String.valueOf(inProgressTasks));
     }
 }

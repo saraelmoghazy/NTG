@@ -14,12 +14,12 @@ public interface StorySummaryViewContract extends BaseView {
 
     void showDescription(String description);
 
-    void showNotStartedSubTasks(int notStartedCount);
+    void showNewTasks(int notStartedCount);
 
-    void showProgress(int progress);
+    void showStoryProgress(int progress);
 
-    void showDoneSubTasks(int doneSubTasks);
+    void showDoneTasks(int doneSubTasks);
 
-    void showInProgressSubTasks(int inProgressSubTasks);
+    void showInProgressTasks(int inProgressSubTasks);
 
 }

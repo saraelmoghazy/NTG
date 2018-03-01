@@ -3,19 +3,21 @@ package com.ntg.user.mvpsample.stories.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ntg.user.mvpsample.AddStoryActivity;
 import com.ntg.user.mvpsample.R;
+import com.ntg.user.mvpsample.add_task.view.TasksFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
 import com.ntg.user.mvpsample.model.Story;
-import com.ntg.user.mvpsample.story_summary.view.StorySummaryFragment;
 import com.ntg.user.mvpsample.stories.presenter.StoryPresenter;
+import com.ntg.user.mvpsample.story_summary.view.StorySummaryFragment;
+import com.ntg.user.mvpsample.util.RecyclerViewEmptySupport;
 
 import java.util.List;
 
@@ -34,10 +36,13 @@ public class StoriesFragment extends BaseFragment implements StoriesViewContract
     @BindView(R.id.fab_add_story)
     FloatingActionButton fabAddStory;
     @BindView(R.id.rv_stories)
-    RecyclerView rvStories;
+    RecyclerViewEmptySupport rvStories;
+    @BindView(R.id.list_empty)
+    TextView listEmptyView;
+
     private StoriesAdapter storiesAdapter;
     private StoryPresenter storyPresenter;
-    private Subject<StorySummaryItem> storySummaryObservable = PublishSubject.create();
+    private Subject<Story> storySummaryObservable = PublishSubject.create();
     private Subject<Story> updateTasksObservable = PublishSubject.create();
 
     public static StoriesFragment newInstance() {
@@ -55,8 +60,10 @@ public class StoriesFragment extends BaseFragment implements StoriesViewContract
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stories, container, false);
         ButterKnife.bind(this, view);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.dashboard));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvStories.setLayoutManager(linearLayoutManager);
+        rvStories.setEmptyView(listEmptyView);
         storyPresenter = new StoryPresenter(this);
         fabAddStory.setOnClickListener(v -> addNewStory());
 
@@ -66,35 +73,55 @@ public class StoriesFragment extends BaseFragment implements StoriesViewContract
     @Override
     public void onResume() {
         super.onResume();
+
         storyPresenter.start();
     }
 
+    /**
+     * show stories list
+     *
+     * @param stories
+     */
     @Override
     public void showStories(List<Story> stories) {
-        storySummaryObservable.subscribe(storySummaryItem ->
-                storyPresenter.onStorySummaryClicked(storySummaryItem.getSharedElement(),
-                        storySummaryItem.getStory()));
+        storySummaryObservable.subscribe(story ->
+                storyPresenter.onStorySummaryClicked(story));
         updateTasksObservable.subscribe(story -> storyPresenter.onUpdateTasksClicked(story));
         storiesAdapter = new StoriesAdapter(stories, storySummaryObservable, updateTasksObservable);
         rvStories.setAdapter(storiesAdapter);
-
     }
 
+    /**
+     * Add new story
+     */
     @Override
     public void addNewStory() {
         Intent intent = new Intent(getActivity(), AddStoryActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Navigate to story summary screen
+     *
+     * @param story
+     */
     @Override
-    public void navigateToStorySummaryFragment(View sharedElement, Story story) {
+    public void navigateToStorySummary(Story story) {
         getFragmentManager().beginTransaction()
+                .replace(R.id.container, StorySummaryFragment.newInstance(story))
                 .addToBackStack(TAG)
-                .replace(R.id.container, StorySummaryFragment.newInstance(story)).commit();
+                .commit();
     }
 
+    /**
+     * Navigate to update story tasks screen
+     *
+     * @param story
+     */
     @Override
-    public void navigateToUpdateTasksFragment(Story story) {
-
+    public void navigateToUpdateTasks(Story story) {
+        getFragmentManager().beginTransaction()
+                .addToBackStack(TAG)
+                .replace(R.id.container, TasksFragment.newInstance(story)).commit();
     }
 }

@@ -16,7 +16,7 @@ public interface StoriesViewContract extends BaseView {
 
     void addNewStory();
 
-    void navigateToStorySummaryFragment(View sharedElement, Story story);
+    void navigateToStorySummary(Story story);
 
-    void navigateToUpdateTasksFragment(Story story);
+    void navigateToUpdateTasks(Story story);
 }

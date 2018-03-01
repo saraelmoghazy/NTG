@@ -4,21 +4,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.add_story.presenter.AddStoryPresenter;
-import com.ntg.user.mvpsample.add_task.view.AddTaskFragment;
+import com.ntg.user.mvpsample.add_task.view.TasksFragment;
 import com.ntg.user.mvpsample.base.BaseFragment;
+import com.ntg.user.mvpsample.model.Story;
+import com.ntg.user.mvpsample.stories.view.StoriesFragment;
 import com.ntg.user.mvpsample.util.ViewUtility;
 
 import butterknife.BindView;
@@ -28,6 +28,8 @@ import butterknife.ButterKnife;
  * @author Sara Elmoghazy
  */
 public class AddStoryFragment extends BaseFragment implements AddStoryViewContract {
+
+    public static final String TAG = StoriesFragment.class.getSimpleName();
 
     @BindView(R.id.tv_title)
     EditText tvTitle;
@@ -42,7 +44,6 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
 
     private AddStoryPresenter presenter;
 
-
     public static AddStoryFragment newInstance() {
         return new AddStoryFragment();
     }
@@ -54,7 +55,7 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
         View view = inflater.inflate(R.layout.fragment_add_story, container, false);
         ButterKnife.bind(this, view);
         ViewUtility.addShadowToView(getActivity(), partialAddStory);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Story");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.add_story));
         presenter = new AddStoryPresenter(this);
 
         return view;
@@ -80,21 +81,32 @@ public class AddStoryFragment extends BaseFragment implements AddStoryViewContra
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.add_story_menu, menu);
     }
 
+    /**
+     * Navigate to add tasks screen
+     *
+     * @param story
+     */
     @Override
-    public void navigateToAddTasksFragments(int storyId) {
+    public void navigateToAddTasks(Story story) {
         getFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.container, AddTaskFragment.newInstance(storyId)).commit();
+                .addToBackStack(TAG)
+                .replace(R.id.container, TasksFragment.newInstance(story)).commit();
     }
 
+    /**
+     * show missing title error
+     */
     @Override
     public void showTitleMissingError() {
         inputTitle.setError(getString(R.string.tile_missing_error));
     }
 
+    /**
+     * show missing acceptance criteria error
+     */
     @Override
     public void showDescriptionMissingError() {
         inputDescription.setError(getString(R.string.description_missing_error));

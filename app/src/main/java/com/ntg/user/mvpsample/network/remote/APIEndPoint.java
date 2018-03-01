@@ -23,7 +23,7 @@ public interface APIEndPoint {
     Observable<List<Story>> getStories();
 
     @POST("saveStory")
-    Observable<Integer> saveStory(@Body Story story);
+    Observable<Story> saveStory(@Body Story story);
 
     @PUT("saveTasks/{taskId}")
     Observable<Response<Void>> saveTasks(@Path("taskId") int id, @Body List<StoryTask> storyTasks);

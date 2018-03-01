@@ -25,7 +25,7 @@ public class AddStoryRepository implements AddStoryDataSource {
     }
 
     @Override
-    public Observable<Integer> saveStory(Story story) {
+    public Observable<Story> saveStory(Story story) {
         return remoteAddStoryRepo.saveStory(story);
     }
 }

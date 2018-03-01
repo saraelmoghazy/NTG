@@ -2,7 +2,9 @@ package com.ntg.user.mvpsample.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class StoryTask {
+import java.io.Serializable;
+
+public class StoryTask implements Serializable {
 
     @SerializedName("progress")
     private int progress;
@@ -13,8 +15,12 @@ public class StoryTask {
     @SerializedName("title")
     private String title;
 
-    public StoryTask(String title, int progress) {
-        this.title = title;
+
+    public StoryTask() {
+    }
+
+    public StoryTask(String id, int progress) {
+        this.id = id;
         this.progress = progress;
     }
 

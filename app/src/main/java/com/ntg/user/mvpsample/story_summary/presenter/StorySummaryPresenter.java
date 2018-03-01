@@ -6,9 +6,10 @@ import com.ntg.user.mvpsample.model.StoryTask;
 import com.ntg.user.mvpsample.story_summary.view.StorySummaryViewContract;
 
 /**
+ * Story Summary presenter
+ *
  * @author Sara Elmoghazy
  */
-
 public class StorySummaryPresenter extends BasePresenter<StorySummaryViewContract> {
 
     private Story story;
@@ -24,6 +25,15 @@ public class StorySummaryPresenter extends BasePresenter<StorySummaryViewContrac
 
         getView().showTitle(story.getTitle());
         getView().showDescription(story.getDescription());
+        getView().showIcon(story.getTitle());
+        getView().showStoryProgress(story.getProgress());
+        showTasksProgress();
+    }
+
+    /**
+     * calculate tasks summary (NEW , In progress , Done)
+     */
+    private void showTasksProgress() {
         int done = 0;
         int inProgress = 0;
         int notStarted = 0;
@@ -34,10 +44,8 @@ public class StorySummaryPresenter extends BasePresenter<StorySummaryViewContrac
                 else if (task.getProgress() == 100) done++;
             }
         }
-        getView().showIcon(story.getTitle());
-        getView().showProgress(story.getProgress());
-        getView().showDoneSubTasks(done);
-        getView().showNotStartedSubTasks(notStarted);
-        getView().showInProgressSubTasks(inProgress);
+        getView().showDoneTasks(done);
+        getView().showNewTasks(notStarted);
+        getView().showInProgressTasks(inProgress);
     }
 }

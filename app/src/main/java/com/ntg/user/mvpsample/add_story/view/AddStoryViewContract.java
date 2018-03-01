@@ -1,6 +1,7 @@
 package com.ntg.user.mvpsample.add_story.view;
 
 import com.ntg.user.mvpsample.base.BaseView;
+import com.ntg.user.mvpsample.model.Story;
 
 /**
  * @author Sara Elmoghazy
@@ -8,7 +9,7 @@ import com.ntg.user.mvpsample.base.BaseView;
 public interface AddStoryViewContract extends BaseView {
 
 
-    void navigateToAddTasksFragments(int storyId);
+    void navigateToAddTasks(Story story);
 
     void showTitleMissingError();
 

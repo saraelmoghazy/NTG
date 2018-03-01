@@ -1,7 +1,5 @@
 package com.ntg.user.mvpsample.stories.presenter;
 
-import android.view.View;
-
 import com.ntg.user.mvpsample.base.BaseFetchObserver;
 import com.ntg.user.mvpsample.base.BasePresenter;
 import com.ntg.user.mvpsample.model.Story;
@@ -14,6 +12,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Story Presenter which handle story screen events
+ * Help to show list of stories , navigate to story summary and update story tasks
+ *
  * @author Sara Elmoghazy
  */
 
@@ -27,8 +28,10 @@ public class StoryPresenter extends BasePresenter<StoriesViewContract> {
         GetStoriesComponent.Initializer.buildComponent().inject(this);
     }
 
+    @Override
+    public void start() {
+        super.start();
 
-    private void loadStories() {
         showLoadingIndicator();
         BaseFetchObserver<List<Story>> observer = new BaseFetchObserver<List<Story>>(this) {
             @Override
@@ -40,19 +43,21 @@ public class StoryPresenter extends BasePresenter<StoriesViewContract> {
         getStoriesRepository.getStories().subscribe(observer);
     }
 
-    @Override
-    public void start() {
-        super.start();
-
-        loadStories();
+    /**
+     * triggered when user click story summary
+     *
+     * @param story
+     */
+    public void onStorySummaryClicked(Story story) {
+        getView().navigateToStorySummary(story);
     }
 
-    public void onStorySummaryClicked(View sharedElement, Story story) {
-        getView().navigateToStorySummaryFragment(sharedElement, story);
-    }
-
-
+    /**
+     * triggered when user click update tasks
+     *
+     * @param story
+     */
     public void onUpdateTasksClicked(Story story) {
-        getView().navigateToUpdateTasksFragment(story);
+        getView().navigateToUpdateTasks(story);
     }
 }

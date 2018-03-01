@@ -10,5 +10,5 @@ import io.reactivex.Observable;
 
 public interface AddStoryDataSource {
 
-    Observable<Integer> saveStory(Story story);
+    Observable<Story> saveStory(Story story);
 }

@@ -16,7 +16,6 @@ public class RemoteAddStoryRepo extends BaseObservable implements AddStoryDataSo
     private static RemoteAddStoryRepo INSTANCE = null;
     RetrofitProvider retrofitProvider;
 
-
     private RemoteAddStoryRepo(RetrofitProvider retrofitProvider) {
         this.retrofitProvider = retrofitProvider;
     }
@@ -28,7 +27,7 @@ public class RemoteAddStoryRepo extends BaseObservable implements AddStoryDataSo
     }
 
     @Override
-    public Observable<Integer> saveStory(Story story) {
+    public Observable<Story> saveStory(Story story) {
         APIEndPoint apiEndPoint = retrofitProvider.getRetrofit().create(APIEndPoint.class);
         return getObservable(apiEndPoint.saveStory(story));
     }

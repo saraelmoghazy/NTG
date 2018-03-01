@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -22,15 +23,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
     private List<StoryTask> storyTasks = new ArrayList<>();
     Context context;
+    private Subject<StoryTask> onTaskSelectedObservable = PublishSubject.create();
 
-    public TaskAdapter(Context context, List<StoryTask> storyTasks) {
+
+    public TaskAdapter(Context context, List<StoryTask> storyTasks,
+                       Subject<StoryTask> onTaskSelectedObservable) {
         this.storyTasks = storyTasks;
         this.context = context;
+        this.onTaskSelectedObservable = onTaskSelectedObservable;
     }
 
     @Override
@@ -51,6 +58,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
                         Utils.generateColor());
         holder.icTask.setImageDrawable(drawable);
         initProgressColor(holder, storyTask);
+        holder.taskLayout.setOnClickListener(v -> onTaskSelectedObservable.onNext(storyTask));
+
 
     }
 
@@ -75,13 +84,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     }
 
     public void updateTasks(List<StoryTask> tasks) {
-        storyTasks = tasks;
+        storyTasks.clear();
+        storyTasks.addAll(tasks);
         notifyDataSetChanged();
     }
 
 
     class TaskHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.task_layout)
+        RelativeLayout taskLayout;
         @BindView(R.id.ic_task)
         ImageView icTask;
         @BindView(R.id.txtTitle)

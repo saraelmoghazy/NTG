@@ -12,8 +12,9 @@
     <color name="blue_chill">#117E93</color>
     <color name="java">#1BA9C3</color>
     <color name="pink">#f06292</color>
+    <color name="black_green">#428F00</color>
     <color name="pink_white">#f8bbd0</color>
     <color name="off_white">#EBEBEB</color>
-
-
+    <color name="black_red">#e60000</color>
+    <color name="lemon_yellow">#FECB00</color>
 </resources>

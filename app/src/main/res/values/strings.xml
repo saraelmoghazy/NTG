@@ -1,16 +1,25 @@
 <resources>
 
-    <string name="app_name">NTG</string>
+    <string name="app_name">Sprint plan</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="add">Add</string>
     <string name="tile_missing_error">Title must be set</string>
-    <string name="description_missing_error">Description must be set</string>
+    <string name="description_missing_error">Acceptance criteria must be set</string>
     <string name="loading_indicator_message">"Wheels are turning..."</string>
     <string name="story_summary">"Story Summary"</string>
     <string name="update_tasks">"Update Tasks"</string>
     <string name="progress">"Progress"</string>
-    <string name="state_in_progress">"Progress"</string>
+    <string name="state_in_progress">"Now"</string>
     <string name="state_done">"Done"</string>
-    <string name="state_not_started">"Intial"</string>
+    <string name="state_not_started">"New"</string>
+    <string name="add_story">"Add Story"</string>
+    <string name="progress_must_be_set">"Progress must be set"</string>
+    <string name="add_task">"Add Tasks"</string>
+    <string name="update_task">"Update Tasks"</string>
+    <string name="no_stories">"No Stories Added"</string>
+    <string name="no_tasks">"No Tasks Added"</string>
+
+    <string name="dashboard">"Dashboard"</string>
+
 </resources>

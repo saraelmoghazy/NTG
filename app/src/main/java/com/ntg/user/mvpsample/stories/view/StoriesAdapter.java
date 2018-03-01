@@ -1,5 +1,7 @@
 package com.ntg.user.mvpsample.stories.view;
 
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ntg.user.mvpsample.R;
 import com.ntg.user.mvpsample.Utils;
 import com.ntg.user.mvpsample.model.Story;
 import com.ntg.user.mvpsample.util.ViewUtility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,10 +25,10 @@ import io.reactivex.subjects.Subject;
 public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.TaskViewHolder> {
 
     private List<Story> stories;
-    private Subject<StorySummaryItem> onStorySummaryClicked;
+    private Subject<Story> onStorySummaryClicked;
     private Subject<Story> onUpdateTasksClicked;
 
-    public StoriesAdapter(List<Story> stories, Subject<StorySummaryItem> onStorySummaryClicked,
+    public StoriesAdapter(List<Story> stories, Subject<Story> onStorySummaryClicked,
                           Subject<Story> onUpdateTasksClicked) {
         this.stories = stories;
         this.onStorySummaryClicked = onStorySummaryClicked;
@@ -50,14 +50,35 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.TaskView
         Story story = stories.get(position);
         holder.txtStoryTitle.setText(story.getTitle());
         TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect(String.valueOf(story.getTitle().charAt(0)), Utils.generateColor(), 10);
-        holder.txtStoryConsumption.setText("" + story.getProgress());
+                .buildRoundRect(String.valueOf(story.getTitle().charAt(0)), Utils.generateColor()
+                        , 10);
+        holder.txtStoryConsumption.setText(String.valueOf(story.getProgress()));
         holder.icStory.setImageDrawable(drawable);
         holder.progressBar.setProgress(story.getProgress());
+        setProgressColor(holder, story.getProgress());
         holder.ivStorySummary.setOnClickListener(view -> onStorySummaryClicked
-                .onNext(new StorySummaryItem(holder.icStory, story)));
+                .onNext(story));
         holder.ivUpdateTasks.setOnClickListener(view -> onUpdateTasksClicked
                 .onNext(story));
+    }
+
+    /**
+     * set progress color bases on percentage
+     *
+     * @param holder
+     * @param progress
+     */
+    private void setProgressColor(TaskViewHolder holder, int progress) {
+        if (progress < 50) {
+            DrawableCompat.setTint(holder.progressBar.getProgressDrawable()
+                    , ContextCompat.getColor(holder.progressBar.getContext(), R.color.black_red));
+        } else if (progress > 50 && progress < 100) {
+            DrawableCompat.setTint(holder.progressBar.getProgressDrawable()
+                    , ContextCompat.getColor(holder.progressBar.getContext(), R.color.lemon_yellow));
+        } else if (progress == 100) {
+            DrawableCompat.setTint(holder.progressBar.getProgressDrawable()
+                    , ContextCompat.getColor(holder.progressBar.getContext(), R.color.black_green));
+        }
     }
 
 
