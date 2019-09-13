@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ntg.user.mvpsample.show_task.ShowTaskActivity">
+
+    <item
+        android:id="@+id/mi_add_subtask"
+        android:title="Add SubTask"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/mi_edit"
+        android:title="Edit"
+        app:showAsAction="ifRoom" />
+</menu>
