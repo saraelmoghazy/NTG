@@ -1,0 +1,28 @@
+package com.ntg.user.mvpsample.tasks;
+
+
+
+import com.ntg.user.mvpsample.remote.Task;
+
+import java.util.List;
+
+/**
+ * Created by GM7 on 1/29/2018.
+ */
+
+public interface TasksContract {
+    interface View{
+        void showTasks(List<Task> tasks);
+        void showEmptyTasks();
+        void showErrorMessage(String errMsg);
+        void showSaveTaskSuccessMsg();
+        void showSaveTaskFailedMsg();
+        void setPresenter(Presenter presenter);
+    }
+
+    interface Presenter{
+        void getTask();
+        void saveTask(Task task);
+        void updateTask(String id,Task task);
+    }
+}

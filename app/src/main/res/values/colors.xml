@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="subTaskLow">#ff3333</color>
+    <color name="subTaskMedium">#eeee00</color>
+    <color name="subTaskHigh">#128521</color>
+
 </resources>
